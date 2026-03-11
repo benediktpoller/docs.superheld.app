@@ -1,0 +1,17 @@
+{
+  "runners": ["axe"],
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox"]
+  },
+  "timeout": 10000,
+  "wait": 3000,
+  "threshold": 0,
+  "standard": "WCAG2AA",
+  "runners": ["axe", "pa11y-runner-htmlcs"],
+  "rules": {
+    "ignore": []
+  },
+  "headers": {
+    "User-Agent": "superheld-app-accessibility-test"
+  }
+}

@@ -1,0 +1,39 @@
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# mkdocs build output
+/site/
+
+# Hugo build output
+/hugo-site/public/
+/hugo-site/resources/_gen/
+
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Test artifacts
+.coverage
+htmlcov/
+test-results/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
