@@ -1,8 +1,8 @@
 # superheld.app Dokumentation
 
 [![Tests](https://github.com/benediktpoller/docs.superheld.app/workflows/WCAG%20AAA%20Accessibility%20Tests/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
-[![Build](https://github.com/benediktpoller/docs.superheld.app/workflows/Build%20%26%20Deploy/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Build](https://github.com/benediktpoller/docs.superheld.app/workflows/Build%20%26%20Deploy%20Hugo%20Site/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
+[![Validation](https://github.com/benediktpoller/docs.superheld.app/workflows/Link%20%26%20Content%20Validation/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
 
 Offizielle End-User Dokumentation für **[superheld.app](https://superheld.app)** – dein Schutzmittel gegen KI und Datenverlust.
 
