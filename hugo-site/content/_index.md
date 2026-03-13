@@ -13,7 +13,39 @@ Neu bei superheld.app? Hier beginnen:
 3. [**Nutzung**](/docs/nutzung) – So nutzt du die App täglich
 4. [**Apps & Plattformen**](/docs/apps) – Oberflächen & Rollen verstehen
 
+{{< button href="/docs/einführung/installation" >}}Installationsanleitung starten{{< /button >}}
+{{< button href="/docs/apps" >}}Apps & Plattformen ansehen{{< /button >}}
+
 ---
+
+## 🧭 Für wen ist superheld.app?
+
+{{% tabs %}}
+{{% tab title="DAU (Einsteiger)" %}}
+- **Einfacher Ein-Knopf-Schutz**: Schutz aktivieren, grün = OK.
+- Schnellstart: Installation → Konto → VPN & Filter einschalten.
+- Schritt-für-Schritt Hilfen im Menü unter **Nutzung**.
+
+{{% /tab %}}
+{{% tab title="Versierte Nutzer" %}}
+- Konfiguriere **Regeln**, Ausnahmen und Zeitlimit (z.B. TikTok nur 30 Minuten).
+- Nutze **Logs** zur Fehleranalyse (wer, was, wann blockiert wurde).
+- Exportiere/Importiere Regel-Sets für Backup.
+
+{{% /tab %}}
+{{% tab title="Eltern" %}}
+- **Kinderprofile** anlegen: Regeln, Zeitpläne, Ausnahmen.
+- **Freigabe-Workflow**: Kind fragt, Eltern genehmigen per Push.
+- Einfacher Überblick: Wer war online, was wurde blockiert.
+
+{{% /tab %}}
+{{% tab title="Admin" %}}
+- Geräte-Inventar + Status (Online/Offline, Patchlevel).
+- Rollout‑Profil (z.B. Schule, Home‑Office, Familiennetz).
+- Remote‑Wipe, Remote‑Lock & Richtlinien‑Templates.
+
+{{% /tab %}}
+{{% /tabs %}}
 
 ## 🎬 Storyboard: in 3 Schritten zum sicheren Schutz
 
