@@ -1,29 +1,55 @@
-<svg width="540" height="960" viewBox="0 0 540 960" xmlns="http://www.w3.org/2000/svg">
+<svg width="800" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1a1f2b"/>
-      <stop offset="100%" stop-color="#121826"/>
+    <linearGradient id="lxTitleBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d2d2d"/>
+      <stop offset="100%" stop-color="#252525"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
   </defs>
-  <rect width="540" height="960" rx="40" ry="40" fill="url(#bg)" />
-  <rect x="30" y="40" width="480" height="72" rx="18" ry="18" fill="#0f172a" />
-  <text x="60" y="86" fill="#fff" font-family="system-ui, sans-serif" font-size="28" font-weight="700">superheld.app</text>
-  <text x="60" y="124" fill="#a8b2c6" font-family="system-ui, sans-serif" font-size="16">Linux • CLI + GUI</text>
-  <g filter="url(#shadow)">
-    <rect x="30" y="160" width="480" height="620" rx="28" ry="28" fill="#0f172a" />
-  </g>
-  <text x="60" y="210" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="18" font-weight="600">Dashboard</text>
-  <line x1="60" y1="220" x2="480" y2="220" stroke="#334155" stroke-width="1" />
-  <rect x="60" y="260" width="420" height="52" rx="14" ry="14" fill="#152039" />
-  <text x="90" y="294" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="16">VPN</text>
-  <rect x="60" y="330" width="420" height="52" rx="14" ry="14" fill="#152039" />
-  <text x="90" y="364" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="16">Proxy</text>
-  <rect x="60" y="400" width="420" height="52" rx="14" ry="14" fill="#152039" />
-  <text x="90" y="434" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="16">Updates</text>
-  <rect x="60" y="470" width="420" height="52" rx="14" ry="14" fill="#152039" />
-  <text x="90" y="504" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="16">Admin-Tools</text>
-  <text x="60" y="580" fill="#64748b" font-family="system-ui, sans-serif" font-size="14">Status: Sicher · Letzte Prüfung: 2m</text>
+  <rect width="800" height="520" rx="10" fill="#1e1e1e" stroke="#444" stroke-width="1"/>
+  <rect width="800" height="32" rx="10" fill="url(#lxTitleBar)"/>
+  <rect y="22" width="800" height="10" fill="url(#lxTitleBar)"/>
+  <circle cx="20" cy="16" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="16" r="6" fill="#febc2e"/>
+  <circle cx="60" cy="16" r="6" fill="#28c840"/>
+  <text x="400" y="21" fill="rgba(255,255,255,0.7)" font-family="-apple-system,system-ui,sans-serif" font-size="12" font-weight="500" text-anchor="middle">superheld — Terminal + GUI</text>
+  <rect x="0" y="32" width="800" height="488" rx="0" fill="#1e1e1e"/>
+  <text x="16" y="60" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="500">$</text>
+  <text x="28" y="60" fill="#e0e0e0" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> superheld status</text>
+  <text x="16" y="86" fill="rgba(224,224,224,0.6)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">╔══════════════════════════════════════════════════╗</text>
+  <text x="16" y="106" fill="rgba(224,224,224,0.6)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">║</text>
+  <text x="56" y="106" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="700">SUPERHELD v2.1.0</text>
+  <text x="16" y="126" fill="rgba(224,224,224,0.6)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">║</text>
+  <text x="56" y="126" fill="rgba(224,224,224,0.7)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">Status: </text>
+  <text x="120" y="126" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="600">● AKTIV</text>
+  <text x="16" y="146" fill="rgba(224,224,224,0.6)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">║</text>
+  <text x="16" y="166" fill="rgba(224,224,224,0.6)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">╚══════════════════════════════════════════════════╝</text>
+  <text x="16" y="196" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">┌─ Module ─────────────────────┬─ Status ──────────┐</text>
+  <text x="16" y="216" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">│</text>
+  <text x="32" y="216" fill="#e0e0e0" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> VPN (WireGuard)             </text>
+  <text x="350" y="216" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">● connected  </text>
+  <text x="16" y="236" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">│</text>
+  <text x="32" y="236" fill="#e0e0e0" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> DNS Filter                  </text>
+  <text x="350" y="236" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">● active     </text>
+  <text x="16" y="256" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">│</text>
+  <text x="32" y="256" fill="#e0e0e0" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> Web Proxy                   </text>
+  <text x="350" y="256" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">● active     </text>
+  <text x="16" y="276" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">│</text>
+  <text x="32" y="276" fill="#e0e0e0" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> Tracking Protection         </text>
+  <text x="350" y="276" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">● active     </text>
+  <text x="16" y="296" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">│</text>
+  <text x="32" y="296" fill="#e0e0e0" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> Firewall                   </text>
+  <text x="350" y="296" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">● enforcing  </text>
+  <text x="16" y="316" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">└──────────────────────────────┴────────────────────┘</text>
+  <text x="16" y="346" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">┌─ Statistiken ─────────────────────────────────────┐</text>
+  <text x="32" y="366" fill="rgba(224,224,224,0.7)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">Blockiert heute:  </text>
+  <text x="210" y="366" fill="#5856d6" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="600">1.247</text>
+  <text x="32" y="386" fill="rgba(224,224,224,0.7)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">Tracker gestoppt: </text>
+  <text x="210" y="386" fill="#ff9500" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="600">428</text>
+  <text x="32" y="406" fill="rgba(224,224,224,0.7)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">Uptime:           </text>
+  <text x="210" y="406" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="600">14d 7h 32m</text>
+  <text x="32" y="426" fill="rgba(224,224,224,0.7)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">Geräte verbunden: </text>
+  <text x="210" y="426" fill="#007aff" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="600">3</text>
+  <text x="16" y="446" fill="rgba(224,224,224,0.5)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12">└───────────────────────────────────────────────────┘</text>
+  <text x="16" y="476" fill="#34c759" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12" font-weight="500">$</text>
+  <text x="28" y="476" fill="rgba(224,224,224,0.8)" font-family="'SF Mono',Menlo,Consolas,monospace" font-size="12"> _</text>
 </svg>

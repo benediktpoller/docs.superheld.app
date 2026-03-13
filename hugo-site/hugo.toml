@@ -40,6 +40,12 @@ theme = 'relearn'
   highlightInline = true
   highlightStyle = "monokai"
 
+# Allow raw HTML in markdown
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 # Outputs
 [outputs]
   home = ["HTML"]
