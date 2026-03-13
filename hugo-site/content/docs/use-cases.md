@@ -1,7 +1,7 @@
-+++
-title = "Use Cases & Szenarien"
-weight = 35
-+++
+---
+title: "Use Cases & Szenarien"
+weight: 35
+---
 
 ## 🎯 superheld.app für verschiedene Szenarien
 
@@ -22,7 +22,7 @@ Du bist neu gegründet und fragst dich:
 
 ### Superheld-Lösung
 
-{{% expand title="Dokumente & Investor-Updates" %}}
+{{< details title="Dokumente & Investor-Updates" >}}
 
 ```
 1. Finanzierungsrunde-Daten
@@ -41,9 +41,9 @@ Du bist neu gegründet und fragst dich:
    → Signatur-Integration
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Team-Kommunikation mit API-Keys" %}}
+{{< details title="Team-Kommunikation mit API-Keys" >}}
 
 ```
 DevOps-Team braucht AWS-Credentials:
@@ -62,9 +62,9 @@ superheld.app Weise (✅ Sicher):
 7. Zugriff wird geloggt (Audit Trail)
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Skalierung ohne Insecurity" %}}
+{{< details title="Skalierung ohne Insecurity" >}}
 
 ```
 Alle 3 Monate: +5 neue Team-Members
@@ -80,7 +80,7 @@ superheld.app macht das sicher:
 ✅ Automatische Logs auf Sicherheit prüfen
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -97,7 +97,7 @@ Du recherchierst sensible Themen:
 
 ### Superheld-Lösung
 
-{{% expand title="Sichere Quelle-Management" %}}
+{{< details title="Sichere Quelle-Management" >}}
 
 ```
 1. Quelle kontaktiert dich über superheld-Link
@@ -116,15 +116,15 @@ Du recherchierst sensible Themen:
    → Automatisierte Deletion nach X Tagen
 ```
 
-{{% notice title="💡 Pro-Tipp" color="info" %}}
+{{< callout type="info" >}}
 superheld's "Auto-Delete" Feature:
 Nach 30 Tagen gelöscht. Nicht wiederherstellbar.
 Perfekt für sensitive Recherche.
-{{% /notice %}}
+{{< /callout >}}
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Investigative Tools Integration" %}}
+{{< details title="Investigative Tools Integration" >}}
 
 ```
 Du nutzt mehrere spezialisierte Tools:
@@ -146,9 +146,9 @@ superheld connectet diese sicher:
 Alles an einem Ort. Alles privat. Alles nachverfolgbar.
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Sichere Team-Redaktion" %}}
+{{< details title="Sichere Team-Redaktion" >}}
 
 ```
 Mehrere Journalisten arbeiten an Story:
@@ -167,7 +167,7 @@ Regulatorische Anforderungen?
 ✅ Newsroom-Standard erfüllt
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -184,7 +184,7 @@ Du leitest eine Arztpraxis:
 
 ### Superheld-Lösung
 
-{{% expand title="Patient-Überblick sicher" %}}
+{{< details title="Patient-Überblick sicher" >}}
 
 ```
 Jeder Patient hat Ordner in superheld:
@@ -206,18 +206,18 @@ Nur Diese Mitarbeiter dürfen sehen:
 ❌ Praktikanten
 ```
 
-{{% notice title="✅ HIPAA konform" color="success" %}}
+{{< callout type="info" >}}
 superheld erfüllt alle Anforderungen:
 - Access Control
 - Audit Logs
 - 256-Bit Encryption
 - Disaster Recovery
 - Business Associate Agreement
-{{% /notice %}}
+{{< /callout >}}
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Sichere Zweitmeinungen" %}}
+{{< details title="Sichere Zweitmeinungen" >}}
 
 ```
 Patient fragt: "Kann ich eine Zweitmeinung einholen?"
@@ -240,9 +240,9 @@ superheld.app macht es sicher:
    → Keine ungesicherten Emails!
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Telemedizin & Follow-ups" %}}
+{{< details title="Telemedizin & Follow-ups" >}}
 
 ```
 Du machst Videocalls mit Patienten:
@@ -261,7 +261,7 @@ Sicherheit:
 ✅ HIPAA konform
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -278,7 +278,7 @@ Du koordinierst NGO über 10 Länder:
 
 ### Superheld-Lösung
 
-{{% expand title="Globale Team-Kommunikation" %}}
+{{< details title="Globale Team-Kommunikation" >}}
 
 ```
 Beispiel: Netzwerk gegen Sklaverei
@@ -301,9 +301,9 @@ Jeder kann in seiner Sprache arbeiten.
 Alles bleibt E2E verschlüsselt.
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Spender & Transparenz" %}}
+{{< details title="Spender & Transparenz" >}}
 
 ```
 Spender haben Berechtigungen für:
@@ -320,7 +320,7 @@ Audit Trail zeigt:
 - Wie wurde geantwortet?
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -337,7 +337,7 @@ Du musst sicherstellen:
 
 ### Superheld-Lösung
 
-{{% expand title="Built-in Compliance" %}}
+{{< details title="Built-in Compliance" >}}
 
 ```
 superheld.app hat alles eingebaut:
@@ -360,9 +360,9 @@ CCPA:
 ✅ Disclosure Requirements
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Audit Logs & Monitoring" %}}
+{{< details title="Audit Logs & Monitoring" >}}
 
 ```
 Dein Compliance-Dashboard zeigt:
@@ -385,7 +385,7 @@ Dein Compliance-Dashboard zeigt:
 - Per Action-Type
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -402,7 +402,7 @@ Du hast mehrere Kunden:
 
 ### Superheld-Lösung
 
-{{% expand title="Kunden-Workspaces" %}}
+{{< details title="Kunden-Workspaces" >}}
 
 ```
 Du (Consultant) hast:
@@ -427,9 +427,9 @@ Sicherheit:
 ✅ Automatische Billing pro Workspace
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Sichere Vertragsarbeit" %}}
+{{< details title="Sichere Vertragsarbeit" >}}
 
 ```
 Client schreibt dir eine Anfrage:
@@ -445,18 +445,18 @@ superheld.app Workflow:
 8. Projekt-Abschluss & Archivierung
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
 ## 🎓 Welche Seite passt zu meinem Szenario?
 
-{{% notice title="Für weitere Details" color="info" %}}
+{{< callout type="info" >}}
 - [Installation](/docs/einführung/installation-v2) – Schnell starten
 - [Konfiguration](/docs/konfiguration) – Alles customizen
 - [Sicherheit](/docs/privacy-sicherheit) – Technische Details
 - [FAQ](/docs/faq) – Häufige Fragen
-{{% /notice %}}
+{{< /callout >}}
 
 ---
 

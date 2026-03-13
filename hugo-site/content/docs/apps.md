@@ -1,7 +1,7 @@
-+++
-title = "Apps & Plattformen"
-weight = 25
-+++
+---
+title: "Apps & Plattformen"
+weight: 25
+---
 
 ## 📱 App-Übersicht
 

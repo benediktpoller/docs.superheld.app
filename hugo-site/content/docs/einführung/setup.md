@@ -1,7 +1,7 @@
-+++
-title = "Erstkonfiguration"
-weight = 40
-+++
+---
+title: "Erstkonfiguration"
+weight: 40
+---
 
 Nach der Installation öffnet superheld.app einen Setup-Assistenten.
 
@@ -53,4 +53,4 @@ Herzlichen Glückwunsch! Jetzt kannst du superheld.app nutzen.
 
 ---
 
-## Nächster Schritt: [Nutzung →]({{< ref "docs/nutzung" >}})
+## Nächster Schritt: [Nutzung →](/docs/nutzung)

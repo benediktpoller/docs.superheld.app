@@ -1,7 +1,7 @@
-+++
-title = "Screenshots & Use Cases"
-weight = 50
-+++
+---
+title: "Screenshots & Use Cases"
+weight: 50
+---
 
 ## 📸 Visuelle Übersicht
 

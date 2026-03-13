@@ -1,7 +1,9 @@
-+++
-title = "Dokumentation"
-weight = 10
-+++
+---
+title: Dokumentation
+weight: 10
+cascade:
+  type: docs
+---
 
 Wähle ein Kapitel aus dem Menü, um zu beginnen.
 

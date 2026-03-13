@@ -1,7 +1,7 @@
-+++
-title = "Nutzung"
-weight = 50
-+++
+---
+title: "Nutzung"
+weight: 50
+---
 
 ## 🎤 Sprachgesteuerte Eingabe
 

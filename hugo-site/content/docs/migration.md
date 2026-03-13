@@ -1,7 +1,7 @@
-+++
-title = "Migration Guide"
-weight = 40
-+++
+---
+title: "Migration Guide"
+weight: 40
+---
 
 ## 🔄 Von anderen Tools zu superheld.app
 
@@ -24,7 +24,7 @@ Keine Offline-Funktion        Offline-Zugriff
 
 ### Migration in 3 Schritten
 
-{{% expand title="Schritt 1: Export aus Slack" %}}
+{{< details title="Schritt 1: Export aus Slack" >}}
 
 ```
 1. Gehe zu Slack → Admin Panel
@@ -39,9 +39,9 @@ Keine Offline-Funktion        Offline-Zugriff
 
 **Hinweis:** Slack Free hat begrenzte Exports (10.000 Nachrichten)
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Schritt 2: Import zu superheld.app" %}}
+{{< details title="Schritt 2: Import zu superheld.app" >}}
 
 ```
 1. Öffne superheld.app
@@ -55,15 +55,15 @@ Keine Offline-Funktion        Offline-Zugriff
    ✅ Benutzer → Einladungen gesendet
 6. Warte ~5 Minuten auf Abschluss
 ```
-{{% notice title="Wichtige Hinweise" color="info" %}}
+{{< callout type="info" >}}
 - Import verschlüsselt alles automatisch
 - Alte Slack-Metadaten werden nicht übertragen (absichtlich!)
 - Alle Benutzer müssen neue Passwörter setzen
-{{% /notice %}}
+{{< /callout >}}
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Schritt 3: Team einladen & migrieren" %}}
+{{< details title="Schritt 3: Team einladen & migrieren" >}}
 
 ```
 1. superheld.app erstellt Einladungs-Email
@@ -82,11 +82,11 @@ Timeline:
 - Tag 7: Slack komplett aus
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ### Häufige Fragen beim Slack-Wechsel
 
-{{% expand title="Was passiert mit meinen Slack-Archives?" %}}
+{{< details title="Was passiert mit meinen Slack-Archives?" >}}
 
 Slack speichert alte Nachrichten:
 
@@ -107,9 +107,9 @@ Option 3: Hybrid
 - Schrittweise Migration
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Kosten beim Wechsel?" %}}
+{{< details title="Kosten beim Wechsel?" >}}
 
 ```
 Slack kostet: ~$12.50/User/Monat
@@ -126,7 +126,7 @@ Ersparnisse: $420/Jahr
 ✅ Open Source
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -153,7 +153,7 @@ superheld.app unterstützt:
 
 ### Migration
 
-{{% expand title="Einfache Migration" %}}
+{{< details title="Einfache Migration" >}}
 
 ```
 1. Google Drive öffnen
@@ -166,9 +166,9 @@ superheld.app unterstützt:
 Time: 5-30 Min (je nach Dateigröße)
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Dokumente konvertieren" %}}
+{{< details title="Dokumente konvertieren" >}}
 
 Wenn du Google Docs benutzt:
 
@@ -184,7 +184,7 @@ aber superheld hat einen Web-Editor für
 Zusammenarbeit (auch E2E verschlüsselt)
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
@@ -192,7 +192,7 @@ Zusammenarbeit (auch E2E verschlüsselt)
 
 ### Passwörter mitnehmen
 
-{{% expand title="Export aus LastPass" %}}
+{{< details title="Export aus LastPass" >}}
 
 ```
 1. LastPass → Account Settings
@@ -203,13 +203,13 @@ Zusammenarbeit (auch E2E verschlüsselt)
    url,username,password,extra,name,folder
 ```
 
-{{% notice title="⚠️ Achtung" color="warning" %}}
+{{< callout type="warning" >}}
 LastPass CSV ist unverschlüsselt! Speichern sofort nach Download, nicht versenden!
-{{% /notice %}}
+{{< /callout >}}
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="Import zu superheld.app" %}}
+{{< details title="Import zu superheld.app" >}}
 
 ```
 1. Öffne superheld.app
@@ -225,9 +225,9 @@ LastPass CSV ist unverschlüsselt! Speichern sofort nach Download, nicht versend
    UND verschlüsselt alles mit AES-256
 ```
 
-{{< button href="https://docs.superheld.app/password-manager/import" >}}Detaillierter Import-Guide{{< /button >}}
+[Detaillierter Import-Guide](https://docs.superheld.app/password-manager/import)
 
-{{% /expand %}}
+{{< /details >}}
 
 ### Warum superheld ist besser für Passwörter
 
@@ -253,7 +253,7 @@ superheld.app:
 
 Zapier-Zaps → superheld Workflows:
 
-{{% expand title="Schritt-für-Schritt Anleitung" %}}
+{{< details title="Schritt-für-Schritt Anleitung" >}}
 
 **Beispiel:** GitHub Push → Slack Notification
 
@@ -274,9 +274,9 @@ Bei superheld:
 - Zapier: Dein GitHub-Token ist auf Zapier-Servern
 - superheld: Dein GitHub-Token bleibt auf deinem Server ✅
 
-{{% /expand %}}
+{{< /details >}}
 
-{{% expand title="API-Keys sicherer lagern" %}}
+{{< details title="API-Keys sicherer lagern" >}}
 
 ```
 superheld.app hat sichere Vault für API-Keys:
@@ -294,13 +294,13 @@ Resultat: GitHub kann nicht sehen,
 dass du Zapier nutzst!
 ```
 
-{{% /expand %}}
+{{< /details >}}
 
 ---
 
 ## 📊 Migration Checkliste
 
-{{% notice title="Vor der Migration" color="info" %}}
+{{< callout type="info" >}}
 
 - [ ] Backup von aktuellen Tools (sicher lokal speichern)
 - [ ] Alle wichtigen Daten exportieren
@@ -308,9 +308,9 @@ dass du Zapier nutzst!
 - [ ] Downtime planen (meist 1-2 Tage)
 - [ ] Test-Umgebung vorbereiten
 
-{{% /notice %}}
+{{< /callout >}}
 
-{{% notice title="Während der Migration" color="info" %}}
+{{< callout type="info" >}}
 
 - [ ] Daten hochladen zu superheld
 - [ ] Verschlüsselung verifizieren  
@@ -318,9 +318,9 @@ dass du Zapier nutzst!
 - [ ] Notifications + Integrationen testen
 - [ ] Dokumentation aktualisieren
 
-{{% /notice %}}
+{{< /callout >}}
 
-{{% notice title="Nach der Migration" %}}
+{{< callout >}}
 
 - [ ] Alle Benutzer haben Zugriff?
 - [ ] Alle Daten sind da? (stichprobenartig checken)
@@ -329,7 +329,7 @@ dass du Zapier nutzst!
 - [ ] Team-Training (optional)
 - [ ] Support-Kontakt dokumentieren
 
-{{% /notice %}}
+{{< /callout >}}
 
 ---
 
@@ -337,7 +337,7 @@ dass du Zapier nutzst!
 
 Brauchst du Hilfe beim Umstieg?
 
-{{< button href="mailto:migration@superheld.app" >}}Migration-Support kontaktieren{{< /button >}}
+[Migration-Support kontaktieren](mailto:migration@superheld.app)
 
 Wir bieten:
 - ✅ Kostenlose Migrations-Beratung

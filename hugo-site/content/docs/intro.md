@@ -1,7 +1,7 @@
-+++
-title = "Was ist superheld.app?"
-weight = 1
-+++
+---
+title: "Was ist superheld.app?"
+weight: 1
+---
 
 ## 🦸 Die Privacy-First Platform
 
@@ -168,11 +168,11 @@ Organisation mit maximaler Sicherheit
 
 ### 1. Ende-zu-Ende Verschlüsselung (überall)
 
-{{% notice title="Was das bedeutet" color="info" %}}
+{{< callout type="info" >}}
 Wir können deine Daten nicht lesen. Nicht einmal mit Gewalt, Gerichtsbeschluss oder Hackerangriff.
 
 Nur du und deine Geräte haben die Schlüssel.
-{{% /notice %}}
+{{< /callout >}}
 
 **Wer hat Zugriff:**
 ```
@@ -253,7 +253,7 @@ Internet weg? Du kannst trotzdem arbeiten:
 
 ## 💰 Wie funktioniert das Business Model?
 
-{{% notice title="Einfach: Du zahlst, wir liefern" color="success" %}}
+{{< callout type="info" >}}
 **Deine Daten sind kein Produkt.**
 
 Wir verdienen Geld durch:
@@ -266,7 +266,7 @@ Nicht durch:
 - ❌ Personalisierte Werbung
 - ❌ Behavioral Tracking
 - ❌ Weitere Monetisierung
-{{% /notice %}}
+{{< /callout >}}
 
 ---
 

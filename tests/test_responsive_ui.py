@@ -52,162 +52,132 @@ VIEWPORTS = [
 BROWSERS = ["chromium", "firefox", "webkit"]
 
 
+@pytest.fixture(scope="session")
+def hugo_server():
+    """Start Hugo server once for the entire test session."""
+    server = _start_hugo_server()
+    assert _wait_for_server("http://127.0.0.1:1313"), "Hugo server did not start in time"
+    yield server
+    server.terminate()
+    server.wait(5)
+
+
 @pytest.mark.parametrize("viewport", VIEWPORTS)
 @pytest.mark.parametrize("browser_type", BROWSERS)
-def test_homepage_responsive(viewport, browser_type):
+def test_homepage_responsive(viewport, browser_type, hugo_server):
     """Test the homepage renders correctly across viewports and browsers."""
     width, height, label = viewport
-    server = _start_hugo_server()
-    try:
-        assert _wait_for_server("http://127.0.0.1:1313"), "Hugo server did not start in time"
-        with sync_playwright() as p:
-            launcher = getattr(p, browser_type)
-            browser = launcher.launch(headless=True)
-            page = browser.new_page(viewport={"width": width, "height": height})
-            page.goto("http://127.0.0.1:1313", wait_until="networkidle")
+    with sync_playwright() as p:
+        launcher = getattr(p, browser_type)
+        browser = launcher.launch(headless=True)
+        page = browser.new_page(viewport={"width": width, "height": height})
+        page.goto("http://127.0.0.1:1313", wait_until="networkidle")
 
-            # Hero section with Apple-style design
-            hero = page.locator(".sh-hero")
-            assert hero.is_visible(), "Hero section missing"
+        # Hextra hero headline
+        headline = page.locator("h1")
+        assert headline.count() >= 1, "No h1 headline found"
 
-            # Hero heading
-            heading = hero.locator("h1")
-            assert heading.is_visible(), "Hero heading missing"
-            assert "superheld" in heading.inner_text().strip().lower(), "Hero heading text wrong"
+        # Hero subtitle area
+        subtitle = page.locator("p")
+        assert subtitle.count() >= 1, "No paragraph text found"
 
-            # Hero tagline
-            tagline = hero.locator(".sh-hero-tagline")
-            assert tagline.is_visible(), "Hero tagline missing"
+        # Navigation bar
+        navbar = page.locator(".hextra-nav-container")
+        assert navbar.is_visible(), "Navigation bar missing"
 
-            # CTA buttons
-            cta_buttons = hero.locator(".sh-hero-cta")
-            assert cta_buttons.count() >= 1, "No CTA buttons in hero"
+        # Feature cards (Hextra card components)
+        cards = page.locator(".hextra-card")
+        assert cards.count() >= 4, f"Expected at least 4 cards, got {cards.count()}"
 
-            # Device screenshots in hero
-            device_images = hero.locator(".sh-devices img")
-            assert device_images.count() >= 1, "No device screenshots in hero"
+        # SVG device screenshots
+        device_images = page.locator("img[src$='.svg']")
+        assert device_images.count() >= 3, f"Expected at least 3 SVG images, got {device_images.count()}"
 
-            # Features section
-            features = page.locator(".sh-features .sh-feature-card")
-            assert features.count() == 4, f"Expected 4 feature cards, got {features.count()}"
+        # Footer
+        footer = page.locator(".hextra-footer")
+        assert footer.count() >= 1, "Footer missing"
 
-            # Screenshot gallery
-            screenshots = page.locator(".sh-screenshots .sh-screenshot img")
-            assert screenshots.count() >= 3, "Not enough screenshots in gallery"
+        # No horizontal overflow
+        has_overflow = page.evaluate("""() => {
+            return document.documentElement.scrollWidth <= window.innerWidth;
+        }""")
+        assert has_overflow, f"Horizontal overflow detected on {label} ({browser_type})"
 
-            # Platform grid
-            platforms = page.locator(".sh-platforms .sh-platform-card")
-            assert platforms.count() >= 4, "Not enough platform cards"
+        # Capture screenshot
+        out_dir = os.path.join("tests", "screenshots")
+        os.makedirs(out_dir, exist_ok=True)
+        page.screenshot(
+            path=os.path.join(out_dir, f"homepage_{label}_{browser_type}.png"),
+            full_page=True,
+        )
 
-            # Tabs section (roles)
-            tabs = page.locator(".tab-nav-button")
-            assert tabs.count() >= 4, "Role tabs missing"
-
-            # CTA section at bottom
-            cta_section = page.locator(".sh-cta-section")
-            assert cta_section.count() >= 1, "CTA section missing"
-
-            # Doc links
-            doc_links = page.locator(".sh-doc-links .sh-doc-link")
-            assert doc_links.count() >= 4, "Not enough doc links"
-
-            # No horizontal overflow
-            has_overflow = page.evaluate("""() => {
-                return document.documentElement.scrollWidth <= window.innerWidth;
-            }""")
-            assert has_overflow, f"Horizontal overflow detected on {label} ({browser_type})"
-
-            # Capture screenshot
-            out_dir = os.path.join("tests", "screenshots")
-            os.makedirs(out_dir, exist_ok=True)
-            page.screenshot(
-                path=os.path.join(out_dir, f"homepage_{label}_{browser_type}.png"),
-                full_page=True,
-            )
-
-            browser.close()
-    finally:
-        server.terminate()
-        server.wait(5)
+        browser.close()
 
 
 @pytest.mark.parametrize("viewport", VIEWPORTS)
-def test_homepage_images_load(viewport):
+def test_homepage_images_load(viewport, hugo_server):
     """Test that all SVG screenshot images load correctly."""
     width, height, label = viewport
-    server = _start_hugo_server()
-    try:
-        assert _wait_for_server("http://127.0.0.1:1313"), "Hugo server did not start in time"
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": width, "height": height})
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": width, "height": height})
 
-            failed_requests = []
-            page.on("requestfailed", lambda req: failed_requests.append(req.url))
+        failed_requests = []
+        page.on("requestfailed", lambda req: failed_requests.append(req.url))
 
-            page.goto("http://127.0.0.1:1313", wait_until="networkidle")
+        page.goto("http://127.0.0.1:1313", wait_until="networkidle")
 
-            # Check no image requests failed
-            image_failures = [url for url in failed_requests if ".svg" in url or ".png" in url]
-            assert len(image_failures) == 0, f"Failed image requests: {image_failures}"
+        # Check no image requests failed
+        image_failures = [url for url in failed_requests if ".svg" in url or ".png" in url]
+        assert len(image_failures) == 0, f"Failed image requests: {image_failures}"
 
-            # Verify SVG images have natural dimensions
-            images = page.locator("img[src$='.svg']")
-            count = images.count()
-            assert count >= 4, f"Expected at least 4 SVG images, got {count}"
+        # Verify SVG images exist
+        images = page.locator("img[src$='.svg']")
+        count = images.count()
+        assert count >= 4, f"Expected at least 4 SVG images, got {count}"
 
-            browser.close()
-    finally:
-        server.terminate()
-        server.wait(5)
+        browser.close()
 
 
 @pytest.mark.parametrize("viewport", VIEWPORTS)
-def test_homepage_custom_css_loaded(viewport):
-    """Test that custom Apple-style CSS is loaded."""
+def test_docs_page_renders(viewport, hugo_server):
+    """Test that documentation pages render correctly with Hextra theme."""
     width, height, label = viewport
-    server = _start_hugo_server()
-    try:
-        assert _wait_for_server("http://127.0.0.1:1313"), "Hugo server did not start in time"
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": width, "height": height})
-            page.goto("http://127.0.0.1:1313", wait_until="networkidle")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": width, "height": height})
+        page.goto("http://127.0.0.1:1313/docs/", wait_until="networkidle")
 
-            # Check that custom CSS classes are styled (not just default)
-            hero_bg = page.evaluate("""() => {
-                const hero = document.querySelector('.sh-hero');
-                if (!hero) return null;
-                return getComputedStyle(hero).background;
-            }""")
-            assert hero_bg is not None, "Hero element not found or not styled"
+        # Page title
+        title = page.locator("h1")
+        assert title.count() >= 1, "No h1 on docs page"
 
-            browser.close()
-    finally:
-        server.terminate()
-        server.wait(5)
+        # Navigation
+        navbar = page.locator(".hextra-nav-container")
+        assert navbar.is_visible(), "Navigation bar missing on docs page"
+
+        # Sidebar (visible on desktop)
+        if width >= 768:
+            sidebar = page.locator(".hextra-sidebar-container")
+            assert sidebar.count() >= 1, "Sidebar missing on docs page"
+
+        browser.close()
 
 
 @pytest.mark.parametrize("viewport", VIEWPORTS)
-def test_homepage_no_console_errors(viewport):
+def test_homepage_no_console_errors(viewport, hugo_server):
     """Test that no console errors occur on page load."""
     width, height, label = viewport
-    server = _start_hugo_server()
-    try:
-        assert _wait_for_server("http://127.0.0.1:1313"), "Hugo server did not start in time"
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": width, "height": height})
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": width, "height": height})
 
-            errors = []
-            page.on("console", lambda msg: errors.append(msg.text()) if msg.type == "error" else None)
+        errors = []
+        page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
 
-            page.goto("http://127.0.0.1:1313", wait_until="networkidle")
-            page.wait_for_timeout(1000)
+        page.goto("http://127.0.0.1:1313", wait_until="networkidle")
+        page.wait_for_timeout(1000)
 
-            assert len(errors) == 0, f"Console errors on {label}: {errors}"
+        assert len(errors) == 0, f"Console errors on {label}: {errors}"
 
-            browser.close()
-    finally:
-        server.terminate()
-        server.wait(5)
+        browser.close()

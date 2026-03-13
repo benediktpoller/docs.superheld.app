@@ -1,7 +1,7 @@
-+++
-title = "Installation"
-weight = 30
-+++
+---
+title: "Installation"
+weight: 30
+---
 
 ## Wähle dein Betriebssystem
 

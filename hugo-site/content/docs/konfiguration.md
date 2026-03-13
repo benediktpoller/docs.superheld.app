@@ -1,7 +1,7 @@
-+++
-title = "Konfiguration (Expert Mode)"
-weight = 60
-+++
+---
+title: "Konfiguration (Expert Mode)"
+weight: 60
+---
 
 ## Erweiterte Konfiguration
 

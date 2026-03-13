@@ -1,7 +1,7 @@
-+++
-title = "Privatsphäre & Sicherheit"
-weight = 30
-+++
+---
+title: "Privatsphäre & Sicherheit"
+weight: 30
+---
 
 ## 🔒 Die Philosophie von superheld.app
 
@@ -13,9 +13,9 @@ Wir glauben, dass deine Daten *dir* gehören. Punkt. Nicht uns, nicht anderen. D
 
 ## 🛡️ Wie superheld.app dich schützt
 
-{{% notice title="🔐 Kern-Prinzip" color="success" %}}
+{{< callout type="info" >}}
 Deine Daten gehören DIR. Nicht uns. Nicht anderen. Darum haben wir superheld.app mit Ende-zu-Ende Verschlüsselung gebaut – von Tag 1, nicht als Zusatz.
-{{% /notice %}}
+{{< /callout >}}
 
 ### 1️⃣ **Ende-zu-Ende Verschlüsselung (E2E)**
 
@@ -172,7 +172,7 @@ SCHRITT 6: Nachricht lesen & antworten
 
 ---
 
-{{% expand title="Klick für Details: Risiken & Schutzmaßnahmen" %}}
+{{< details title="Klick für Details: Risiken & Schutzmaßnahmen" >}}
 
 |  Szenario | Risiko | superheld.app Lösung |
 |---|---|---|
@@ -182,7 +182,7 @@ SCHRITT 6: Nachricht lesen & antworten
 | 📱 Handy gestohlen | Dieb könnte Apps öffnen | Biometrische Locks & Passcode |
 | 🏨 Hotel mit Spionage-WLAN | Intentionaler Daten-Dieben | E2E: Hacker sieht nur Kauderwelsch |
 
-{{% /expand %}}
+{{< /details >}}
 | ☕ Im Café, Hacker im gleichen Netz | Man-in-the-Middle Attacke möglich | E2E Encryption schützt |
 | 🏪 Bahn mit schlechtem Signal | Daten könnten unterwegs abgefangen werden | Lokal verschlüsselt, dann gesendet |
 | 📱 Handy gestohlen | Dieb könnte Apps öffnen | Biometrische Locks & Passcode |

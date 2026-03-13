@@ -1,7 +1,7 @@
-+++
-title = "Häufig gestellte Fragen"
-weight = 70
-+++
+---
+title: "Häufig gestellte Fragen"
+weight: 70
+---
 
 ## Installation & Setup
 
