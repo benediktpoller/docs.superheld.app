@@ -5,11 +5,11 @@ weight = 20
 
 ## 📦 Installation in 5 Minuten
 
-{{% alert title="✅ Unterstützte Systeme" color="success" %}}
+{{% notice title="✅ Unterstützte Systeme" color="success" %}}
 - iOS 14+ & Android 10+
 - macOS 11+ & Windows 10+
 - Web (alle modernen Browser)
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 
@@ -83,9 +83,9 @@ weight = 20
 4. Sofort einsatzbereit ✅
 ```
 
-{{% alert title="💡 Tipp" color="info" %}}
+{{% notice title="💡 Tipp" color="info" %}}
 Die Web-Version synchronisiert automatisch mit allen anderen Geräten!
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /tab %}}
 {{% /tabs %}}
@@ -117,7 +117,7 @@ Zeitaufwand: **~5 Minuten**
 
 ## 🔐 Sicherheit beim Setup
 
-{{% alert title="⚠️ Wichtig" color="warning" %}}
+{{% notice title="⚠️ Wichtig" color="warning" %}}
 **Sicheres Passwort ist essentiell!**
 
 Verwende:
@@ -127,7 +127,7 @@ Verwende:
 - ✅ Nicht dein Geburtsdatum/Name
 
 Beispiel: `K7@mP9$wQ2#vR8!tL`
-{{% /alert %}}
+{{% /notice %}}
 
 ### Face ID / Touch ID aktivieren
 
@@ -146,12 +146,12 @@ Diese Funktion sperrt deine App automatisch:
 4. Auto-Lock: 2 Minuten empfohlen
 ```
 
-{{% alert title="✅ Best Practice" color="success" %}}
+{{% notice title="✅ Best Practice" color="success" %}}
 Mit Biometric Lock + 2 Minuten Auto-Lock:
 - Hacker können nicht eindringen
 - Du musst nicht ständig entsperren
 - Daten sind geschützt wenn Handy gestohlen wird
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /expand %}}
 
@@ -217,7 +217,7 @@ Universal-Methode (überall):
 
 **Problem:** App bricht gleich ab
 
-{{% alert title="Lösung" color="info" %}}
+{{% notice title="Lösung" color="info" %}}
 ```
 1. Gerät neustarten
 2. App-Cache löschen:
@@ -225,26 +225,26 @@ Universal-Methode (überall):
    - Android: Settings → Apps → superheld → Storage → Clear Cache
 3. App neu installieren
 ```
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 
 **Problem:** Sync funktioniert nicht
 
-{{% alert title="Lösung" color="info" %}}
+{{% notice title="Lösung" color="info" %}}
 ```
 1. Check Internet-Verbindung (Wi-Fi oder Cellular)
 2. App neustarten
 3. Settings → Accounts → Re-sync
 4. Falls immer noch nicht: Abmelden/Anmelden
 ```
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 
 **Problem:** Passwort vergessen
 
-{{% alert title="Lösung" color="warning" %}}
+{{% notice title="Lösung" color="warning" %}}
 ```
 1. Tippe "Forgot Password?"
 2. Verifiziere deine Identität:
@@ -256,7 +256,7 @@ Universal-Methode (überall):
 💾 Backup Recovery Code speichern:
    Settings → Security → Save Recovery Code
 ```
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /expand %}}
 
@@ -264,11 +264,11 @@ Universal-Methode (überall):
 
 ## 📞 Hilfe & Support
 
-{{% alert title="Weitere Hilfe" color="info" %}}
+{{% notice title="Weitere Hilfe" color="info" %}}
 - 📚 Lese [Setup Guide](/docs/einführung/setup)
 - 🔒 Sieh [Sicherheit & Privacy](/docs/privacy-sicherheit)
 - 💬 [Kontaktiere Support](https://support.superheld.app)
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 

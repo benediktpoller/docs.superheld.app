@@ -116,11 +116,11 @@ Du recherchierst sensible Themen:
    → Automatisierte Deletion nach X Tagen
 ```
 
-{{% alert title="💡 Pro-Tipp" color="info" %}}
+{{% notice title="💡 Pro-Tipp" color="info" %}}
 superheld's "Auto-Delete" Feature:
 Nach 30 Tagen gelöscht. Nicht wiederherstellbar.
 Perfekt für sensitive Recherche.
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /expand %}}
 
@@ -206,14 +206,14 @@ Nur Diese Mitarbeiter dürfen sehen:
 ❌ Praktikanten
 ```
 
-{{% alert title="✅ HIPAA konform" color="success" %}}
+{{% notice title="✅ HIPAA konform" color="success" %}}
 superheld erfüllt alle Anforderungen:
 - Access Control
 - Audit Logs
 - 256-Bit Encryption
 - Disaster Recovery
 - Business Associate Agreement
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /expand %}}
 
@@ -451,12 +451,12 @@ superheld.app Workflow:
 
 ## 🎓 Welche Seite passt zu meinem Szenario?
 
-{{% alert title="Für weitere Details" color="info" %}}
+{{% notice title="Für weitere Details" color="info" %}}
 - [Installation](/docs/einführung/installation-v2) – Schnell starten
 - [Konfiguration](/docs/konfiguration) – Alles customizen
 - [Sicherheit](/docs/privacy-sicherheit) – Technische Details
 - [FAQ](/docs/faq) – Häufige Fragen
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 

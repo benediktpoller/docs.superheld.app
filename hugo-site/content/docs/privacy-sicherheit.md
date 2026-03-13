@@ -13,9 +13,9 @@ Wir glauben, dass deine Daten *dir* gehören. Punkt. Nicht uns, nicht anderen. D
 
 ## 🛡️ Wie superheld.app dich schützt
 
-{{% alert title="🔐 Kern-Prinzip" color="success" %}}
+{{% notice title="🔐 Kern-Prinzip" color="success" %}}
 Deine Daten gehören DIR. Nicht uns. Nicht anderen. Darum haben wir superheld.app mit Ende-zu-Ende Verschlüsselung gebaut – von Tag 1, nicht als Zusatz.
-{{% /alert %}}
+{{% /notice %}}
 
 ### 1️⃣ **Ende-zu-Ende Verschlüsselung (E2E)**
 

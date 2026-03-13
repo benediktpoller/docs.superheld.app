@@ -168,11 +168,11 @@ Organisation mit maximaler Sicherheit
 
 ### 1. Ende-zu-Ende Verschlüsselung (überall)
 
-{{% alert title="Was das bedeutet" color="info" %}}
+{{% notice title="Was das bedeutet" color="info" %}}
 Wir können deine Daten nicht lesen. Nicht einmal mit Gewalt, Gerichtsbeschluss oder Hackerangriff.
 
 Nur du und deine Geräte haben die Schlüssel.
-{{% /alert %}}
+{{% /notice %}}
 
 **Wer hat Zugriff:**
 ```
@@ -253,7 +253,7 @@ Internet weg? Du kannst trotzdem arbeiten:
 
 ## 💰 Wie funktioniert das Business Model?
 
-{{% alert title="Einfach: Du zahlst, wir liefern" color="success" %}}
+{{% notice title="Einfach: Du zahlst, wir liefern" color="success" %}}
 **Deine Daten sind kein Produkt.**
 
 Wir verdienen Geld durch:
@@ -266,7 +266,7 @@ Nicht durch:
 - ❌ Personalisierte Werbung
 - ❌ Behavioral Tracking
 - ❌ Weitere Monetisierung
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 

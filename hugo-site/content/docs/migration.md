@@ -55,12 +55,11 @@ Keine Offline-Funktion        Offline-Zugriff
    ✅ Benutzer → Einladungen gesendet
 6. Warte ~5 Minuten auf Abschluss
 ```
-
-{{% /alert title="⚠️ Wichtig" color="warning" %}}
+{{% notice title="Wichtige Hinweise" color="info" %}}
 - Import verschlüsselt alles automatisch
 - Alte Slack-Metadaten werden nicht übertragen (absichtlich!)
 - Alle Benutzer müssen neue Passwörter setzen
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /expand %}}
 
@@ -204,9 +203,9 @@ Zusammenarbeit (auch E2E verschlüsselt)
    url,username,password,extra,name,folder
 ```
 
-{{% alert title="⚠️ Achtung" color="warning" %}}
+{{% notice title="⚠️ Achtung" color="warning" %}}
 LastPass CSV ist unverschlüsselt! Speichern sofort nach Download, nicht versenden!
-{{% /alert %}}
+{{% /notice %}}
 
 {{% /expand %}}
 
@@ -301,7 +300,7 @@ dass du Zapier nutzst!
 
 ## 📊 Migration Checkliste
 
-{{% alert title="Vor der Migration" color="info" %}}
+{{% notice title="Vor der Migration" color="info" %}}
 
 - [ ] Backup von aktuellen Tools (sicher lokal speichern)
 - [ ] Alle wichtigen Daten exportieren
@@ -309,9 +308,9 @@ dass du Zapier nutzst!
 - [ ] Downtime planen (meist 1-2 Tage)
 - [ ] Test-Umgebung vorbereiten
 
-{{% /alert %}}
+{{% /notice %}}
 
-{{% alert title="Während der Migration" color="info" %}}
+{{% notice title="Während der Migration" color="info" %}}
 
 - [ ] Daten hochladen zu superheld
 - [ ] Verschlüsselung verifizieren  
@@ -319,9 +318,9 @@ dass du Zapier nutzst!
 - [ ] Notifications + Integrationen testen
 - [ ] Dokumentation aktualisieren
 
-{{% /alert %}}
+{{% /notice %}}
 
-{{% alert title="Nach der Migration" %}}
+{{% notice title="Nach der Migration" %}}
 
 - [ ] Alle Benutzer haben Zugriff?
 - [ ] Alle Daten sind da? (stichprobenartig checken)
@@ -330,7 +329,7 @@ dass du Zapier nutzst!
 - [ ] Team-Training (optional)
 - [ ] Support-Kontakt dokumentieren
 
-{{% /alert %}}
+{{% /notice %}}
 
 ---
 
