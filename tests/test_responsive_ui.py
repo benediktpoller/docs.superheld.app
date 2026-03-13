@@ -85,8 +85,8 @@ def test_homepage_responsive(viewport, browser_type, hugo_server):
         navbar = page.locator(".hextra-nav-container")
         assert navbar.is_visible(), "Navigation bar missing"
 
-        # Feature cards (Hextra card components)
-        cards = page.locator(".hextra-card")
+        # Feature cards (Hextra feature-card or card components)
+        cards = page.locator(".hextra-feature-card, .hextra-card")
         assert cards.count() >= 4, f"Expected at least 4 cards, got {cards.count()}"
 
         # SVG device screenshots

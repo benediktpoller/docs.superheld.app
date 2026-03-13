@@ -1,0 +1,278 @@
+/* ============================================
+   superheld.app — Custom Design System
+   Enterprise-ready, Apple-inspired styling
+   ============================================ */
+
+/* --- Brand Colors & CSS Variables --- */
+:root {
+  --sh-primary: #2563eb;
+  --sh-primary-light: #3b82f6;
+  --sh-primary-dark: #1d4ed8;
+  --sh-accent: #10b981;
+  --sh-surface: #f8fafc;
+  --sh-text: #0f172a;
+  --sh-text-secondary: #64748b;
+  --sh-border: rgba(0, 0, 0, 0.06);
+  --sh-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --sh-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --sh-radius: 0.75rem;
+  --sh-radius-lg: 1rem;
+}
+
+html.dark {
+  --sh-surface: #0a0a0a;
+  --sh-text: #f1f5f9;
+  --sh-text-secondary: #94a3b8;
+  --sh-border: rgba(255, 255, 255, 0.06);
+  --sh-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  --sh-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Typography --- */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.content h1 {
+  font-size: 2.25rem;
+  line-height: 1.15;
+}
+
+.content h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+/* --- Wider Layout --- */
+:root {
+  --hextra-max-page-width: 90rem;
+  --hextra-max-navbar-width: 90rem;
+  --hextra-max-footer-width: 90rem;
+}
+
+/* --- Navbar Polish --- */
+.hextra-nav-container-blur {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--sh-border);
+}
+
+/* --- Card Enhancements --- */
+.hextra-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hextra-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-shadow-hover);
+}
+
+html.dark .hextra-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Feature Card Enhancements --- */
+.hextra-feature-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.hextra-feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-shadow-hover);
+}
+
+/* --- Hero Section Polish --- */
+.hextra-hero-headline {
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.hextra-hero-subtitle {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+/* --- Screenshot Containers --- */
+.sh-screenshot {
+  border-radius: var(--sh-radius-lg);
+  box-shadow: var(--sh-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.sh-screenshot:hover {
+  transform: scale(1.02);
+  box-shadow: var(--sh-shadow-hover);
+}
+
+html.dark .sh-screenshot {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html.dark .sh-screenshot:hover {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.sh-screenshot img {
+  width: 100%;
+  display: block;
+}
+
+/* --- Inline Code Refinement --- */
+.content code:not(pre code) {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, monospace;
+}
+
+html.dark .content code:not(pre code) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Code Block Polish --- */
+pre {
+  border-radius: var(--sh-radius) !important;
+}
+
+/* --- Callout Refinement --- */
+.hextra-callout {
+  border-radius: var(--sh-radius);
+}
+
+/* --- Homepage Sections Spacing --- */
+.sh-section {
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+}
+
+.sh-section h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--sh-text);
+  margin-bottom: 0.5rem;
+}
+
+html.dark .sh-section h2 {
+  color: var(--sh-text);
+}
+
+.sh-section-subtitle {
+  color: var(--sh-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+}
+
+/* --- Screenshot Gallery (responsive) --- */
+.sh-gallery {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 3rem;
+  max-width: 100%;
+}
+
+.sh-gallery-phone {
+  width: 160px;
+  max-width: 28%;
+}
+
+.sh-gallery-desktop {
+  width: 420px;
+  max-width: 55%;
+}
+
+.sh-gallery-wide {
+  width: 480px;
+  max-width: 100%;
+}
+
+/* --- Footer Trust Badges --- */
+.sh-trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--sh-text-secondary);
+  flex-wrap: wrap;
+}
+
+.sh-trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.sh-trust-badge:hover {
+  opacity: 1;
+}
+
+.sh-trust-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* --- Smooth Scroll --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Selection Color --- */
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+html.dark ::selection {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+/* --- Badge in hero area --- */
+.hextra-hero-badge {
+  transition: transform 0.2s ease;
+}
+
+.hextra-hero-badge:hover {
+  transform: translateY(-1px);
+}
+
+/* --- Sidebar refinements --- */
+.hextra-sidebar-item a:hover {
+  transition: color 0.15s ease;
+}
+
+/* --- Print improvements --- */
+@media print {
+  .hextra-nav-container,
+  .hextra-sidebar-container,
+  .hextra-footer {
+    display: none !important;
+  }
+
+  .content {
+    max-width: 100% !important;
+  }
+}

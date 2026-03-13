@@ -40,30 +40,38 @@ params:
   navbar:
     displayTitle: true
     displayLogo: false
-    width: normal
+    width: wide
 
   theme:
     default: system
     displayToggle: true
 
   page:
-    width: normal
+    width: wide
+    tabs:
+      sync: true
 
   editURL:
     enable: true
     base: https://github.com/benediktpoller/docs.superheld.app/edit/main/hugo-site/content
 
   footer:
-    width: normal
+    width: wide
 
   search:
     enable: true
     type: flexsearch
     flexsearch:
       index: content
-      tokenize: forward
+      tokenize: full
 
   displayUpdatedDate: true
+
+  banner:
+    key: v1-launch
+    message: "**Neu:** superheld.app Dokumentation ist live — [Jetzt lesen](/docs) &rarr;"
+
+  externalLinkDecoration: true
 
 # Allow raw HTML in markdown
 markup:

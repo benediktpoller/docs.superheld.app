@@ -27,76 +27,162 @@ layout: hextra-home
 {{< hextra/hero-button text="Plattformen ansehen" link="/docs/apps" style="background: transparent; border: 1px solid #e5e7eb; color: inherit;" >}}
 </div>
 
-<div class="hx-mt-16">
+<div class="sh-section">
 
 ## Screenshots
 
 </div>
 
-<div style="display: flex; align-items: flex-end; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin: 2rem 0 3rem; max-width: 100%; overflow: hidden;">
-  <div style="width: 160px; max-width: 30%;">
-    <img src="/images/screenshot-android.svg" alt="superheld.app auf Android — Dashboard mit Schutzstatus" style="width: 100%; border-radius: 1rem; box-shadow: 0 12px 40px rgba(0,0,0,0.1);" loading="lazy">
+<div class="sh-gallery">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-android.svg" alt="superheld.app auf Android — Dashboard mit Schutzstatus" loading="lazy">
+    </div>
   </div>
-  <div style="width: 420px; max-width: 55%;">
-    <img src="/images/screenshot-macos.svg" alt="superheld.app auf macOS — Dashboard mit Geräteübersicht" style="width: 100%; border-radius: 0.75rem; box-shadow: 0 12px 40px rgba(0,0,0,0.1);" loading="lazy">
+  <div class="sh-gallery-desktop">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-macos.svg" alt="superheld.app auf macOS — Dashboard mit Geräteübersicht" loading="lazy">
+    </div>
   </div>
-  <div style="width: 160px; max-width: 30%;">
-    <img src="/images/screenshot-ios.svg" alt="superheld.app auf iOS — Einstellungen" style="width: 100%; border-radius: 1rem; box-shadow: 0 12px 40px rgba(0,0,0,0.1);" loading="lazy">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-ios.svg" alt="superheld.app auf iOS — Einstellungen" loading="lazy">
+    </div>
   </div>
 </div>
 
-<div class="hx-mt-8">
+<div class="sh-section">
 
 ## Features
 
+<p class="sh-section-subtitle">Alles was du brauchst, um deine digitale Welt zu schützen — in einer Plattform.</p>
+
 </div>
 
-{{< cards >}}
-  {{< card link="/docs/einführung" title="Echtzeit-Schutz" subtitle="Schützt deine Daten rund um die Uhr mit intelligentem Filtering und sofortiger Bedrohungsabwehr." icon="shield-check" >}}
-  {{< card link="/docs/privacy-sicherheit" title="Privatsphäre zuerst" subtitle="Deine Daten gehören dir. Aller Traffic wird anonymisiert und Ende-zu-Ende verschlüsselt." icon="lock-closed" >}}
-  {{< card link="/docs/nutzung" title="Familiensteuerung" subtitle="Regeln, Zeitlimits und Freigabe-Workflows. Eltern behalten die Kontrolle, Kinder bleiben sicher." icon="user-group" >}}
-  {{< card link="/docs/apps" title="Plattformübergreifend" subtitle="Ein Konto, alle Geräte. Nahtlose Synchronisation über iOS, Android, macOS, Windows und Linux." icon="device-mobile" >}}
-{{< /cards >}}
+{{< hextra/feature-grid >}}
+  {{< hextra/feature-card
+    title="Echtzeit-Schutz"
+    subtitle="Schützt deine Daten rund um die Uhr mit intelligentem Filtering und sofortiger Bedrohungsabwehr."
+    icon="shield-check"
+    link="/docs/einführung"
+    style="background: radial-gradient(ellipse at 50% 80%, rgba(37,99,235,0.08), transparent);"
+  >}}
+  {{< hextra/feature-card
+    title="Privatsphäre zuerst"
+    subtitle="Deine Daten gehören dir. Aller Traffic wird anonymisiert und Ende-zu-Ende verschlüsselt."
+    icon="lock-closed"
+    link="/docs/privacy-sicherheit"
+    style="background: radial-gradient(ellipse at 50% 80%, rgba(16,185,129,0.08), transparent);"
+  >}}
+  {{< hextra/feature-card
+    title="Familiensteuerung"
+    subtitle="Regeln, Zeitlimits und Freigabe-Workflows. Eltern behalten die Kontrolle, Kinder bleiben sicher."
+    icon="user-group"
+    link="/docs/nutzung"
+    style="background: radial-gradient(ellipse at 50% 80%, rgba(168,85,247,0.08), transparent);"
+  >}}
+  {{< hextra/feature-card
+    title="Plattformübergreifend"
+    subtitle="Ein Konto, alle Geräte. Nahtlose Synchronisation über iOS, Android, macOS, Windows und Linux."
+    icon="device-mobile"
+    link="/docs/apps"
+    style="background: radial-gradient(ellipse at 50% 80%, rgba(245,158,11,0.08), transparent);"
+  >}}
+{{< /hextra/feature-grid >}}
 
-<div class="hx-mt-16">
+<div class="sh-section">
 
 ## Weitere Screenshots
 
 </div>
 
-<div style="display: flex; align-items: flex-end; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 2rem 0; max-width: 100%; overflow: hidden;">
-  <div style="width: 480px; max-width: 100%;">
-    <img src="/images/screenshot-windows.svg" alt="superheld.app auf Windows" style="width: 100%; border-radius: 0.75rem; box-shadow: 0 12px 40px rgba(0,0,0,0.1);" loading="lazy">
+<div class="sh-gallery">
+  <div class="sh-gallery-wide">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-windows.svg" alt="superheld.app auf Windows" loading="lazy">
+    </div>
   </div>
-  <div style="width: 480px; max-width: 100%;">
-    <img src="/images/screenshot-linux.svg" alt="superheld.app auf Linux" style="width: 100%; border-radius: 0.75rem; box-shadow: 0 12px 40px rgba(0,0,0,0.1);" loading="lazy">
+  <div class="sh-gallery-wide">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-linux.svg" alt="superheld.app auf Linux" loading="lazy">
+    </div>
   </div>
 </div>
 
-<div class="hx-mt-16">
+<div class="sh-section">
 
 ## Plattformen
 
+<p class="sh-section-subtitle">Verfügbar auf allen wichtigen Betriebssystemen — nahtlos synchronisiert.</p>
+
 </div>
 
-{{< cards >}}
-  {{< card title="iOS / macOS" subtitle="App Store & direkt-Download für Mac" icon="device-mobile" >}}
-  {{< card title="Android" subtitle="Google Play Store & APK" icon="device-mobile" >}}
-  {{< card title="Windows" subtitle="MSI-Installer & Microsoft Store" icon="desktop-computer" >}}
-  {{< card title="Linux" subtitle="DEB, RPM, AppImage & CLI" icon="terminal" >}}
-{{< /cards >}}
+{{< hextra/feature-grid cols="4" >}}
+  {{< hextra/feature-card
+    title="iOS / macOS"
+    subtitle="App Store & direkt-Download für Mac"
+    icon="device-mobile"
+  >}}
+  {{< hextra/feature-card
+    title="Android"
+    subtitle="Google Play Store & APK"
+    icon="device-mobile"
+  >}}
+  {{< hextra/feature-card
+    title="Windows"
+    subtitle="MSI-Installer & Microsoft Store"
+    icon="desktop-computer"
+  >}}
+  {{< hextra/feature-card
+    title="Linux"
+    subtitle="DEB, RPM, AppImage & CLI"
+    icon="terminal"
+  >}}
+{{< /hextra/feature-grid >}}
 
-<div class="hx-mt-16">
+<div class="sh-section">
 
 ## Dokumentation
 
+<p class="sh-section-subtitle">Von der Installation bis zur Experten-Konfiguration — alles in einem Ort.</p>
+
 </div>
 
-{{< cards >}}
-  {{< card link="/docs/einführung/installation" title="Installation" subtitle="Lade die App herunter und starte sofort." icon="download" >}}
-  {{< card link="/docs/einführung/setup" title="Erstes Setup" subtitle="Deine erste Konfiguration in wenigen Minuten." icon="cog" >}}
-  {{< card link="/docs/nutzung" title="Tägliche Nutzung" subtitle="So nutzt du die App im Alltag." icon="book-open" >}}
-  {{< card link="/docs/konfiguration" title="Konfiguration" subtitle="Expert Mode für fortgeschrittene Nutzer." icon="adjustments" >}}
-  {{< card link="/docs/apps" title="Apps & Plattformen" subtitle="Alle Oberflächen und Rollen verstehen." icon="view-grid" >}}
-  {{< card link="/docs/faq" title="FAQ" subtitle="Häufig gestellte Fragen und Antworten." icon="question-mark-circle" >}}
-{{< /cards >}}
+{{< hextra/feature-grid cols="3" >}}
+  {{< hextra/feature-card
+    title="Installation"
+    subtitle="Lade die App herunter und starte sofort."
+    icon="download"
+    link="/docs/einführung/installation"
+  >}}
+  {{< hextra/feature-card
+    title="Erstes Setup"
+    subtitle="Deine erste Konfiguration in wenigen Minuten."
+    icon="cog"
+    link="/docs/einführung/setup"
+  >}}
+  {{< hextra/feature-card
+    title="Tägliche Nutzung"
+    subtitle="So nutzt du die App im Alltag."
+    icon="book-open"
+    link="/docs/nutzung"
+  >}}
+  {{< hextra/feature-card
+    title="Konfiguration"
+    subtitle="Expert Mode für fortgeschrittene Nutzer."
+    icon="adjustments"
+    link="/docs/konfiguration"
+  >}}
+  {{< hextra/feature-card
+    title="Apps & Plattformen"
+    subtitle="Alle Oberflächen und Rollen verstehen."
+    icon="view-grid"
+    link="/docs/apps"
+  >}}
+  {{< hextra/feature-card
+    title="FAQ"
+    subtitle="Häufig gestellte Fragen und Antworten."
+    icon="question-mark-circle"
+    link="/docs/faq"
+  >}}
+{{< /hextra/feature-grid >}}
