@@ -11,10 +11,33 @@ Neu bei superheld.app? Hier beginnen:
 1. [**Installation**](/docs/einführung/installation) – Lade die App herunter
 2. [**Setup**](/docs/einführung/setup) – Deine erste Konfiguration
 3. [**Nutzung**](/docs/nutzung) – So nutzt du die App täglich
+4. [**Apps & Plattformen**](/docs/apps) – Oberflächen & Rollen verstehen
+
+---
+
+## 🎬 Storyboard: in 3 Schritten zum sicheren Schutz
+
+1. **Installieren** (Smartphone oder Desktop)
+   - App herunterladen
+   - Konto registrieren
+   - Biometrische Sicherung aktivieren
+
+2. **Einrichten** (Schutz konfigurieren)
+   - Schutzprofil wählen (Privat / Familie / Jugendschutz)
+   - VPN & Proxy aktivieren
+   - Regeln anpassen (Webfilter, Zeitlimit, Ausnahmen)
+
+3. **Schutz aktiv lassen**
+   - Statusanzeige: grün = alles sicher
+   - Bei Warnung: Details ansehen, Ausnahme genehmigen oder blockieren
+   - Bei Bedarf: Eltern‑Modus / Admin‑Modus öffnen
+
+![Storyboard – Schritt für Schritt](/images/screenshot-android.svg)
 
 ## 📚 Dokumentation
 
 - **[Einführung](/docs/einführung)** – Von Anfänger zu Profi
+- **[Anwendungs‑Plattformen](/docs/apps)** – Android, iOS, Desktop, Linux
 - **[Nutzung](/docs/nutzung)** – Tägliche Workflows  
 - **[Konfiguration](/docs/konfiguration)** – Expert Mode
 - **[FAQ](/docs/faq)** – Häufige Fragen
