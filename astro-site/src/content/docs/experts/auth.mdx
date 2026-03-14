@@ -1,0 +1,130 @@
+---
+title: "Authentifizierung und Autorisierung"
+sidebar:
+  order: 12
+---
+
+Die Superheld API bietet zwei Authentifizierungsmechanismen: **API-Schlüssel** für einfache Integrationen und **OAuth2** für komplexere Szenarien mit delegiertem Zugriff. Beide Verfahren arbeiten mit scope-basierter Autorisierung, die den Zugriff auf einzelne Ressourcen granular steuert.
+
+## API-Schlüssel
+
+### Erstellung
+
+API-Schlüssel werden im Superheld-Dashboard unter **Einstellungen → API-Zugang → Neuer Schlüssel** erstellt. Bei der Erstellung wählen Sie einen Namen, die gewünschten Scopes und optional ein Ablaufdatum. Der Schlüssel wird nur einmal vollständig angezeigt — speichern Sie ihn sofort in einem sicheren Credential-Manager.
+
+```
+sh_live_abc123xyz456
+```
+
+Schlüssel mit dem Präfix `sh_live_` gelten für die Produktionsumgebung, `sh_test_` für die Testumgebung.
+
+### Verwendung
+
+Übermitteln Sie den API-Schlüssel im `Authorization`-Header jeder Anfrage:
+
+```bash
+curl -X GET https://api.superheld.app/api/v1/devices \
+  -H "Authorization: Bearer sh_live_abc123xyz456"
+```
+
+Übermitteln Sie Schlüssel niemals im Query-String oder Request-Body. Alle Anfragen müssen über HTTPS erfolgen.
+
+### Rotation
+
+Regelmäßige Schlüsselrotation reduziert das Risiko bei Kompromittierung. Empfohlene Vorgehensweise:
+
+1. **Neuen Schlüssel erstellen** mit identischen Scopes im Dashboard.
+2. **Integration aktualisieren** — den neuen Schlüssel in Ihrer Anwendung hinterlegen.
+3. **Alten Schlüssel widerrufen**, sobald die Integration erfolgreich mit dem neuen Schlüssel arbeitet.
+
+Wir empfehlen eine Rotation alle **90 Tage**. In sicherheitskritischen Umgebungen kann ein kürzerer Zyklus von 30 Tagen sinnvoll sein.
+
+### Widerruf
+
+Kompromittierte Schlüssel können jederzeit unter **Einstellungen → API-Zugang** sofort widerrufen werden. Der Widerruf ist unwiderruflich und wirkt sofort — alle laufenden Anfragen mit diesem Schlüssel erhalten ab diesem Zeitpunkt `401 Unauthorized`.
+
+## OAuth2
+
+Für Szenarien, in denen Drittanwendungen im Namen eines Benutzers auf die API zugreifen, unterstützt Superheld OAuth2.
+
+### Authorization Code Flow
+
+Geeignet für Webanwendungen, bei denen ein Benutzer den Zugriff explizit autorisiert:
+
+```bash
+# 1. Benutzer zur Autorisierung weiterleiten
+https://auth.superheld.app/authorize?
+  response_type=code&
+  client_id=CLIENT_ID&
+  redirect_uri=https://meine-app.de/callback&
+  scope=devices:read threats:read
+
+# 2. Authorization Code gegen Token tauschen
+curl -X POST https://auth.superheld.app/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=authorization_code&code=AUTH_CODE&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&redirect_uri=https://meine-app.de/callback"
+```
+
+Die Antwort enthält ein `access_token` und ein `refresh_token`. Das Access-Token ist 60 Minuten gültig.
+
+### Client Credentials Flow
+
+Geeignet für Server-zu-Server-Integrationen ohne Benutzerinteraktion:
+
+```bash
+curl -X POST https://auth.superheld.app/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&scope=threats:read scan:execute"
+```
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "scope": "threats:read scan:execute"
+}
+```
+
+### Token verwenden
+
+OAuth2-Token werden wie API-Schlüssel im `Authorization`-Header übergeben:
+
+```bash
+curl -X GET https://api.superheld.app/api/v1/threats \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+```
+
+## Scope-basierte Autorisierung
+
+Scopes begrenzen den Zugriff eines Schlüssels oder Tokens auf bestimmte Ressourcen und Aktionen:
+
+| Scope            | Berechtigung                                |
+|------------------|---------------------------------------------|
+| `devices:read`   | Geräte auflisten und Details abrufen        |
+| `devices:write`  | Geräte registrieren und konfigurieren       |
+| `threats:read`   | Bedrohungen auflisten und Details abrufen   |
+| `alerts:read`    | Benachrichtigungsregeln anzeigen            |
+| `alerts:write`   | Benachrichtigungsregeln erstellen/ändern    |
+| `scan:execute`   | Inhalte zur Analyse übergeben               |
+
+Anfragen, deren Scope nicht ausreicht, werden mit `403 Forbidden` beantwortet:
+
+```json
+{
+  "error": {
+    "code": "insufficient_scope",
+    "message": "Der Scope 'threats:read' ist für diesen Endpunkt erforderlich.",
+    "status": 403
+  }
+}
+```
+
+**Best Practice:** Vergeben Sie immer nur die minimal notwendigen Scopes. Eine Integration, die ausschließlich Bedrohungen überwacht, benötigt lediglich `threats:read` — nicht `devices:write` oder `alerts:write`.
+
+:::caution
+**Sicherheitshinweise für API-Schlüssel:**
+- API-Schlüssel niemals in Quellcode oder Versionskontrolle speichern — nutzen Sie Umgebungsvariablen oder Credential-Manager (1Password, HashiCorp Vault etc.)
+- Separate Schlüssel für Entwicklung, Test und Produktion verwenden
+- Bei langlaufenden Operationen (> 60 min) bei OAuth2 Refresh-Tokens implementieren, um Unterbrechungen zu vermeiden
+:::

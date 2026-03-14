@@ -1,0 +1,125 @@
+---
+title: "Erkennungspipeline"
+sidebar:
+  order: 4
+---
+
+## Übersicht
+
+Die Erkennungspipeline von Superheld verarbeitet sicherheitsrelevante Ereignisse in sechs aufeinander aufbauenden Stufen — von der Signalerfassung bis zur Alarmierung. Jede Stufe hat eine klar definierte Aufgabe, definierte Ein- und Ausgaben und kann unabhängig konfiguriert werden.
+
+Das folgende Diagramm zeigt den vollständigen Datenfluss durch die Pipeline:
+
+```mermaid
+flowchart LR
+    A["1 · Signal Collection"] --> B["2 · Local Detection"]
+    B --> C["3 · Cloud Enrichment"]
+    C --> D["4 · Policy Decision"]
+    D --> E["5 · Event Generation"]
+    E --> F["6 · Alert Exposure"]
+
+    style A fill:#457b9d,color:#fff
+    style B fill:#457b9d,color:#fff
+    style C fill:#6c757d,color:#fff,stroke-dasharray:5 5
+    style D fill:#e76f51,color:#fff
+    style E fill:#2d6a4f,color:#fff
+    style F fill:#2d6a4f,color:#fff
+```
+
+:::note
+Stufe 3 (Cloud Enrichment) ist optional und gestrichelt dargestellt. Superheld arbeitet vollständig lokal — die Cloud-Anreicherung verbessert die Erkennung, ist aber nicht erforderlich.
+:::
+
+---
+
+## 1 · Signal Collection — Signalerfassung
+
+**Zweck:** Rohdaten aus allen relevanten Quellen des Geräts sammeln.
+
+| | Beschreibung |
+|---|---|
+| **Eingaben** | Betriebssystem-Events (Anrufstatus, App-Installationen, Berechtigungsänderungen), Netzwerkverkehr (DNS-Anfragen, Verbindungsaufbau), Benutzeraktionen (App-Starts, Eingaben in Sicherheitsdialoge) |
+| **Ausgaben** | Normalisierte Rohsignale mit Zeitstempel, Quelltyp und Kontextmetadaten |
+
+Die Signalerfassung läuft als leichtgewichtiger Hintergrundprozess mit minimaler Systembelastung. Signale werden in einem lokalen Ringpuffer zwischengespeichert, sodass auch bei hoher Systemlast keine Ereignisse verloren gehen. Personenbezogene Inhalte werden bereits in dieser Stufe auf das für die Analyse notwendige Minimum reduziert.
+
+---
+
+## 2 · Local Detection — Lokale Erkennung
+
+**Zweck:** Rohsignale klassifizieren und Bedrohungskandidaten identifizieren.
+
+| | Beschreibung |
+|---|---|
+| **Eingaben** | Normalisierte Rohsignale aus Stufe 1 |
+| **Ausgaben** | Bedrohungskandidaten mit Konfidenzwert (0.0–1.0), Bedrohungskategorie und erkannten Indikatoren. Schwellenwerte: 0.0–0.3 = Erlauben, 0.3–0.7 = Warnen, 0.7+ = Blockieren (konfigurierbar via Policy Engine) |
+
+Die lokale Erkennung kombiniert regelbasierte Heuristiken mit kompakten ML-Modellen. Bekannte Muster — etwa Spoofing-Rufnummern oder bekannte Betrugs-Domains — werden durch Regeln in unter 10 ms erkannt. Für komplexere Fälle wie Social-Engineering-Muster in Textnachrichten oder verdächtiges App-Verhalten kommen optimierte neuronale Netze zum Einsatz (quantisiert, < 50 MB, Inferenz < 200 ms pro Signal), die direkt auf dem Gerät ausgeführt werden.
+
+:::note
+Alle Klassifikationen erfolgen lokal. Weder Nachrichteninhalte noch Anrufdaten verlassen das Gerät in dieser Stufe.
+:::
+
+---
+
+## 3 · Optional Cloud Enrichment — Cloud-Anreicherung
+
+**Zweck:** Erkennungsqualität durch globale Bedrohungsintelligenz verbessern.
+
+| | Beschreibung |
+|---|---|
+| **Eingaben** | Kryptografische Hashes (SHA-256) für Threat-Intelligence-Lookups und anonymisierte Feature-Vektoren bei komplexen Fällen (keine Klartextdaten) |
+| **Ausgaben** | Angereicherte Bedrohungsdaten — globale Verbreitungsinformationen, bekannte Kampagnenzuordnungen, aktuelle Indicator-of-Compromise-Daten |
+
+Diese Stufe ist vollständig optional und kann vom Benutzer oder Administrator deaktiviert werden. Bei aktivierter Cloud-Anbindung sendet die Pipeline ausschließlich kryptografische Hashes an die Threat Database. Die Antwort enthält zusätzliche Kontextinformationen, die den Konfidenzwert erhöhen oder senken können — etwa ob eine bestimmte Rufnummer weltweit in Betrugskampagnen verwendet wird.
+
+---
+
+## 4 · Policy Decision — Richtlinienentscheidung
+
+**Zweck:** Benutzer- und Administratorrichtlinien auf die Bedrohungskandidaten anwenden.
+
+| | Beschreibung |
+|---|---|
+| **Eingaben** | Bedrohungskandidaten mit Konfidenzwerten + konfigurierte Richtlinien (Schwellenwerte, Whitelist/Blacklist, organisationsspezifische Regeln) |
+| **Ausgaben** | Aktionsentscheidung je Kandidat: **Erlauben**, **Warnen** oder **Blockieren** |
+
+Die Richtlinien-Engine evaluiert jeden Bedrohungskandidaten gegen die konfigurierte Policy-Hierarchie. In verwalteten Umgebungen (MDM) können Administratoren organisationsweite Mindeststandards definieren. Benutzer können innerhalb dieses Rahmens ihre eigenen Schwellenwerte anpassen — etwa die Empfindlichkeit der App-Berechtigungsprüfung erhöhen oder bestimmte Rufnummern freigeben.
+
+:::note
+Richtlinienentscheidungen sind deterministisch und nachvollziehbar. Jede Entscheidung dokumentiert, welche Regel ausgelöst wurde und welcher Konfidenzwert zugrunde lag.
+:::
+
+---
+
+## 5 · Event Generation — Ereigniserzeugung
+
+**Zweck:** Unveränderlichen Audit-Trail für jede Entscheidung erstellen.
+
+| | Beschreibung |
+|---|---|
+| **Eingaben** | Aktionsentscheidungen aus Stufe 4 |
+| **Ausgaben** | Unveränderliche Ereignisdatensätze mit Zeitstempel, Entscheidung, angewandter Richtlinie und Bedrohungsdetails |
+
+Jede Entscheidung der Pipeline wird als unveränderlicher Datensatz im lokalen Ereignisprotokoll gespeichert. Diese Datensätze dienen als Audit-Trail für Compliance-Anforderungen und ermöglichen die nachträgliche Analyse von Sicherheitsvorfällen. Das Protokoll ist kryptografisch verkettet, sodass nachträgliche Manipulationen erkennbar sind.
+
+---
+
+## 6 · Alert Exposure — Alarmierung
+
+**Zweck:** Benutzer und externe Systeme über sicherheitsrelevante Ereignisse benachrichtigen.
+
+| | Beschreibung |
+|---|---|
+| **Eingaben** | Ereignisdatensätze aus Stufe 5 |
+| **Ausgaben** | Push-Benachrichtigungen an den Benutzer, Webhook-Payloads an konfigurierte Endpunkte, API-Antworten für SIEM-Integration |
+
+Die Alarmierung ist der letzte Schritt der Pipeline und stellt sicher, dass erkannte Bedrohungen die richtigen Empfänger erreichen. Endanwender erhalten kontextbezogene Warnungen mit klaren Handlungsempfehlungen. In Unternehmensumgebungen können Ereignisse zusätzlich per Webhook an SIEM-Systeme, Ticketing-Plattformen oder benutzerdefinierte Endpunkte weitergeleitet werden.
+
+---
+
+## Weiterführende Informationen
+
+- [Systemarchitektur](/experts/architecture) — Gesamtarchitektur und Komponentenübersicht
+- [Bedrohungsmodell](/experts/threat-model) — Angriffskategorien im Detail
+- [Konfiguration](/experts/configuration) — Pipeline-Schwellenwerte und Richtlinien anpassen

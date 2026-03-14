@@ -1,0 +1,98 @@
+---
+title: "Responsible Disclosure"
+sidebar:
+  order: 18
+---
+
+## Sicherheitslücken melden
+
+Superheld nimmt die Sicherheit seiner Plattform und den Schutz seiner Nutzer ernst. Wenn Sie eine Sicherheitslücke in unserer Software, Infrastruktur oder Konfiguration entdecken, bitten wir Sie, diese verantwortungsvoll über den unten beschriebenen Prozess zu melden — anstatt sie öffentlich zu machen oder auszunutzen.
+
+Bitte beschreiben Sie in Ihrer Meldung:
+
+- **Art der Schwachstelle** — z. B. Cross-Site Scripting, fehlerhafte Authentifizierung, Datenexfiltration
+- **Betroffene Komponente** — URL, API-Endpunkt, App-Version oder Konfigurationsdatei
+- **Reproduktionsschritte** — eine klare Anleitung, wie die Schwachstelle ausgelöst werden kann
+- **Auswirkung** — welche Daten oder Funktionen potenziell betroffen sind
+
+---
+
+## Sicherheitskontakt
+
+Senden Sie Ihre Meldung per E-Mail an:
+
+**security@superheld.app**
+
+Verwenden Sie nach Möglichkeit unseren PGP-Schlüssel, um sensible Inhalte zu verschlüsseln. Vermeiden Sie es, Details zu Schwachstellen über unverschlüsselte Kanäle wie Social Media oder öffentliche Issue-Tracker zu teilen.
+
+---
+
+## PGP-Schlüssel
+
+Unser öffentlicher PGP-Schlüssel ist unter folgender Adresse abrufbar:
+
+```
+https://superheld.app/.well-known/security.txt
+```
+
+Die Datei `security.txt` folgt dem Standard [RFC 9116](https://www.rfc-editor.org/rfc/rfc9116) und enthält neben dem PGP-Schlüssel auch Kontaktinformationen und bevorzugte Sprachen.
+
+### Vorlage: security.txt
+
+```txt
+Contact: mailto:security@superheld.app
+Expires: 2027-03-14T23:59:00.000Z
+Encryption: https://superheld.app/.well-known/pgp-key.asc
+Preferred-Languages: de, en
+Canonical: https://superheld.app/.well-known/security.txt
+Policy: https://docs.superheld.app/experts/responsible-disclosure
+```
+
+---
+
+## Reaktionszeiten
+
+Nach Eingang Ihrer Meldung gelten folgende Reaktionszeiten:
+
+| Phase | Zeitrahmen |
+|---|---|
+| **Eingangsbestätigung** | Innerhalb von 24 Stunden |
+| **Erstbewertung (Triage)** | Innerhalb von 72 Stunden |
+| **Behebung** | Abhängig vom Schweregrad |
+
+Die Behebungszeit richtet sich nach der Kritikalität der gemeldeten Schwachstelle:
+
+- **Kritisch** (Remote Code Execution, Datenleck aktiver Nutzerdaten) — Sofortmassnahmen, Patch innerhalb weniger Tage
+- **Hoch** (Privilege Escalation, Authentifizierungsumgehung) — Behebung innerhalb von zwei Wochen
+- **Mittel** (Information Disclosure, fehlerhafte Validierung) — Behebung im nächsten regulären Release-Zyklus
+- **Niedrig** (Hardening-Empfehlungen, Best-Practice-Abweichungen) — Aufnahme in den Backlog
+
+Wir halten Sie über den Fortschritt auf dem Laufenden und stimmen mit Ihnen ab, wann eine öffentliche Bekanntmachung sinnvoll ist.
+
+---
+
+## Safe-Harbor-Richtlinie
+
+Sicherheitsforschende, die im Einklang mit dieser Richtlinie handeln, werden von uns nicht rechtlich verfolgt. Das bedeutet konkret:
+
+- **Keine Strafanzeige** — Wir erstatten keine Anzeige gegen Forschende, die Schwachstellen in gutem Glauben melden und dabei keine Daten Dritter kompromittieren.
+- **Keine zivilrechtlichen Schritte** — Solange die Meldung verantwortungsvoll erfolgt, verzichten wir auf Unterlassungs- oder Schadensersatzforderungen.
+- **Vertraulichkeit** — Wir behandeln Ihre Identität vertraulich, sofern Sie dies wünschen.
+
+Als „guter Glaube" gilt insbesondere:
+
+1. Sie nutzen die Schwachstelle nicht über das zur Demonstration notwendige Mass hinaus aus.
+2. Sie greifen nicht auf Daten anderer Nutzer zu und verändern oder löschen diese nicht.
+3. Sie vermeiden Denial-of-Service-Angriffe, Social Engineering gegen unser Team und physische Angriffe.
+4. Sie geben uns ausreichend Zeit zur Behebung, bevor Sie Details veröffentlichen.
+
+:::note
+Diese Richtlinie ersetzt keine geltenden Gesetze. Wir ermutigen Forschende, sich im Zweifelsfall rechtlich beraten zu lassen. Unser Ziel ist eine offene und kooperative Zusammenarbeit mit der Sicherheits-Community.
+:::
+
+---
+
+## Weiterführende Informationen
+
+- [Privatsphäre & Sicherheit](/experts/privacy-security) — Datenschutz und Sicherheitsarchitektur
+- [Bedrohungsmodell](/experts/threat-model) — Übersicht der Angriffskategorien

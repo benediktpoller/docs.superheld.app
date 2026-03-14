@@ -1,45 +1,49 @@
 ---
-title: "API-Referenz"
+title: "API-Übersicht"
 sidebar:
-  order: 8
+  order: 11
 ---
 
-:::note
-Die Superheld API befindet sich derzeit in der **Beta-Phase**. Endpunkte, Request-/Response-Formate und Ratenlimits können sich ohne Vorankündigung ändern. Produktiver Einsatz erfolgt auf eigene Verantwortung.
-:::
+Die Superheld API ermöglicht die programmatische Integration von Bedrohungserkennung, Geräteverwaltung und Alerting in bestehende Sicherheits-Workflows. Diese Seite beschreibt die zentralen Designprinzipien, das Authentifizierungsmodell und typische Integrationsmuster.
 
-## Authentifizierung
+## API-Prinzipien
 
-Alle API-Anfragen erfordern einen gültigen API-Schlüssel im `Authorization`-Header. Sie erhalten Ihren Schlüssel im Superheld-Dashboard unter **Einstellungen → API-Zugang**.
+Die API folgt dem **REST**-Architekturstil. Alle Endpunkte akzeptieren und liefern **JSON**. Die Basis-URL lautet:
+
+```
+https://api.superheld.app/api/v1/
+```
+
+Jede Anfrage muss über **HTTPS** erfolgen — unverschlüsselte Verbindungen werden abgelehnt. Die API ist **versioniert**: Das Präfix `/v1/` garantiert Abwärtskompatibilität innerhalb einer Hauptversion. Änderungen an bestehenden Feldern oder Endpunkten werden erst mit `/v2/` eingeführt.
+
+**Rate Limiting** schützt die Infrastruktur. Pro API-Schlüssel sind **120 Anfragen pro Minute** erlaubt. Bei Überschreitung antwortet die API mit `429 Too Many Requests`. Die Header `X-RateLimit-Limit`, `X-RateLimit-Remaining` und `X-RateLimit-Reset` informieren über den aktuellen Status.
+
+## Authentifizierungsmodell
+
+Alle Anfragen erfordern einen gültigen API-Schlüssel im `Authorization`-Header:
 
 ```
 Authorization: Bearer sh_live_abc123xyz456
 ```
 
-Übermitteln Sie Ihren API-Schlüssel niemals im Query-String oder im Request-Body. Alle Anfragen müssen über HTTPS erfolgen — unverschlüsselte Verbindungen werden abgelehnt.
+API-Schlüssel werden im Dashboard unter **Einstellungen → API-Zugang** erstellt. Für erweiterte Szenarien unterstützt die API zusätzlich **OAuth2** mit dem Authorization-Code-Flow und Client-Credentials-Flow. OAuth2-Token erhalten **Scopes**, die den Zugriff granular steuern — beispielsweise `devices:read`, `threats:read`, `alerts:write` oder `scan:execute`. Details zur Authentifizierung finden Sie auf der Seite [Authentifizierung und Autorisierung](/experts/auth/).
 
-## Rate Limiting
+## Multi-Tenant-Modell
 
-Die API erlaubt **120 Anfragen pro Minute** pro API-Schlüssel. Bei Überschreitung erhalten Sie eine `429 Too Many Requests`-Antwort. Die folgenden Header informieren über den aktuellen Status:
+Die API arbeitet mit **organisationsbasierter Mandantentrennung**. Jeder API-Schlüssel ist genau einer Organisation zugeordnet. Anfragen liefern ausschließlich Daten der zugehörigen Organisation — ein übergreifender Zugriff ist nicht möglich. Geräte, Bedrohungen und Alerts sind strikt isoliert. Organisationsadministratoren können mehrere API-Schlüssel mit unterschiedlichen Scopes für verschiedene Integrationen erstellen.
 
-| Header                  | Beschreibung                          |
-|-------------------------|---------------------------------------|
-| `X-RateLimit-Limit`     | Maximale Anfragen pro Minute          |
-| `X-RateLimit-Remaining` | Verbleibende Anfragen im Zeitfenster  |
-| `X-RateLimit-Reset`     | Unix-Timestamp für das nächste Reset  |
+## Zentrale Endpunkte
 
----
+Die wichtigsten Ressourcen der API:
 
-## Endpunkte
+| Methode | Endpunkt         | Beschreibung                              |
+|---------|------------------|-------------------------------------------|
+| `GET`   | `/devices`       | Alle registrierten Geräte abrufen         |
+| `GET`   | `/threats`       | Erkannte Bedrohungen auflisten            |
+| `GET`   | `/alerts`        | Konfigurierte Benachrichtigungsregeln     |
+| `POST`  | `/scan`          | Inhalt zur Bedrohungsanalyse übergeben    |
 
-### GET /api/v1/threats
-
-Gibt eine paginierte Liste aller erkannten Bedrohungen für Ihr Konto zurück.
-
-```bash
-curl -X GET https://api.superheld.app/api/v1/threats \
-  -H "Authorization: Bearer sh_live_abc123xyz456"
-```
+### Beispiel: GET /threats
 
 ```json
 {
@@ -58,29 +62,7 @@ curl -X GET https://api.superheld.app/api/v1/threats \
 }
 ```
 
-| Feld           | Typ      | Beschreibung                                          |
-|----------------|----------|-------------------------------------------------------|
-| `id`           | string   | Eindeutige Kennung der Bedrohung                      |
-| `type`         | string   | Kategorie (`phishing`, `malware`, `social_engineering`)|
-| `severity`     | string   | Schweregrad: `low`, `medium`, `high`, `critical`      |
-| `source`       | string   | Herkunftskanal der Bedrohung                          |
-| `detected_at`  | string   | ISO-8601-Zeitstempel der Erkennung                    |
-| `description`  | string   | Kurzbeschreibung der erkannten Bedrohung              |
-| `has_more`     | boolean  | Weitere Ergebnisse verfügbar                          |
-| `total_count`  | integer  | Gesamtanzahl der Bedrohungen                          |
-
----
-
-### POST /api/v1/scan
-
-Übergibt einen Inhalt (URL, Text oder Datei-Hash) zur Bedrohungsanalyse. Die Analyse erfolgt synchron und gibt das Ergebnis direkt zurück.
-
-```bash
-curl -X POST https://api.superheld.app/api/v1/scan \
-  -H "Authorization: Bearer sh_live_abc123xyz456" \
-  -H "Content-Type: application/json" \
-  -d '{"content": "https://beispiel-phishing.de/login", "type": "url"}'
-```
+### Beispiel: POST /scan
 
 ```json
 {
@@ -93,20 +75,25 @@ curl -X POST https://api.superheld.app/api/v1/scan \
 }
 ```
 
-| Feld              | Typ      | Beschreibung                                      |
-|--------------------|----------|--------------------------------------------------|
-| `scan_id`          | string   | Eindeutige Kennung des Scan-Vorgangs             |
-| `status`           | string   | `completed`, `pending` oder `failed`              |
-| `threat_detected`  | boolean  | Ob eine Bedrohung erkannt wurde                   |
-| `threat_type`      | string   | Kategorie der erkannten Bedrohung (falls vorhanden)|
-| `confidence`       | float    | Konfidenzwert zwischen `0.0` und `1.0`            |
-| `details`          | string   | Menschenlesbare Analyse des Ergebnisses           |
+## Event-Modell
 
----
+Bedrohungen durchlaufen in der API einen definierten Lebenszyklus: **Erkennung → Klassifizierung → Benachrichtigung → Behebung**. Bei der Erkennung wird ein Threat-Objekt mit Typ, Schweregrad und Quelle erstellt. Die Klassifizierung ordnet die Bedrohung einer Kategorie zu (`phishing`, `malware`, `social_engineering`). Konfigurierte Alert-Regeln prüfen den Schweregrad und lösen Benachrichtigungen über den gewählten Kanal aus. Über die API können Bedrohungen anschließend als behoben markiert werden.
 
-### POST /api/v1/alerts
+## Integrationsmuster
 
-Erstellt oder aktualisiert eine Benachrichtigungsregel. Alerts können per Webhook, E-Mail oder Push-Notification ausgelöst werden.
+### Pull-Integration (Polling)
+
+Bei der Pull-Integration fragt Ihr System die API regelmäßig nach neuen Daten ab. Das eignet sich für Dashboards, Berichte und periodische Synchronisierungen. Beachten Sie das Rate Limit von 120 Anfragen pro Minute — ein Polling-Intervall von 30 Sekunden pro Endpunkt ist empfehlenswert.
+
+```bash
+# Alle 30 Sekunden neue Bedrohungen abfragen
+curl -X GET "https://api.superheld.app/api/v1/threats?since=2026-03-14T09:00:00Z" \
+  -H "Authorization: Bearer sh_live_abc123xyz456"
+```
+
+### Push-Integration (Webhooks)
+
+Bei der Push-Integration sendet Superheld Ereignisse aktiv an Ihren Endpunkt. Sie konfigurieren eine Alert-Regel mit `channel: "webhook"` und einer Ziel-URL. Bei jeder relevanten Bedrohung sendet die API einen `POST`-Request mit dem vollständigen Event-Objekt an Ihre URL. Webhooks sind effizienter als Polling und ermöglichen Echtzeit-Reaktionen.
 
 ```bash
 curl -X POST https://api.superheld.app/api/v1/alerts \
@@ -120,82 +107,4 @@ curl -X POST https://api.superheld.app/api/v1/alerts \
   }'
 ```
 
-```json
-{
-  "alert_id": "alt_9b2f3e",
-  "name": "Kritische Bedrohungen",
-  "channel": "webhook",
-  "severity_filter": ["high", "critical"],
-  "active": true,
-  "created_at": "2026-03-14T10:05:33Z"
-}
-```
-
-| Feld              | Typ      | Beschreibung                                       |
-|--------------------|----------|----------------------------------------------------|
-| `alert_id`         | string   | Eindeutige Kennung der Benachrichtigungsregel      |
-| `name`             | string   | Bezeichnung der Regel                              |
-| `channel`          | string   | Zustellkanal: `webhook`, `email` oder `push`       |
-| `severity_filter`  | array    | Schweregrade, die diese Regel auslösen             |
-| `active`           | boolean  | Ob die Regel aktiv ist                             |
-| `created_at`       | string   | ISO-8601-Zeitstempel der Erstellung                |
-
----
-
-### GET /api/v1/devices
-
-Gibt alle registrierten Geräte zurück, die mit Ihrem Konto verknüpft sind.
-
-```bash
-curl -X GET https://api.superheld.app/api/v1/devices \
-  -H "Authorization: Bearer sh_live_abc123xyz456"
-```
-
-```json
-{
-  "data": [
-    {
-      "device_id": "dev_3c8a1f",
-      "name": "MacBook Pro – Arbeit",
-      "platform": "macos",
-      "agent_version": "2.4.1",
-      "last_seen": "2026-03-14T08:47:02Z",
-      "status": "online"
-    }
-  ],
-  "total_count": 3
-}
-```
-
-| Feld            | Typ      | Beschreibung                                        |
-|-----------------|----------|-----------------------------------------------------|
-| `device_id`     | string   | Eindeutige Kennung des Geräts                       |
-| `name`          | string   | Vom Benutzer vergebener Gerätename                  |
-| `platform`      | string   | Betriebssystem: `macos`, `windows`, `ios`, `android`|
-| `agent_version` | string   | Installierte Version des Guardian Agent              |
-| `last_seen`     | string   | Letzter Kontakt des Geräts (ISO 8601)               |
-| `status`        | string   | `online`, `offline` oder `inactive`                 |
-
----
-
-## Fehlerbehandlung
-
-Fehlerhafte Anfragen geben ein einheitliches JSON-Format zurück:
-
-```json
-{
-  "error": {
-    "code": "invalid_api_key",
-    "message": "Der angegebene API-Schlüssel ist ungültig oder abgelaufen.",
-    "status": 401
-  }
-}
-```
-
-| HTTP-Status | Bedeutung                                              |
-|-------------|--------------------------------------------------------|
-| `400`       | Ungültige Anfrage — fehlende oder fehlerhafte Parameter|
-| `401`       | Authentifizierung fehlgeschlagen                       |
-| `403`       | Zugriff verweigert — unzureichende Berechtigungen     |
-| `429`       | Rate Limit überschritten                               |
-| `500`       | Interner Serverfehler                                  |
+**Empfehlung:** Nutzen Sie Webhooks für zeitkritische Sicherheitsereignisse und Polling für regelmäßige Bestandsabgleiche. Kombinieren Sie beide Muster für eine robuste Integration, bei der Webhooks die primäre Quelle bilden und Polling als Fallback dient.

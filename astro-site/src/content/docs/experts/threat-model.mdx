@@ -1,118 +1,166 @@
 ---
 title: "Bedrohungsmodell"
 sidebar:
-  order: 2
+  order: 3
 ---
 
-## Übersicht
-
-Superheld schützt Nutzer vor einer wachsenden Zahl digitaler Bedrohungen, die gezielt menschliches Vertrauen ausnutzen. Klassische Sicherheitssoftware erkennt Malware und Viren — aber sie versagt bei Angriffen, die auf Manipulation statt auf Code setzen.
-
-Dieses Bedrohungsmodell beschreibt die sechs zentralen Angriffskategorien, die Superheld adressiert, und erklärt, wie jede Bedrohung erkannt und abgewehrt wird.
-
-:::note
-Über 80 % aller erfolgreichen Cyberangriffe beginnen nicht mit einem technischen Exploit, sondern mit einem Anruf, einer Nachricht oder einem gefälschten Dialog. Superheld setzt genau dort an.
-:::
+Dieses Dokument beschreibt das Bedrohungsmodell von Superheld nach etablierter Sicherheitsarchitektur-Praxis. Es definiert Schutzobjekte, Angreifer, Angriffsflächen, Bedrohungskategorien, Gegenmaßnahmen sowie Annahmen und Grenzen des Systems.
 
 ---
 
-## Angriffskategorien
+## Assets — Was Superheld schützt
 
-| Kategorie | Beschreibung | Beispiel |
+Superheld schützt die folgenden Werte seiner Nutzer:
+
+- **Endgeräte** — Smartphones und Tablets vor unbefugtem Fernzugriff und schädlicher Software
+- **Persönliche Daten** — Kontakte, Nachrichten, Fotos, Standortdaten und Zugangsdaten
+- **Finanzkonten** — Bankkonten, Kreditkarten und Zahlungsdienste vor betrügerischen Transaktionen
+- **Digitale Identität** — E-Mail-Konten, Social-Media-Profile und behördliche Zugänge (z. B. eID)
+- **Familienmitglieder** — insbesondere ältere oder weniger technikaffine Angehörige, die überproportional häufig Ziel von Betrug werden
+
+---
+
+## Adversaries — Wer angreift
+
+| Angreifertyp | Motivation | Fähigkeiten |
 |---|---|---|
-| **Telefonbetrug** | Anrufe, die sich als Bank, Behörde oder Polizei ausgeben | „Ihre Kreditkarte wurde gesperrt – bestätigen Sie Ihre PIN." |
-| **Social Engineering** | Gezielte Manipulation über persönliche Informationen | Angreifer kennt deinen Namen und Arbeitgeber aus Social Media. |
-| **Fake-Support-Anrufe** | Vorgetäuschter technischer Support von Microsoft, Apple etc. | „Ihr Computer hat einen Virus. Wir helfen Ihnen jetzt." |
-| **Schädliche Apps** | Apps, die Berechtigungen missbrauchen oder Daten exfiltrieren | Eine Taschenlampen-App, die Kontakte und SMS ausliest. |
-| **Fernzugriffsbetrug** | Aufforderung, Fernsteuerungssoftware zu installieren | „Installieren Sie TeamViewer, damit wir Ihr Problem beheben." |
-| **KI-generierte Täuschung** | Deepfake-Stimmen oder -Videos, die echte Personen imitieren | Anruf mit der geklonten Stimme eines Familienmitglieds. |
+| **Scam-Callcenter** | Finanzieller Gewinn | Massenanrufe, Rufnummernspoofing, einstudierte Skripte |
+| **Social Engineers** | Gezielter Datendiebstahl | OSINT-Recherche, Personalisierung, psychologische Manipulation |
+| **Malware-Verbreiter** | Datenexfiltration, Erpressung | Tarnung als legitime Apps, Exploit-Kits, Sideloading |
+| **Staatlich unterstützte Akteure** | Überwachung, Spionage | Fortgeschrittene Werkzeuge, Zero-Day-Exploits, langfristige Kampagnen |
+| **Opportunistische Angreifer** | Schneller Gewinn | Massen-Phishing, bekannte Schwachstellen, automatisierte Tools |
 
 ---
 
-## Typischer Angriffsablauf
+## Attack Surfaces — Wo Angriffe stattfinden
 
-Die meisten Angriffe folgen einem vorhersehbaren Muster. Das folgende Diagramm zeigt den Ablauf eines typischen Telefonbetrugs:
+Angriffe erreichen Nutzer über verschiedene Kanäle:
 
-```mermaid
-sequenceDiagram
-    participant Angreifer
-    participant Opfer
-    participant Superheld
-
-    Angreifer->>Opfer: Anruf: „Hier ist Ihre Bank"
-    Note over Angreifer: Spoofed Rufnummer der Bank
-    Angreifer->>Opfer: Erzeugt Dringlichkeit: „Konto kompromittiert"
-    Superheld-->>Opfer: Warnung: Verdächtige Rufnummer erkannt
-    Angreifer->>Opfer: Fordert PIN / TAN an
-    Superheld-->>Opfer: Alarm: Anfrage nach sensiblen Daten
-    Opfer->>Angreifer: Anruf wird blockiert
-    Note over Superheld: Vorfall dokumentiert und gemeldet
-```
-
-:::caution
-Banken, Behörden und seriöse Unternehmen fragen niemals am Telefon nach PINs, TANs oder Passwörtern. Jede solche Anfrage ist ein Betrugsversuch.
-:::
+1. **Telefonanrufe** — Spoofed-Nummern, VoIP-Anrufe, KI-generierte Stimmen
+2. **SMS und Messaging** — Smishing-Nachrichten, gefälschte Paketbenachrichtigungen, WhatsApp-Betrug
+3. **E-Mail** — Phishing-Mails, gefälschte Rechnungen, CEO-Fraud
+4. **App Stores** — Gefälschte oder trojanisierte Apps in offiziellen und inoffiziellen Stores
+5. **Browser** — Drive-by-Downloads, gefälschte Anmeldeseiten, bösartige Werbung
+6. **Fernzugriffs-Tools** — TeamViewer, AnyDesk, QuickSupport als Einfallstor
+7. **Netzwerk** — Rogue-Hotspots, DNS-Manipulation, Man-in-the-Middle-Angriffe
 
 ---
 
-## Wie Superheld Bedrohungen erkennt
+## Bedrohungskategorien
 
-Superheld kombiniert mehrere Erkennungsmethoden, um Angriffe in Echtzeit zu identifizieren.
+### Fernzugriffsbetrug (Remote Access Scams)
 
-### Telefonbetrug & Fake-Support-Anrufe
+**Beschreibung:** Der Angreifer überzeugt das Opfer, eine Fernsteuerungssoftware zu installieren, und erlangt damit vollständige Kontrolle über das Gerät.
 
-- **Rufnummern-Analyse** — Abgleich eingehender Nummern mit bekannten Betrugsmustern und Spoofing-Datenbanken
-- **Sprachmuster-Erkennung** — Identifikation typischer Drucktaktiken wie künstliche Dringlichkeit, Autoritätsansprüche und emotionale Manipulation
-- **Kontextprüfung** — Automatische Warnung, wenn ein Anrufer nach sensiblen Daten fragt
+**Typischer Ablauf:** Anruf mit vorgetäuschtem Support-Anliegen → Erzeugung von Dringlichkeit → Aufforderung zur Installation von Fernzugriffs-Software → Übernahme des Geräts → Zugriff auf Banking-Apps und Passwörter.
+
+**Erkennung:** Superheld erkennt die Installation von Fernsteuerungs-Tools im zeitlichen Zusammenhang mit aktiven Anrufen. Session-Monitoring identifiziert nicht vom Nutzer initiierte Verbindungen.
+
+**Mitigation:** Automatische Blockierung der Fernzugriffs-Session, sofortige Benachrichtigung des Nutzers, Dokumentation des Vorfalls zur Beweissicherung.
 
 ### Social Engineering
 
-- **Verhaltensanalyse** — Erkennung ungewöhnlicher Kommunikationsmuster, z. B. wenn ein vermeintlicher Kollege plötzlich per SMS nach Zugangsdaten fragt
-- **Informationsabgleich** — Prüfung, ob übermittelte Informationen konsistent sind oder auf zusammengetragene öffentliche Daten hindeuten
+**Beschreibung:** Der Angreifer nutzt öffentlich verfügbare Informationen und psychologische Taktiken, um das Vertrauen des Opfers zu gewinnen und es zu schädlichen Handlungen zu bewegen.
 
-### Schädliche Apps
+**Typischer Ablauf:** OSINT-Recherche über das Opfer → Kontaktaufnahme unter falschem Vorwand → Aufbau von Vertrauen durch korrekte persönliche Details → Aufforderung zur Herausgabe sensibler Daten oder Überweisung.
 
-- **Berechtigungs-Audit** — Analyse installierter Apps auf übermäßige oder verdächtige Berechtigungen
-- **Verhaltens-Monitoring** — Erkennung von Apps, die im Hintergrund ungewöhnliche Aktivitäten ausführen (Datenexfiltration, Kamera-/Mikrofon-Zugriff)
+**Erkennung:** Verhaltensanalyse identifiziert ungewöhnliche Kommunikationsmuster, z. B. wenn ein vermeintlicher Bekannter plötzlich per SMS nach Zugangsdaten fragt. Kontextprüfung erkennt Inkonsistenzen.
 
-### Fernzugriffsbetrug
+**Mitigation:** Echtzeit-Warnung bei verdächtigen Anfragen, Verifizierungsaufforderung über einen alternativen Kanal, Handlungsempfehlungen für den Nutzer.
 
-- **Installations-Erkennung** — Warnung bei Installation von Fernsteuerungs-Tools im Zusammenhang mit einem aktiven Anruf
-- **Session-Überwachung** — Erkennung aktiver Remote-Desktop-Sitzungen, die nicht vom Nutzer initiiert wurden
+### Schädliche Anwendungen (Malicious Applications)
 
-### KI-generierte Täuschung (Deepfakes)
+**Beschreibung:** Apps, die unter dem Deckmantel legitimer Funktionalität Berechtigungen missbrauchen, Daten exfiltrieren oder als Trojaner fungieren.
 
-- **Stimm-Authentizitätsprüfung** — Analyse von Audiomustern auf Artefakte synthetischer Sprachgenerierung
-- **Plausibilitätsprüfung** — Abgleich des Anrufkontexts mit bekannten Verhaltensmustern der vorgeblichen Person
+**Typischer Ablauf:** Nutzer installiert scheinbar harmlose App → App fordert übermäßige Berechtigungen → Hintergrundaktivität: Auslesen von Kontakten, SMS, Standort → Weiterleitung der Daten an Command-and-Control-Server.
+
+**Erkennung:** Berechtigungs-Audit analysiert installierte Apps auf unverhältnismäßige Zugriffsrechte. Verhaltens-Monitoring erkennt ungewöhnliche Hintergrundaktivitäten wie Kamera-/Mikrofon-Zugriff oder Datenübertragung.
+
+**Mitigation:** Deinstallationsempfehlung, Berechtigungsentzug, Benachrichtigung über verdächtige Aktivitäten.
+
+### Phishing-Links
+
+**Beschreibung:** Gefälschte Webseiten, die legitime Dienste imitieren, um Zugangsdaten, Zahlungsinformationen oder persönliche Daten abzugreifen.
+
+**Typischer Ablauf:** Empfang einer Nachricht mit dringendem Handlungsbedarf → Link führt zu täuschend echter Nachbildung einer Bank- oder Paketdienstseite → Nutzer gibt Zugangsdaten ein → Angreifer übernimmt das Konto.
+
+**Erkennung:** URL-Analyse prüft Links in Nachrichten und E-Mails auf bekannte Phishing-Muster, Homoglyph-Angriffe und verdächtige Domain-Registrierungen. Cloud-Intelligence gleicht mit aktuellen Bedrohungsdatenbanken ab.
+
+**Mitigation:** Blockierung des Zugriffs auf erkannte Phishing-Seiten, Warnung vor dem Öffnen verdächtiger Links, Anzeige der tatsächlichen Ziel-URL.
+
+### Gerätemanipulation (Device Manipulation)
+
+**Beschreibung:** Direkte oder indirekte Manipulation des Geräts durch Änderung von Systemeinstellungen, Installation von Zertifikaten oder Aktivierung von Entwickleroptionen.
+
+**Typischer Ablauf:** Angreifer instruiert Opfer telefonisch, Sicherheitseinstellungen zu deaktivieren → Installation von Profilen oder Zertifikaten → Umgehung der regulären Schutzmechanismen → Vollzugriff auf verschlüsselte Kommunikation.
+
+**Erkennung:** Monitoring von Systemeinstellungsänderungen, Erkennung neuer Zertifikate oder Profile, Alarm bei Deaktivierung von Sicherheitsfunktionen.
+
+**Mitigation:** Sofortige Warnung bei sicherheitskritischen Einstellungsänderungen, Anleitung zur Wiederherstellung sicherer Konfiguration, automatische Benachrichtigung verknüpfter Familienmitglieder.
 
 ---
 
-## Schutzmechanismen
+## Typischer Angriffsablauf mit Superheld-Intervention
 
-Superheld setzt auf mehrere Verteidigungsebenen, die zusammenwirken:
+Das folgende Diagramm zeigt einen typischen Telefonbetrug und wie Superheld in Echtzeit eingreift:
 
-| Bedrohung | Erkennung | Abwehr |
+```mermaid
+sequenceDiagram
+    participant A as Angreifer
+    participant O as Opfer
+    participant S as Superheld
+
+    A->>O: Anruf mit gespoofter Banknummer
+    S-->>O: ⚠ Rufnummer weicht von<br/>bekannter Bank-Nummer ab
+    A->>O: „Ihr Konto wurde kompromittiert!"
+    S-->>O: Sprachmuster-Alarm:<br/>Künstliche Dringlichkeit erkannt
+    A->>O: „Installieren Sie TeamViewer"
+    S->>O: 🛑 Fernzugriffs-Installation<br/>während aktivem Anruf blockiert
+    A->>O: „Nennen Sie Ihre PIN"
+    S->>O: 🛑 Anfrage nach sensiblen<br/>Daten erkannt — Anruf unterbrochen
+    Note over S: Vorfall dokumentiert,<br/>Familienmitglieder benachrichtigt
+```
+
+---
+
+## Mitigations — Übergreifende Schutzmaßnahmen
+
+Superheld setzt auf vier zentrale Verteidigungsschichten, die bedrohungsübergreifend wirken:
+
+| Schicht | Funktion | Wirkungsbereich |
 |---|---|---|
-| **Telefonbetrug** | Rufnummern-Analyse, Sprachmuster | Anruf-Blockierung, Echtzeit-Warnung |
-| **Social Engineering** | Verhaltensanalyse, Kontextprüfung | Benachrichtigung, Handlungsempfehlung |
-| **Fake-Support** | Skript-Erkennung, Spoofing-Check | Automatische Blockierung, Meldung |
-| **Schädliche Apps** | Berechtigungs-Audit, Monitoring | Deinstallationsempfehlung, Berechtigungsentzug |
-| **Fernzugriffsbetrug** | Installations-Erkennung, Session-Check | Blockierung der Fernsteuerung, Alarmierung |
-| **KI-Täuschung** | Stimm-Analyse, Plausibilitätsprüfung | Verifizierungsaufforderung, Warnhinweis |
+| **Lokale KI** | On-Device-Analyse von Anrufen, Nachrichten und App-Verhalten in Echtzeit | Alle Bedrohungskategorien |
+| **Cloud-Intelligence** | Abgleich mit aktuellen Bedrohungsdatenbanken, Rufnummern-Blacklists und Phishing-URLs | Telefonbetrug, Phishing, Malware |
+| **Policy Engine** | Regelbasierte Entscheidungslogik für automatische Blockierung und Eskalation | Fernzugriff, Gerätemanipulation |
+| **Nutzerwarnungen** | Kontextbezogene, verständliche Hinweise und Handlungsempfehlungen | Alle Bedrohungskategorien |
 
-### Defense-in-Depth
+Die lokale KI-Analyse stellt sicher, dass Anrufinhalte und persönliche Daten das Gerät nicht verlassen. Cloud-Intelligence beschränkt sich auf den Abgleich anonymisierter Signaturen.
 
-Der Schutz erfolgt auf drei Ebenen:
+---
 
-1. **Prävention** — Bekannte Bedrohungen werden blockiert, bevor sie den Nutzer erreichen. Dazu gehören Rufnummern-Blacklists, App-Berechtigungsprüfungen und proaktive Warnungen.
+## Annahmen
 
-2. **Erkennung** — Laufende Analyse von Anrufen, Nachrichten und App-Verhalten identifiziert Angriffe in Echtzeit, auch wenn sie bisher unbekannt sind.
+:::caution
+Das Bedrohungsmodell von Superheld basiert auf folgenden Sicherheitsannahmen. Wenn diese nicht zutreffen, kann der Schutz eingeschränkt sein.
 
-3. **Reaktion** — Bei erkannten Bedrohungen erhält der Nutzer klare Handlungsanweisungen. Kritische Aktionen (z. B. Fernzugriff) werden automatisch unterbunden.
-
-:::note
-Superheld arbeitet lokal auf dem Gerät. Anrufinhalte und persönliche Daten werden nicht an externe Server übertragen. Die Analyse erfolgt in Echtzeit auf dem Gerät selbst.
+- **Geräteintegrität** — Das Gerät ist nicht gerootet oder gejailbreakt. Der Bootloader ist gesperrt und die Firmware unverändert.
+- **Betriebssystem-Integrität** — Das Betriebssystem ist aktuell und seine Sicherheitsmechanismen (Sandbox, Berechtigungssystem) funktionieren ordnungsgemäß.
+- **Lesefähigkeit des Nutzers** — Der Nutzer kann angezeigte Warnungen lesen und grundlegend verstehen. Für Nutzer mit Einschränkungen bietet Superheld akustische Warnungen.
+- **Aktive Netzwerkverbindung** — Für Cloud-Intelligence-Abgleiche ist eine Internetverbindung erforderlich. Ohne Verbindung arbeitet Superheld ausschließlich mit lokaler Analyse.
+- **Superheld-App ist aktiv** — Die App muss im Hintergrund laufen und über die notwendigen Betriebssystem-Berechtigungen verfügen.
 :::
+
+---
+
+## Out of Scope — Grenzen des Schutzes
+
+Folgende Bedrohungen liegen außerhalb des Schutzbereichs von Superheld:
+
+- **Physischer Zugriff** — Wenn ein Angreifer physischen Zugang zum entsperrten Gerät hat, kann Superheld keinen vollständigen Schutz gewährleisten.
+- **Nation-State Zero-Days** — Hochentwickelte, bisher unbekannte Exploits auf Betriebssystem-Ebene (z. B. Pegasus-artige Angriffe) können nicht durch eine App-basierte Lösung abgefangen werden.
+- **Hardware-Implantate** — Kompromittierte Hardware-Komponenten (z. B. manipulierte Ladekabel, Baseband-Chips) liegen außerhalb der Software-Erkennungsebene.
+- **Insider-Angriffe mit physischem Gerätezugang** — Manipulation durch Personen mit legitimem Zugang zum Gerät und Kenntnis der Entsperrmethode.
+- **Verschlüsselte Kanäle Dritter** — Inhalte in Ende-zu-Ende-verschlüsselten Drittanbieter-Apps können systembedingt nicht analysiert werden, sofern keine Betriebssystem-Integration besteht.
 
 ---
 
@@ -120,4 +168,5 @@ Superheld arbeitet lokal auf dem Gerät. Anrufinhalte und persönliche Daten wer
 
 - [Privatsphäre & Sicherheit](/experts/privacy-security) — Verschlüsselung und Datenschutz im Detail
 - [Konfiguration](/experts/configuration) — Schutzeinstellungen anpassen
+- [Responsible Disclosure](/experts/responsible-disclosure) — Sicherheitslücken melden
 - [Häufige Fragen](/getting-started/faq) — Antworten auf Sicherheitsfragen

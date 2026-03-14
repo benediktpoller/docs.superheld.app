@@ -1,0 +1,136 @@
+---
+title: "SIEM-Integration"
+sidebar:
+  order: 14
+---
+
+Superheld lässt sich nahtlos in bestehende SIEM-Plattformen (Security Information and Event Management) integrieren. Diese Seite beschreibt die verfügbaren Integrationsmuster, das Alert-Format und einen vollständigen Beispiel-Workflow von der Erkennung bis zur SOC-Untersuchung.
+
+## Alert-Struktur
+
+Jeder Superheld-Alert wird als strukturiertes JSON-Objekt ausgeliefert. Das Format ist mit gängigen SIEM-Systemen wie Splunk, Microsoft Sentinel, Elastic Security und IBM QRadar kompatibel.
+
+```json
+{
+  "event_id": "evt_7f2a9c",
+  "timestamp": "2026-03-14T14:32:08Z",
+  "event_type": "detection",
+  "threat_type": "phishing",
+  "severity": "high",
+  "confidence": 0.94,
+  "device_id": "dev_3c8a1f",
+  "device_platform": "macos",
+  "source_channel": "email",
+  "action_taken": "blocked",
+  "description": "Gefälschte Login-Seite eines Finanzdienstleisters erkannt und blockiert.",
+  "indicators": {
+    "url_hash": "sha256:a1b2c3d4e5f6...",
+    "sender_domain": "example-phishing.de",
+    "matched_signature": "sig_fin_phish_042"
+  },
+  "metadata": {
+    "agent_version": "2.4.1",
+    "model_version": "detect-v3.2",
+    "tenant_id": "org_5e9d2a"
+  }
+}
+```
+
+:::note
+Alle personenbezogenen Daten werden vor der Übertragung automatisch redaktiert. URLs werden als SHA-256-Hashes übermittelt, E-Mail-Adressen durch Platzhalter ersetzt. Details hierzu finden Sie unter [Telemetrie und Logging](/experts/telemetry).
+:::
+
+## Webhook-Integration
+
+Die Webhook-Integration ermöglicht Echtzeit-Zustellung von Alerts an Ihr SIEM-System.
+
+### Einrichtung
+
+1. Navigieren Sie im Superheld-Dashboard zu **Einstellungen → Integrationen → SIEM**.
+2. Wählen Sie **Webhook** als Zustellmethode.
+3. Geben Sie Ihre SIEM-Endpunkt-URL ein (HTTPS erforderlich).
+4. Konfigurieren Sie optional einen HMAC-Signing-Secret zur Validierung eingehender Payloads.
+5. Wählen Sie die gewünschten Schweregrade (`low`, `medium`, `high`, `critical`) als Filter.
+
+Superheld signiert jeden Webhook-Request mit einem HMAC-SHA256-Hash im Header `X-Superheld-Signature`. Ihr SIEM-System sollte diese Signatur verifizieren, um die Authentizität sicherzustellen.
+
+```bash
+# Beispiel: Webhook-Signatur verifizieren
+echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "$SIGNING_SECRET"
+```
+
+### Retry-Verhalten
+
+Bei fehlgeschlagener Zustellung (HTTP-Status >= 400) wiederholt Superheld den Versand bis zu **5 Mal** mit exponentiellem Backoff (10 s, 30 s, 90 s, 270 s, 810 s). Nach 5 Fehlversuchen wird der Alert in eine Dead-Letter-Queue verschoben und im Dashboard als unzustellbar markiert.
+
+## Polling-API
+
+Alternativ zur Push-Methode können SIEM-Systeme Ereignisse periodisch über die REST-API abrufen.
+
+```bash
+curl -X GET "https://api.superheld.app/api/v1/events?since=2026-03-14T00:00:00Z&severity=high,critical&limit=100" \
+  -H "Authorization: Bearer sh_live_abc123xyz456"
+```
+
+| Parameter   | Typ      | Beschreibung                                         |
+|-------------|----------|------------------------------------------------------|
+| `since`     | string   | ISO-8601-Zeitstempel — nur Ereignisse nach diesem Zeitpunkt |
+| `severity`  | string   | Kommaseparierte Schweregrade als Filter               |
+| `limit`     | integer  | Maximale Anzahl zurückgegebener Ereignisse (max. 500) |
+| `cursor`    | string   | Paginierungs-Cursor für folgende Seiten               |
+
+Die API gibt einen `next_cursor`-Wert zurück, solange weitere Ergebnisse vorhanden sind. Ein typisches Polling-Intervall liegt bei **60 Sekunden** für hochkritische Umgebungen oder **5 Minuten** für Standardkonfigurationen.
+
+## Mapping auf SIEM-Events
+
+Superheld-Alerts lassen sich direkt auf die Event-Taxonomien gängiger SIEM-Plattformen abbilden:
+
+| Superheld-Feld     | Splunk CIM            | Elastic ECS             | Microsoft Sentinel      |
+|---------------------|-----------------------|-------------------------|-------------------------|
+| `event_type`        | `action`              | `event.category`        | `Category`              |
+| `threat_type`       | `signature`           | `threat.indicator.type` | `ThreatType`            |
+| `severity`          | `severity`            | `event.severity`        | `Severity`              |
+| `device_id`         | `dest`                | `host.id`               | `DeviceId`              |
+| `source_channel`    | `transport`           | `event.module`          | `SourceSystem`          |
+| `action_taken`      | `action`              | `event.action`          | `ActionTaken`           |
+| `indicators.url_hash` | `url_hash`          | `threat.indicator.url`  | `Url`                   |
+
+## Beispiel-Workflow
+
+Der folgende Ablauf zeigt, wie ein Superheld-Alert über das SIEM-System bis zur SOC-Untersuchung fließt:
+
+```mermaid
+sequenceDiagram
+    participant Gerät as Endgerät
+    participant SH as Superheld Cloud
+    participant SIEM as SIEM-Plattform
+    participant SOC as SOC-Analyst
+
+    Gerät->>SH: Detection Event (anonymisiert)
+    SH->>SH: Redaktion & Anreicherung
+    SH->>SIEM: Webhook-Push (JSON-Alert)
+    SIEM->>SIEM: Event-Korrelation & Regel-Matching
+    SIEM->>SOC: Alert-Benachrichtigung (Ticket erstellt)
+    SOC->>SIEM: Alert-Details abrufen
+    SOC->>SH: Zusätzliche Kontextdaten via API
+    SH-->>SOC: Threat Intelligence & Scan-Historie
+    SOC->>SOC: Bewertung & Incident-Entscheidung
+    SOC->>Gerät: Maßnahme auslösen (Quarantäne / Freigabe)
+```
+
+### Ablauf im Detail
+
+1. **Erkennung** — Der Guardian Agent auf dem Endgerät erkennt eine Bedrohung und erzeugt ein Detection Event. Nur anonymisierte Metadaten werden an die Superheld Cloud übertragen.
+2. **Anreicherung** — Die Superheld Cloud ergänzt das Event um Threat-Intelligence-Daten (bekannte Kampagnen, IOC-Abgleich) und wendet Redaktionsregeln an.
+3. **SIEM-Ingestion** — Das angereicherte Event wird per Webhook an die SIEM-Plattform gepusht. Dort findet eine Korrelation mit bestehenden Events statt.
+4. **SOC-Investigation** — Bei Übereinstimmung mit einer Erkennungsregel erzeugt das SIEM ein Ticket für das SOC-Team. Der Analyst kann über die Superheld-API zusätzliche Kontextdaten (Scan-Historie, Gerätedetails) abrufen.
+5. **Reaktion** — Basierend auf der Bewertung löst der SOC-Analyst eine Maßnahme aus — etwa die Quarantäne des betroffenen Geräts oder die Freigabe eines fälschlich blockierten Elements.
+
+:::caution
+Stellen Sie sicher, dass Ihr SIEM-Endpunkt über eine gültige TLS-Konfiguration verfügt. Superheld lehnt Verbindungen zu Endpunkten ohne gültiges Zertifikat ab.
+:::
+
+---
+
+**Technischer Support für Integrationen:** integrations@superheld.app
+**API-Dokumentation:** [API-Referenz](/experts/api)

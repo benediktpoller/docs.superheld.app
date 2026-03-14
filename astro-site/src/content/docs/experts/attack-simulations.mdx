@@ -1,12 +1,12 @@
 ---
-title: "Angriffssimulationen"
+title: "Angriffsszenarien"
 sidebar:
-  order: 10
+  order: 15
 ---
 
 ## Übersicht
 
-Die folgenden Szenarien zeigen reale Angriffsmuster, wie sie täglich gegen Privatpersonen eingesetzt werden. Jede Simulation beschreibt den Ablauf eines Angriffs, das damit verbundene Risiko und wie Superheld den Angriff erkennt und abwehrt.
+Die folgenden Szenarien beschreiben reale Angriffsmuster, die täglich gegen Privatpersonen eingesetzt werden. Für jedes Szenario dokumentieren wir die Angriffsbeschreibung, das Risiko, die Erkennungsmethode und die Systemreaktion von Superheld.
 
 :::note
 Alle Szenarien basieren auf dokumentierten Angriffsmustern. Die Erkennungsmechanismen von Superheld arbeiten in Echtzeit und lokal auf dem Gerät — ohne Übertragung persönlicher Daten an externe Server.
@@ -16,19 +16,23 @@ Alle Szenarien basieren auf dokumentierten Angriffsmustern. Die Erkennungsmechan
 
 ## 1. Fake IT-Support-Anruf
 
-:::caution
-Ein Anrufer gibt sich als Microsoft-Mitarbeiter aus. Er behauptet, dass der Computer des Opfers mit Schadsoftware infiziert sei, und fordert zur Installation eines Fernzugriffs-Tools (z. B. AnyDesk oder TeamViewer) auf. Anschliessend übernimmt der Angreifer die Kontrolle über das Gerät.
-:::
+### Angriffsbeschreibung
 
-**Risiko:** Vollständiger Zugriff auf das Gerät, Diebstahl persönlicher Daten, Bankzugänge und Passwörter. Installation weiterer Schadsoftware. Finanzieller Schaden durch unautorisierte Transaktionen.
+Ein Anrufer gibt sich als Mitarbeiter von Microsoft, einer Bank oder eines Internetanbieters aus. Er behauptet, dass der Computer des Opfers kompromittiert sei, und drängt auf sofortige Massnahmen. Das Ziel ist, das Opfer zur Installation eines Fernzugriffs-Tools zu bewegen und anschliessend die Kontrolle über das Gerät zu übernehmen.
 
-:::note
-**Erkennung durch Superheld:** Rufnummern-Analyse identifiziert die gespoofte Nummer. Sprachmuster-Erkennung schlägt bei typischen Drucktaktiken und Autoritätsansprüchen an. Bei Erwähnung von Fernzugriffs-Software wird eine zusätzliche Warnstufe ausgelöst.
+### Risiko für den Nutzer
 
-**Schutzreaktion:** Echtzeit-Warnung während des Gesprächs. Blockierung der Installation von Fernsteuerungs-Tools im Zusammenhang mit dem aktiven Anruf. Dokumentation des Vorfalls zur späteren Meldung.
-:::
+Vollständiger Gerätezugriff durch den Angreifer. Diebstahl von Bankzugangsdaten, Passwörtern und persönlichen Dokumenten. Installation von Schadsoftware für langfristigen Zugriff. Finanzieller Schaden durch unautorisierte Transaktionen.
 
-### Ablaufdiagramm: Fake IT-Support-Anruf
+### Erkennungsmethode
+
+Rufnummern-Analyse identifiziert gespoofte Nummern. Sprachmuster-Erkennung schlägt bei typischen Drucktaktiken und Autoritätsansprüchen an. Die Erwähnung von Fernzugriffs-Software im Gesprächskontext löst eine zusätzliche Warnstufe aus.
+
+### Systemreaktion
+
+Echtzeit-Warnung während des Gesprächs. Blockierung der Installation von Fernsteuerungs-Tools im Zusammenhang mit dem aktiven Anruf. Dokumentation des Vorfalls zur späteren Meldung an Behörden.
+
+### Ablaufdiagramm
 
 ```mermaid
 sequenceDiagram
@@ -36,64 +40,76 @@ sequenceDiagram
     participant Opfer
     participant Superheld
 
-    Angreifer->>Opfer: Anruf: „Hier ist Microsoft Support"
+    Angreifer->>Opfer: Anruf: „Hier ist der Microsoft Support"
     Note over Angreifer: Gefälschte Support-Nummer
-    Superheld-->>Opfer: Warnung: Verdächtige Rufnummer erkannt
-    Angreifer->>Opfer: „Ihr PC ist infiziert, wir helfen Ihnen"
-    Superheld-->>Opfer: Hinweis: Typisches Betrugsskript erkannt
+    Superheld-->>Opfer: ⚠ Warnung: Verdächtige Rufnummer erkannt
+    Angreifer->>Opfer: „Ihr PC ist infiziert, wir müssen sofort handeln"
+    Superheld-->>Opfer: ⚠ Hinweis: Typisches Betrugsskript erkannt
     Angreifer->>Opfer: „Installieren Sie bitte AnyDesk"
-    Superheld-->>Opfer: Alarm: Fernzugriffs-Tool im Kontext eines Anrufs
-    Superheld->>Opfer: Installation blockiert, Anruf als Betrug markiert
+    Superheld-->>Opfer: 🛑 Alarm: Fernzugriffs-Tool im Anrufkontext
+    Superheld->>Opfer: Installation blockiert — Anruf als Betrug markiert
     Note over Superheld: Vorfall dokumentiert und gemeldet
 ```
 
 ---
 
-## 2. Gefälschte Bank-SMS
+## 2. Remote-Access-Betrug
 
-:::caution
-Das Opfer erhält eine SMS, die angeblich von der Hausbank stammt. Die Nachricht warnt vor einer verdächtigen Kontobewegung und enthält einen Link zu einer täuschend echten, aber gefälschten Login-Seite. Dort werden Zugangsdaten und TAN abgefangen.
-:::
+### Angriffsbeschreibung
 
-**Risiko:** Preisgabe von Online-Banking-Zugangsdaten und TAN. Unautorisierte Überweisungen, vollständige Kontoleerung. Identitätsdiebstahl durch abgegriffene persönliche Daten.
+Der Angreifer überzeugt das Opfer — oft im Anschluss an einen Fake-Support-Anruf oder über eine gefälschte Warnmeldung im Browser — ein Fernzugriffsprogramm wie TeamViewer, AnyDesk oder QuickSupport zu installieren. Nach der Verbindung navigiert der Angreifer auf dem Gerät des Opfers und greift auf Banking-Portale, Passwort-Manager und persönliche Dateien zu.
 
-:::note
-**Erkennung durch Superheld:** URL-Analyse erkennt die gefälschte Domain (z. B. `sparkasse-sicherheit.xyz` statt `sparkasse.de`). Absendernummer wird mit bekannten Spoofing-Mustern abgeglichen. Der Nachrichteninhalt wird auf typische Phishing-Merkmale geprüft — künstliche Dringlichkeit, generische Anrede, verdächtige Links.
+### Risiko für den Nutzer
 
-**Schutzreaktion:** Die SMS wird als potenzieller Betrug markiert. Der enthaltene Link wird blockiert. Der Nutzer erhält eine klare Empfehlung, die echte Banking-App oder die offizielle Website direkt zu verwenden.
-:::
+Der Angreifer sieht den Bildschirm in Echtzeit und kann Eingaben tätigen. Bankkonten werden direkt im Browser des Opfers manipuliert. Passwörter und gespeicherte Zugangsdaten werden ausgelesen. Der Angriff wirkt für das Opfer wie „legitime Hilfe".
 
----
+### Erkennungsmethode
 
-## 3. KI-Stimmbetrug
+Superheld erkennt die Installation und Aktivierung bekannter Fernzugriffs-Tools. Kontextanalyse verknüpft die Installation mit einem vorausgehenden verdächtigen Anruf oder einer Phishing-Nachricht. Ungewöhnliche Berechtigungsanfragen werden als Risikoindikatoren gewertet.
 
-:::caution
-Ein Anruf geht ein, bei dem eine KI-generierte Stimme ein Familienmitglied imitiert. Die gefälschte Stimme klingt emotional aufgelöst und bittet dringend um eine Geldüberweisung — angeblich wegen eines Unfalls oder einer Notsituation im Ausland.
-:::
+### Systemreaktion
 
-**Risiko:** Überweisung hoher Geldbeträge an Betrüger. Emotionale Belastung durch die vermeintliche Notsituation eines Angehörigen. Preisgabe weiterer persönlicher Informationen im Gespräch.
-
-:::note
-**Erkennung durch Superheld:** Stimm-Authentizitätsprüfung analysiert das Audiosignal auf Artefakte synthetischer Sprachgenerierung. Plausibilitätsprüfung gleicht den Anrufkontext mit bekannten Verhaltensmustern ab — ein Familienmitglied, das plötzlich von einer unbekannten Nummer anruft und sofortige Überweisungen fordert, löst eine Warnung aus.
-
-**Schutzreaktion:** Echtzeit-Warnung mit dem Hinweis auf mögliche KI-generierte Stimme. Empfehlung, die Person über einen bekannten Kanal zurückzurufen. Blockierung von Überweisungsversuchen während des verdächtigen Anrufs.
-:::
+Warnung vor der Installation mit Hinweis auf den verdächtigen Kontext. Bei aktiver Fernzugriffssitzung: Benachrichtigung über laufende Bildschirmfreigabe. Empfehlung, die Verbindung sofort zu trennen und Passwörter zu ändern.
 
 ---
 
-## 4. Schädliche App-Installation
+## 3. Schädliche App-Installation
 
-:::caution
-Der Nutzer erhält eine Benachrichtigung, die ein dringendes System-Update vortäuscht. Die Benachrichtigung leitet zu einer App weiter, die als offizielles Update getarnt ist. Nach der Installation fordert die App umfangreiche Berechtigungen an und beginnt im Hintergrund, Kontakte, Nachrichten, Standortdaten und Tastatureingaben auszulesen.
-:::
+### Angriffsbeschreibung
 
-**Risiko:** Umfassende Überwachung des Geräts — Zugriff auf Kamera, Mikrofon, Kontakte und Nachrichten. Exfiltration sensibler Daten wie Passwörter und Bankdaten. Langfristiger, unbemerkter Zugriff auf das Gerät.
+Das Opfer wird per SMS, E-Mail oder gefälschter Werbeanzeige auf eine App hingewiesen — etwa ein angebliches Sicherheitsupdate, eine Banking-App oder ein nützliches Werkzeug. Die App stammt nicht aus dem offiziellen App Store und fordert nach der Installation umfangreiche Berechtigungen an: Zugriff auf Kontakte, Kamera, Mikrofon und SMS.
 
-:::note
-**Erkennung durch Superheld:** Berechtigungs-Audit erkennt die unverhältnismässige Anforderung von Berechtigungen (Kamera, Mikrofon, Kontakte, SMS) für eine angebliche System-App. Verhaltens-Monitoring identifiziert Datenexfiltration im Hintergrund. Die Installationsquelle ausserhalb des offiziellen App Stores wird als Risikofaktor bewertet.
+### Risiko für den Nutzer
 
-**Schutzreaktion:** Warnung vor der Installation mit Hinweis auf verdächtige Berechtigungen. Nach Installation: sofortige Benachrichtigung über verdächtige Hintergrundaktivitäten. Empfehlung zur Deinstallation und Anleitung zum Entzug erteilter Berechtigungen.
-:::
+Umfassende Überwachung des Geräts im Hintergrund. Abfangen von SMS-TANs und Zwei-Faktor-Codes. Exfiltration persönlicher Daten wie Fotos, Nachrichten und Standortverlauf. Langfristiger, unbemerkter Zugriff durch den Angreifer.
+
+### Erkennungsmethode
+
+Berechtigungs-Audit erkennt unverhältnismässige Zugriffsanforderungen. Installationsquelle ausserhalb des offiziellen App Stores wird als Risikofaktor bewertet. Verhaltens-Monitoring identifiziert Datenexfiltration und verdächtige Hintergrundprozesse.
+
+### Systemreaktion
+
+Warnung vor der Installation mit Erklärung der angeforderten Berechtigungen. Nach Installation: sofortige Benachrichtigung über verdächtige Hintergrundaktivitäten. Anleitung zur Deinstallation und zum Entzug erteilter Berechtigungen.
+
+---
+
+## 4. Phishing-Link per SMS oder E-Mail
+
+### Angriffsbeschreibung
+
+Das Opfer erhält eine SMS oder E-Mail, die von einer vertrauenswürdigen Stelle zu stammen scheint — etwa der Hausbank, einem Paketdienst oder einer Behörde. Die Nachricht enthält einen Link zu einer täuschend echten Webseite, auf der Login-Daten, Kreditkartennummern oder persönliche Informationen abgefragt werden.
+
+### Risiko für den Nutzer
+
+Preisgabe von Online-Banking-Zugangsdaten und TANs. Kreditkartenmissbrauch durch abgefangene Zahlungsdaten. Identitätsdiebstahl durch Kombination verschiedener persönlicher Daten. Zugang zu weiteren Konten durch Wiederverwendung gleicher Passwörter.
+
+### Erkennungsmethode
+
+URL-Analyse erkennt gefälschte Domains (z. B. `sparkasse-sicherheit.xyz` statt `sparkasse.de`). Absendernummer und -adresse werden mit bekannten Spoofing-Mustern abgeglichen. Nachrichteninhalt wird auf typische Phishing-Merkmale geprüft: künstliche Dringlichkeit, generische Anrede, verdächtige Links.
+
+### Systemreaktion
+
+Die Nachricht wird als potenzieller Betrug markiert. Der enthaltene Link wird blockiert, bevor die Seite geladen wird. Der Nutzer erhält eine Empfehlung, die offizielle App oder Website direkt zu verwenden — niemals über einen zugesandten Link.
 
 ---
 

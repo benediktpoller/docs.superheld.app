@@ -1,0 +1,132 @@
+---
+title: "Kernkonzepte"
+sidebar:
+  order: 1
+---
+
+## Übersicht
+
+Superheld basiert auf einer Handvoll klar definierter Konzepte, die das gesamte System durchziehen — von der Datenerfassung auf dem Gerät bis zur Benachrichtigung des Nutzers. Wer diese Konzepte versteht, kann Superheld gezielt konfigurieren, in bestehende Sicherheitsinfrastruktur integrieren und Vorfälle effizient nachvollziehen.
+
+Diese Seite beschreibt die acht Kernkonzepte und zeigt, wie sie zusammenwirken.
+
+---
+
+## Datenlebenszyklus
+
+Jede Sicherheitserkennung durchläuft einen definierten Lebenszyklus: Vom Rohsignal auf dem Gerät bis zur Lösung eines erkannten Vorfalls.
+
+```mermaid
+flowchart LR
+    A["Signal"] --> B["Threat"]
+    B --> C["Alert"]
+    C --> D["Resolution"]
+
+    style A fill:#457b9d,color:#fff
+    style B fill:#e76f51,color:#fff
+    style C fill:#f4a261,color:#fff
+    style D fill:#2d6a4f,color:#fff
+```
+
+**Signal → Threat:** Der Device Agent erfasst Rohdaten (z. B. einen eingehenden Anruf). Die lokale Schutz-Engine analysiert das Signal und klassifiziert es als Bedrohung, wenn vordefinierte Kriterien erfüllt sind.
+
+**Threat → Alert:** Eine erkannte Bedrohung erzeugt einen Alert — eine nutzerseitige Benachrichtigung mit Kontext, Schweregrad und Handlungsempfehlung.
+
+**Alert → Resolution:** Der Nutzer oder eine automatische Policy reagiert auf den Alert. Das Ergebnis — ob blockiert, ignoriert oder eskaliert — wird als unveränderlicher Event im Audit-Log festgehalten.
+
+---
+
+## Konzepte im Detail
+
+### Devices
+
+Ein **Device** ist jedes Endgerät, das von Superheld geschützt wird: Smartphones, Tablets oder Desktop-Rechner. Jedes Device wird bei der Einrichtung registriert und erhält eine eindeutige Kennung. Der Schutzstatus, die installierten Policies und die aktive Agent-Version sind pro Device einsehbar.
+
+### Device Agents
+
+Der **Device Agent** ist ein leichtgewichtiger Prozess, der lokal auf jedem geschützten Gerät läuft. Er überwacht relevante Kommunikationskanäle, erfasst Signale und führt die erste Analysestufe aus — alles ohne Daten an externe Server zu senden.
+
+:::note
+Der Device Agent arbeitet mit minimalen Systemrechten und benötigt keine permanente Internetverbindung. Schutzmaßnahmen greifen auch vollständig offline.
+:::
+
+### Signals
+
+**Signals** sind die Rohdaten, die der Device Agent erfasst. Dazu gehören:
+
+- **Anruf-Metadaten** — Rufnummer, Zeitstempel, Anrufdauer
+- **App-Installationsereignisse** — neue oder aktualisierte Anwendungen
+- **Netzwerkaktivität** — DNS-Anfragen, Verbindungsversuche zu bekannten Malware-Domains
+- **Berechtigungsänderungen** — Apps, die neue Systemzugriffe anfordern
+
+Signals werden lokal verarbeitet und niemals in Rohform an die Cloud übertragen.
+
+### Threats
+
+Ein **Threat** ist ein klassifiziertes Sicherheitsereignis, das aus einem oder mehreren Signals abgeleitet wird. Jeder Threat hat einen Typ (z. B. `phone_scam`, `malicious_app`, `remote_control`), einen Schweregrad (`low`, `medium`, `high`, `critical`) und einen Konfidenzwert.
+
+:::caution
+Nicht jedes Signal erzeugt einen Threat. Die Schutz-Engine filtert unbedenkliche Signale heraus, um Fehlalarme zu minimieren. Nur Signale, die definierte Schwellenwerte überschreiten, werden als Threat eingestuft.
+:::
+
+### Alerts
+
+**Alerts** sind nutzerseitige Benachrichtigungen, die aus Threats generiert werden. Ein Alert enthält:
+
+- Eine verständliche Beschreibung der Bedrohung
+- Den Schweregrad und empfohlene Maßnahmen
+- Aktionen, die der Nutzer direkt ausführen kann (blockieren, ignorieren, melden)
+
+Alerts werden auf dem Gerät angezeigt und optional an konfigurierte Integrationen weitergeleitet.
+
+### Policies
+
+**Policies** sind Regeln, die festlegen, was erlaubt, gewarnt oder blockiert wird. Sie steuern das Verhalten der Schutz-Engine und können pro Device oder geräteübergreifend definiert werden.
+
+Beispiele:
+
+- Anrufe von bekannten Betrugsnummern automatisch blockieren
+- Bei Installation von Fernzugriffs-Tools sofort warnen
+- Apps mit übermäßigen Berechtigungen nach Bestätigung entfernen
+
+Policies ermöglichen es, den Schutz an individuelle Anforderungen und Risikobereitschaft anzupassen.
+
+### Events
+
+**Events** sind unveränderliche Einträge im Audit-Log. Jede sicherheitsrelevante Aktion — ob vom System oder vom Nutzer ausgelöst — wird als Event festgehalten. Events sind chronologisch geordnet und können nicht nachträglich verändert oder gelöscht werden.
+
+Events bilden die Grundlage für Compliance-Nachweise und forensische Analysen.
+
+### Integrations
+
+**Integrations** verbinden Superheld mit externen Systemen. Unterstützte Integrationstypen:
+
+- **SIEM** — Events und Threats an ein zentrales Security Information and Event Management weiterleiten
+- **Webhooks** — Echtzeit-Benachrichtigungen an beliebige HTTP-Endpunkte senden
+- **API** — Programmatischer Zugriff auf Devices, Threats, Alerts und Events
+
+Integrations ermöglichen die Einbindung von Superheld in bestehende Sicherheits- und Monitoring-Infrastruktur.
+
+---
+
+## Konzeptübersicht
+
+| Konzept | Beschreibung | Beispiel |
+|---|---|---|
+| **Device** | Geschütztes Endgerät | iPhone 15 eines Nutzers |
+| **Device Agent** | Lokaler Schutzprozess auf dem Gerät | Agent v2.4 auf einem Android-Tablet |
+| **Signal** | Rohdaten, die der Agent erfasst | Eingehender Anruf von +49 800 … |
+| **Threat** | Klassifiziertes Sicherheitsereignis | `phone_scam` mit Schweregrad `high` |
+| **Alert** | Nutzerbenachrichtigung über eine Bedrohung | „Verdächtiger Anruf erkannt — vermutlich Bankbetrug" |
+| **Policy** | Regel für erlaubtes/blockiertes Verhalten | Fernzugriffs-Apps automatisch blockieren |
+| **Event** | Unveränderlicher Audit-Log-Eintrag | „Alert #4821 vom Nutzer als Betrug bestätigt" |
+| **Integration** | Verbindung zu externem System | Webhook an Slack bei kritischen Alerts |
+
+---
+
+## Weiterführende Informationen
+
+- [Systemarchitektur](/experts/architecture) — Technischer Aufbau und Datenflüsse
+- [Bedrohungsmodell](/experts/threat-model) — Angriffskategorien und Erkennungsmethoden
+- [Konfiguration](/experts/configuration) — Policies und Integrationen einrichten
+- [API-Referenz](/experts/api) — Programmatischer Zugriff auf alle Konzepte
