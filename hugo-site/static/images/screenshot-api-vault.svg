@@ -1,0 +1,88 @@
+<svg width="360" height="720" viewBox="0 0 360 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="screenBgVault" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f0f23"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <clipPath id="screenClipVault">
+      <rect x="12" y="12" width="336" height="696" rx="28"/>
+    </clipPath>
+  </defs>
+  <rect width="360" height="720" rx="40" fill="#1a1a1a" stroke="#333" stroke-width="3"/>
+  <g clip-path="url(#screenClipVault)">
+    <rect x="12" y="12" width="336" height="696" fill="url(#screenBgVault)"/>
+    <!-- Status bar -->
+    <rect x="12" y="12" width="336" height="44" fill="rgba(0,0,0,0.3)"/>
+    <text x="32" y="40" fill="rgba(255,255,255,0.7)" font-family="-apple-system,system-ui,sans-serif" font-size="13" font-weight="500">9:41</text>
+    <text x="310" y="40" fill="rgba(255,255,255,0.7)" font-family="-apple-system,system-ui,sans-serif" font-size="13" font-weight="500" text-anchor="end">100%</text>
+    <rect x="120" y="12" width="120" height="28" rx="14" fill="#000"/>
+
+    <!-- Header -->
+    <text x="30" y="86" fill="#f5f5f7" font-family="-apple-system,system-ui,sans-serif" font-size="20" font-weight="600" letter-spacing="-0.3">API Vault</text>
+    <rect x="262" y="68" width="68" height="28" rx="14" fill="rgba(88,86,214,0.3)"/>
+    <text x="296" y="87" fill="#a78bfa" font-family="-apple-system,system-ui,sans-serif" font-size="12" font-weight="500" text-anchor="middle">+ Neu</text>
+    <line x1="30" y1="102" x2="330" y2="102" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Lock badge -->
+    <rect x="30" y="114" width="300" height="36" rx="10" fill="rgba(52,199,89,0.08)"/>
+    <rect x="42" y="126" width="8" height="12" rx="2" fill="#34c759"/>
+    <rect x="43" y="122" width="6" height="6" rx="3" fill="none" stroke="#34c759" stroke-width="1.5"/>
+    <text x="60" y="137" fill="#34c759" font-family="-apple-system,system-ui,sans-serif" font-size="12" font-weight="500">AES-256 verschlüsselt</text>
+    <text x="306" y="137" fill="rgba(52,199,89,0.5)" font-family="-apple-system,system-ui,sans-serif" font-size="11" text-anchor="end">3 Keys</text>
+
+    <!-- Key 1: AWS -->
+    <rect x="30" y="164" width="300" height="88" rx="12" fill="rgba(255,149,0,0.06)"/>
+    <rect x="42" y="180" width="32" height="32" rx="8" fill="rgba(255,149,0,0.15)"/>
+    <text x="58" y="201" fill="#ff9500" font-family="-apple-system,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle">A</text>
+    <text x="86" y="196" fill="rgba(245,245,247,0.9)" font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="500">AWS Production</text>
+    <text x="86" y="214" fill="rgba(245,245,247,0.35)" font-family="-apple-system,system-ui,sans-serif" font-size="11">AKIA****...****7F3Q</text>
+    <text x="86" y="238" fill="rgba(245,245,247,0.3)" font-family="-apple-system,system-ui,sans-serif" font-size="10">Letzter Zugriff: vor 2 Std.</text>
+    <rect x="234" y="228" width="80" height="20" rx="10" fill="rgba(52,199,89,0.1)"/>
+    <text x="274" y="242" fill="#34c759" font-family="-apple-system,system-ui,sans-serif" font-size="10" font-weight="500" text-anchor="middle">In Nutzung</text>
+
+    <!-- Key 2: GitHub -->
+    <rect x="30" y="264" width="300" height="88" rx="12" fill="rgba(255,255,255,0.04)"/>
+    <rect x="42" y="280" width="32" height="32" rx="8" fill="rgba(255,255,255,0.08)"/>
+    <text x="58" y="301" fill="rgba(245,245,247,0.6)" font-family="-apple-system,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle">G</text>
+    <text x="86" y="296" fill="rgba(245,245,247,0.9)" font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="500">GitHub Deploy Token</text>
+    <text x="86" y="314" fill="rgba(245,245,247,0.35)" font-family="-apple-system,system-ui,sans-serif" font-size="11">ghp_****...****xK9m</text>
+    <text x="86" y="338" fill="rgba(245,245,247,0.3)" font-family="-apple-system,system-ui,sans-serif" font-size="10">Letzter Zugriff: vor 12 Std.</text>
+    <rect x="234" y="328" width="80" height="20" rx="10" fill="rgba(52,199,89,0.1)"/>
+    <text x="274" y="342" fill="#34c759" font-family="-apple-system,system-ui,sans-serif" font-size="10" font-weight="500" text-anchor="middle">In Nutzung</text>
+
+    <!-- Key 3: Stripe -->
+    <rect x="30" y="364" width="300" height="88" rx="12" fill="rgba(88,86,214,0.06)"/>
+    <rect x="42" y="380" width="32" height="32" rx="8" fill="rgba(88,86,214,0.15)"/>
+    <text x="58" y="401" fill="#5856d6" font-family="-apple-system,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle">S</text>
+    <text x="86" y="396" fill="rgba(245,245,247,0.9)" font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="500">Stripe API Key</text>
+    <text x="86" y="414" fill="rgba(245,245,247,0.35)" font-family="-apple-system,system-ui,sans-serif" font-size="11">sk_live_****...****Dp4R</text>
+    <text x="86" y="438" fill="rgba(245,245,247,0.3)" font-family="-apple-system,system-ui,sans-serif" font-size="10">Letzter Zugriff: vor 3 Tagen</text>
+    <rect x="234" y="428" width="80" height="20" rx="10" fill="rgba(88,86,214,0.15)"/>
+    <text x="274" y="442" fill="#a78bfa" font-family="-apple-system,system-ui,sans-serif" font-size="10" font-weight="500" text-anchor="middle">Nur Workflow</text>
+
+    <!-- Audit section -->
+    <text x="30" y="490" fill="rgba(245,245,247,0.4)" font-family="-apple-system,system-ui,sans-serif" font-size="11" font-weight="500" letter-spacing="0.5">AUDIT TRAIL</text>
+
+    <rect x="30" y="504" width="300" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <rect x="42" y="518" width="6" height="6" rx="3" fill="#34c759"/>
+    <text x="58" y="524" fill="rgba(245,245,247,0.6)" font-family="-apple-system,system-ui,sans-serif" font-size="11">Jonas hat AWS Key gelesen</text>
+    <text x="306" y="524" fill="rgba(245,245,247,0.25)" font-family="-apple-system,system-ui,sans-serif" font-size="10" text-anchor="end">14:23</text>
+
+    <rect x="30" y="556" width="300" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <rect x="42" y="570" width="6" height="6" rx="3" fill="#5856d6"/>
+    <text x="58" y="576" fill="rgba(245,245,247,0.6)" font-family="-apple-system,system-ui,sans-serif" font-size="11">Stripe Key in Workflow genutzt</text>
+    <text x="306" y="576" fill="rgba(245,245,247,0.25)" font-family="-apple-system,system-ui,sans-serif" font-size="10" text-anchor="end">11:05</text>
+
+    <rect x="30" y="608" width="300" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <rect x="42" y="622" width="6" height="6" rx="3" fill="#ff9500"/>
+    <text x="58" y="628" fill="rgba(245,245,247,0.6)" font-family="-apple-system,system-ui,sans-serif" font-size="11">Sarah: GitHub Token rotiert</text>
+    <text x="306" y="628" fill="rgba(245,245,247,0.25)" font-family="-apple-system,system-ui,sans-serif" font-size="10" text-anchor="end">gestern</text>
+
+    <!-- Bottom tab bar -->
+    <rect x="12" y="676" width="336" height="32" fill="rgba(0,0,0,0.4)"/>
+    <rect x="60" y="684" width="24" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+    <rect x="120" y="684" width="24" height="4" rx="2" fill="rgba(88,86,214,0.6)"/>
+    <rect x="216" y="684" width="24" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+    <rect x="276" y="684" width="24" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+  </g>
+</svg>

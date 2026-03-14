@@ -13,6 +13,14 @@ Entdecke, wie superheld.app in deinem spezifischen Fall hilft.
 
 ## Szenario 1: Startup-Gründer
 
+<div class="sh-gallery">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-api-vault.svg" alt="superheld.app API Vault — verschlüsselte API-Keys mit Audit Trail" loading="lazy">
+    </div>
+  </div>
+</div>
+
 ### Das Problem
 
 - Wie halte ich Finanzpläne geheim?
@@ -80,6 +88,14 @@ superheld.app stellt sicher:
 
 ## Szenario 2: Investigativer Journalist
 
+<div class="sh-gallery">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-secure-chat.svg" alt="superheld.app Sichere Quelle — E2E-verschlüsselter Chat mit Auto-Delete" loading="lazy">
+    </div>
+  </div>
+</div>
+
 ### Das Problem
 
 - Quellen müssen anonym bleiben
@@ -146,6 +162,14 @@ Alles an einem Ort. Alles privat. Alles nachverfolgbar.
 ---
 
 ## Szenario 3: Medizinische Praxis
+
+<div class="sh-gallery">
+  <div class="sh-gallery-wide">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-patientenakte.svg" alt="superheld.app Patientenakte — Zugriffssteuerung und Diagnosen" loading="lazy">
+    </div>
+  </div>
+</div>
 
 ### Das Problem
 
@@ -215,6 +239,14 @@ superheld erfüllt alle relevanten Anforderungen: Access Control, Audit Logs, 25
 
 ## Szenario 4: Internationale NGO
 
+<div class="sh-gallery">
+  <div class="sh-gallery-wide">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-ngo-teams.svg" alt="superheld.app Team-Übersicht — 4 globale Standorte mit Zeitzonen" loading="lazy">
+    </div>
+  </div>
+</div>
+
 ### Das Problem
 
 - Teams in Ländern mit staatlicher Überwachung
@@ -266,6 +298,14 @@ Jeder kann in seiner Sprache arbeiten. Alles bleibt E2E-verschlüsselt.
 ---
 
 ## Szenario 5: Compliance Officer
+
+<div class="sh-gallery">
+  <div class="sh-gallery-wide">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-compliance.svg" alt="superheld.app Compliance Dashboard — KPIs, Alerts und Audit Logs" loading="lazy">
+    </div>
+  </div>
+</div>
 
 ### Das Problem
 
@@ -324,6 +364,14 @@ superheld.app bringt umfassende Compliance-Funktionen mit:
 ---
 
 ## Szenario 6: Freelancer und Consultant
+
+<div class="sh-gallery">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-workspaces.svg" alt="superheld.app Workspaces — isolierte Kunden-Workspaces" loading="lazy">
+    </div>
+  </div>
+</div>
 
 ### Das Problem
 
