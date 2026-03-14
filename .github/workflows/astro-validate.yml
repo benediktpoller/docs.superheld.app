@@ -1,0 +1,122 @@
+name: Astro Docs Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'astro-site/**'
+      - 'tests/**'
+      - '.github/workflows/astro-validate.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'astro-site/**'
+      - 'tests/**'
+      - '.github/workflows/astro-validate.yml'
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: astro-site/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: astro-site
+
+      - name: Build Astro site
+        run: npm run build
+        working-directory: astro-site
+
+      # --- OpenAPI lint ---
+      - name: Install OpenAPI linter
+        run: npm install -g @redocly/cli
+
+      - name: Lint OpenAPI spec
+        run: redocly lint astro-site/public/openapi.yaml --extends=minimal
+
+      # --- Sitemap validation ---
+      - name: Validate sitemap-index.xml exists
+        run: |
+          if [ ! -f astro-site/dist/sitemap-index.xml ]; then
+            echo "::error::sitemap-index.xml not found in build output"
+            exit 1
+          fi
+          echo "✓ sitemap-index.xml exists"
+
+      - name: Validate sitemap references
+        run: |
+          # Check that sitemap-0.xml exists
+          if [ ! -f astro-site/dist/sitemap-0.xml ]; then
+            echo "::error::sitemap-0.xml not found in build output"
+            exit 1
+          fi
+          echo "✓ sitemap-0.xml exists"
+
+          # Count URLs in sitemap
+          URL_COUNT=$(grep -c '<loc>' astro-site/dist/sitemap-0.xml || true)
+          echo "Sitemap contains ${URL_COUNT} URLs"
+
+          # Ensure robots.txt references the correct sitemap
+          if ! grep -q 'sitemap-index.xml' astro-site/dist/robots.txt; then
+            echo "::error::robots.txt does not reference sitemap-index.xml"
+            exit 1
+          fi
+          echo "✓ robots.txt references sitemap-index.xml"
+
+      # --- Endpoint drift: every PAGES entry in tests must have a matching build output ---
+      - name: Check for page drift (test list vs build output)
+        run: |
+          MISSING=0
+          # Extract paths from the PAGES list in test file
+          grep -oP '"\K/[^"]+/' tests/test_astro_site.py | sort -u | while read -r page; do
+            # Convert URL path to filesystem path (e.g. /experts/api/ -> experts/api/index.html)
+            FS_PATH="astro-site/dist${page}index.html"
+            if [ ! -f "$FS_PATH" ]; then
+              echo "::error::Test expects ${page} but ${FS_PATH} not found in build"
+              MISSING=1
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then
+            exit 1
+          fi
+          echo "✓ All test PAGES entries have matching build output"
+
+      # --- Internal link check (offline, on build output) ---
+      - name: Check for broken internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --offline
+            --no-progress
+            --include-fragments
+            --base astro-site/dist
+            'astro-site/dist/**/*.html'
+          fail: true
+
+      # --- OpenAPI endpoint drift: paths in openapi.yaml vs docs references ---
+      - name: Check OpenAPI endpoint coverage
+        run: |
+          echo "OpenAPI paths defined:"
+          grep -E '^\s+/[a-z]' astro-site/public/openapi.yaml | sed 's/://;s/^ */  /' || true
+          echo ""
+          echo "API paths referenced in docs:"
+          grep -roP '`(GET|POST|PUT|PATCH|DELETE)\s+/[^`]+`' astro-site/src/content/docs/ | sed 's/.*`/  /' | sort -u || true
+          echo ""
+          echo "Review above for drift between spec and docs (manual check)"
+
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astro-build
+          path: astro-site/dist/
+          retention-days: 7
