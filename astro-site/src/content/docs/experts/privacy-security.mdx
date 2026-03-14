@@ -38,13 +38,18 @@ Wir beschränken die Datenerhebung auf das absolute Minimum:
 
 ### Aufbewahrung und Verarbeitung
 
-| Datentyp | Verarbeitungsort | Aufbewahrungsdauer |
-|---|---|---|
-| Account-Daten | EU-Server (Frankfurt) | Bis zur Kontolöschung |
-| Geräte-Metadaten | EU-Server (Frankfurt) | 90 Tage |
-| Anonymisierte Metriken | EU-Server (Frankfurt) | 12 Monate, dann aggregiert |
-| Threat-Signaturen | Lokal auf dem Gerät | Bis zum nächsten Update |
-| KI-Analysedaten | Ausschließlich lokal | Werden nicht gespeichert |
+Die kanonischen Aufbewahrungsfristen sind in [Telemetrie und Logging](/experts/telemetry) dokumentiert. Zusammenfassung:
+
+| Datentyp | Verarbeitungsort | Aufbewahrungsdauer | Status |
+|---|---|---|---|
+| Account-Daten | EU-Server (Frankfurt) | Bis zur Kontolöschung + 30 Tage | TODO: bestätigen |
+| Geräte-Metadaten | EU-Server (Frankfurt) | 90 Tage | TODO: bestätigen |
+| Detection Events (lokal) | Gerät | 90 Tage | TODO: bestätigen |
+| Detection Events (Cloud) | EU-Server (Frankfurt) | 180 Tage | TODO: bestätigen |
+| Audit Logs | EU-Server (Frankfurt) | 12 Monate | TODO: bestätigen |
+| Aggregierte Metriken | EU-Server (Frankfurt) | 24 Monate, dann anonymisiert | TODO: bestätigen |
+| Threat-Signaturen | Lokal auf dem Gerät | Bis zum nächsten Update | |
+| KI-Analysedaten | Ausschließlich lokal | Werden nicht persistent gespeichert | |
 
 :::caution
 Nach der Löschung deines Kontos werden alle personenbezogenen Daten innerhalb von 30 Tagen unwiderruflich entfernt. Backups werden nach spätestens 90 Tagen überschrieben.
@@ -62,7 +67,7 @@ Der Kern von Superheld arbeitet direkt auf deinem Gerät. Die KI-basierte Analys
 
 Bestimmte Funktionen erfordern eine kontrollierte Kommunikation mit unserer Infrastruktur. Dabei gelten strenge Regeln:
 
-- **Anonymisierte Signaturen** — Wenn eine neue Bedrohung lokal erkannt wird, sendet Superheld ausschließlich einen anonymisierten Hash an unsere Threat-Intelligence-Plattform. Es werden keine Inhalte, Dateinamen oder Nutzerdaten übertragen.
+- **Anonymisierte Daten** — Bei Cloud Enrichment werden zwei Datentypen übertragen: (1) SHA-256-Hashes für Threat-Intelligence-Lookups und (2) anonymisierte Feature-Vektoren bei Eskalation komplexer Fälle. Keine Klartextinhalte, Dateinamen oder Nutzerdaten. Details unter [Datenflüsse](/experts/data-flows).
 - **Threat-Intelligence-Updates** — Das Gerät empfängt regelmäßig aktualisierte Bedrohungsdatenbanken, um auch offline aktuelle Signaturen zu verwenden.
 - **Modell-Updates** — KI-Modelle werden als signierte Pakete ausgeliefert und lokal verifiziert, bevor sie aktiviert werden.
 - **Transportverschlüsselung** — Jede Kommunikation mit der Cloud erfolgt über TLS 1.3 mit Certificate Pinning. Replay-Angriffe und MITM-Attacken werden wirksam verhindert.
@@ -122,7 +127,7 @@ Sicherheitslücken können verantwortungsvoll an security@superheld.app gemeldet
 
 ### Open-Source-Verpflichtung
 
-Der Quellcode von Superheld ist öffentlich einsehbar auf [GitHub](https://github.com/benediktpoller/superheld-app). Transparenz ist die Grundlage für Vertrauen. Jede Verschlüsselungsimplementierung, jede Netzwerkanfrage und jede Datenzugriffsentscheidung kann unabhängig überprüft werden.
+TODO: Open-Source-Status klären. Ist der Quellcode öffentlich? Falls ja, Repository-URL bestätigen. Falls nein, Abschnitt entfernen oder durch Audit-Informationen ersetzen.
 
 ---
 

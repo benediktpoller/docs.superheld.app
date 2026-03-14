@@ -70,7 +70,7 @@ A: Nein. Superheld verkauft oder teilt keine Nutzerdaten. Die Bedrohungserkennun
 A: Nein. Superheld ist auf minimalen Akkuverbrauch optimiert. Im Normalbetrieb betraegt der zusaetzliche Verbrauch weniger als 3%.
 
 **F: Funktioniert Superheld auch offline?**
-A: Teilweise. Der App-Scanner und der Fernsteuerungsschutz funktionieren offline. Fuer Anrufschutz gegen neue Betrugsnummern und KI-Erkennung ist eine Internetverbindung erforderlich.
+A: Teilweise. Der Device Agent fuehrt lokale Analyse (Heuristiken, ML-Modelle) ohne Internetverbindung durch — App-Scanner, Fernsteuerungsschutz und regelbasierte Erkennung funktionieren offline. Fuer Cloud Enrichment (aktuelle Bedrohungssignaturen, Threat-Intelligence-Lookups) ist eine Internetverbindung erforderlich. Ohne Cloud Enrichment arbeitet die Erkennung mit dem zuletzt heruntergeladenen Modell- und Signaturstand.
 
 **F: Beeinflusst Superheld die Geraeteleistung?**
 A: Nein. Superheld arbeitet ressourcenschonend im Hintergrund. Die Analyse erfolgt ereignisgesteuert — nur bei relevanten Aktionen, nicht permanent.

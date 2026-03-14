@@ -4,40 +4,42 @@ sidebar:
   order: 14
 ---
 
-Superheld lässt sich nahtlos in bestehende SIEM-Plattformen (Security Information and Event Management) integrieren. Diese Seite beschreibt die verfügbaren Integrationsmuster, das Alert-Format und einen vollständigen Beispiel-Workflow von der Erkennung bis zur SOC-Untersuchung.
+Superheld lässt sich in bestehende SIEM-Plattformen (Security Information and Event Management) integrieren. Diese Seite beschreibt die verfügbaren Integrationsmuster, das Event-Format und einen Beispiel-Workflow von der Erkennung bis zur SOC-Untersuchung.
 
-## Alert-Struktur
+:::note
+Das hier dokumentierte Event-Schema ist die kanonische Referenz. Für Begriffsdefinitionen siehe [Glossar](/experts/glossary). TODO: Event-Schema mit Engineering-Team als stabil bestätigen.
+:::
 
-Jeder Superheld-Alert wird als strukturiertes JSON-Objekt ausgeliefert. Das Format ist mit gängigen SIEM-Systemen wie Splunk, Microsoft Sentinel, Elastic Security und IBM QRadar kompatibel.
+## Event-Struktur (kanonisch)
+
+Jedes Superheld-Event wird als strukturiertes JSON-Objekt ausgeliefert — sowohl über Webhooks als auch über die Polling-API. Dieses Schema ist die kanonische Referenz.
 
 ```json
 {
   "event_id": "evt_7f2a9c",
   "timestamp": "2026-03-14T14:32:08Z",
-  "event_type": "detection",
-  "threat_type": "phishing",
-  "severity": "high",
-  "confidence": 0.94,
   "device_id": "dev_3c8a1f",
-  "device_platform": "macos",
-  "source_channel": "email",
-  "action_taken": "blocked",
+  "threat_category": "phishing",
+  "confidence": 0.94,
+  "action_taken": "block",
+  "policy_id": "pol_default",
+  "severity": "high",
   "description": "Gefälschte Login-Seite eines Finanzdienstleisters erkannt und blockiert.",
-  "indicators": {
-    "url_hash": "sha256:a1b2c3d4e5f6...",
-    "sender_domain": "example-phishing.de",
-    "matched_signature": "sig_fin_phish_042"
-  },
+  "indicators": [
+    "sha256:a1b2c3d4e5f6...",
+    "sig_fin_phish_042"
+  ],
   "metadata": {
     "agent_version": "2.4.1",
     "model_version": "detect-v3.2",
+    "device_platform": "macos",
     "tenant_id": "org_5e9d2a"
   }
 }
 ```
 
 :::note
-Alle personenbezogenen Daten werden vor der Übertragung automatisch redaktiert. URLs werden als SHA-256-Hashes übermittelt, E-Mail-Adressen durch Platzhalter ersetzt. Details hierzu finden Sie unter [Telemetrie und Logging](/experts/telemetry).
+Personenbezogene Daten werden vor der Übertragung redaktiert. URLs werden als SHA-256-Hashes übermittelt, E-Mail-Adressen durch Platzhalter ersetzt. Kanonische Bedrohungskategorien: `phone_scam`, `social_engineering`, `malicious_app`, `phishing`, `remote_control`, `deepfake`. TODO: Vollständige Redaktionsregeln dokumentieren. Siehe [Telemetrie und Logging](/experts/telemetry).
 :::
 
 ## Webhook-Integration
@@ -52,12 +54,20 @@ Die Webhook-Integration ermöglicht Echtzeit-Zustellung von Alerts an Ihr SIEM-S
 4. Konfigurieren Sie optional einen HMAC-Signing-Secret zur Validierung eingehender Payloads.
 5. Wählen Sie die gewünschten Schweregrade (`low`, `medium`, `high`, `critical`) als Filter.
 
-Superheld signiert jeden Webhook-Request mit einem HMAC-SHA256-Hash im Header `X-Superheld-Signature`. Ihr SIEM-System sollte diese Signatur verifizieren, um die Authentizität sicherzustellen.
+Superheld signiert jeden Webhook-Request mit einem HMAC-SHA256-Hash im Header `X-Superheld-Signature`. Ihr SIEM-System **muss** diese Signatur verifizieren, um die Authentizität sicherzustellen.
 
 ```bash
 # Beispiel: Webhook-Signatur verifizieren
 echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "$SIGNING_SECRET"
 ```
+
+:::caution
+**Sicherheitshinweise für Webhook-Verifikation:**
+- Verwenden Sie einen zeitkonstanten Vergleich (constant-time comparison) zur Signaturprüfung, um Timing-Angriffe zu verhindern.
+- Prüfen Sie die Signatur **vor** der Verarbeitung des Payloads.
+- Speichern Sie den Signing-Secret nicht in Klartextlogs.
+- TODO: Unterstützt Superheld Replay-Protection via Timestamp-Header? TODO: Idempotency-Key für Webhook-Deduplication?
+:::
 
 ### Retry-Verhalten
 
@@ -87,8 +97,7 @@ Superheld-Alerts lassen sich direkt auf die Event-Taxonomien gängiger SIEM-Plat
 
 | Superheld-Feld     | Splunk CIM            | Elastic ECS             | Microsoft Sentinel      |
 |---------------------|-----------------------|-------------------------|-------------------------|
-| `event_type`        | `action`              | `event.category`        | `Category`              |
-| `threat_type`       | `signature`           | `threat.indicator.type` | `ThreatType`            |
+| `threat_category`   | `signature`           | `threat.indicator.type` | `ThreatType`            |
 | `severity`          | `severity`            | `event.severity`        | `Severity`              |
 | `device_id`         | `dest`                | `host.id`               | `DeviceId`              |
 | `source_channel`    | `transport`           | `event.module`          | `SourceSystem`          |
@@ -134,3 +143,5 @@ Stellen Sie sicher, dass Ihr SIEM-Endpunkt über eine gültige TLS-Konfiguration
 
 **Technischer Support für Integrationen:** integrations@superheld.app
 **API-Dokumentation:** [API-Referenz](/experts/api)
+**Event-Schema:** Siehe [OpenAPI-Spezifikation](/openapi.yaml)
+**Begriffe:** Siehe [Glossar](/experts/glossary)

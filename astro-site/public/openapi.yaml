@@ -1,0 +1,462 @@
+openapi: "3.1.0"
+info:
+  title: Superheld API
+  version: "1.0.0"  # TODO: Aktuelle API-Version mit Engineering bestätigen
+  description: |
+    REST-API der Superheld-Schutzplattform.
+    Base URL: https://api.superheld.app/api/v1/
+    # TODO: Gibt es separate Umgebungen (staging, sandbox)?
+  contact:
+    email: security@superheld.app
+
+servers:
+  - url: https://api.superheld.app/api/v1
+    description: Produktion
+  # TODO: Test-/Staging-Server-URLs
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: |
+        API-Schlüssel (sh_live_*, sh_test_*) oder OAuth2 Bearer Token.
+        # TODO: Token-Format bestätigen (JWT? opaque?)
+
+  schemas:
+    Device:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "dev_xyz789"
+        name:
+          type: string
+          example: "iPhone 15 Pro"
+        platform:
+          type: string
+          enum: [ios, android, windows, macos, linux]
+        status:
+          type: string
+          enum: [active, inactive, pending]
+          # TODO: Vollständige Status-Liste bestätigen
+        agent_version:
+          type: string
+          example: "2.1.0"
+        last_seen:
+          type: string
+          format: date-time
+      # TODO: Vollständiges Device-Schema mit Engineering abstimmen
+
+    Threat:
+      type: object
+      required: [id, timestamp, device_id, category, confidence, status]
+      properties:
+        id:
+          type: string
+          example: "thr_abc123"
+        timestamp:
+          type: string
+          format: date-time
+        device_id:
+          type: string
+          example: "dev_xyz789"
+        category:
+          type: string
+          enum: [phone_scam, social_engineering, malicious_app, phishing, remote_control, deepfake]
+          # TODO: Kanonische Kategorie-Liste bestätigen
+        confidence:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          example: 0.92
+        status:
+          type: string
+          enum: [active, mitigated, dismissed]
+          # TODO: Status-Werte bestätigen
+        description:
+          type: string
+        indicators:
+          type: array
+          items:
+            type: string
+          # TODO: Indikator-Format dokumentieren
+
+    Event:
+      type: object
+      required: [event_id, timestamp, device_id, threat_category, confidence, action_taken]
+      properties:
+        event_id:
+          type: string
+          example: "evt_abc123"
+        timestamp:
+          type: string
+          format: date-time
+        device_id:
+          type: string
+        threat_category:
+          type: string
+          enum: [phone_scam, social_engineering, malicious_app, phishing, remote_control, deepfake]
+        confidence:
+          type: number
+          format: float
+        action_taken:
+          type: string
+          enum: [allow, warn, block]
+        policy_id:
+          type: string
+        metadata:
+          type: object
+          # TODO: Metadata-Schema definieren
+
+    ScanRequest:
+      type: object
+      required: [type, content]
+      properties:
+        type:
+          type: string
+          enum: [url, text, file_hash]
+          # TODO: Unterstützte Scan-Typen bestätigen
+        content:
+          type: string
+        context:
+          type: object
+          # TODO: Kontext-Optionen dokumentieren
+
+    ScanResult:
+      type: object
+      properties:
+        scan_id:
+          type: string
+          example: "scn_def456"
+        status:
+          type: string
+          enum: [clean, suspicious, malicious]
+        threats:
+          type: array
+          items:
+            $ref: "#/components/schemas/Threat"
+        # TODO: Vollständiges Scan-Ergebnis-Schema
+
+    Alert:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        conditions:
+          type: object
+        actions:
+          type: object
+        enabled:
+          type: boolean
+      # TODO: Alert-Schema vollständig dokumentieren
+
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "insufficient_scope"
+            message:
+              type: string
+            status:
+              type: integer
+              example: 403
+
+    PaginatedResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: {}
+        pagination:
+          type: object
+          properties:
+            cursor:
+              type: string
+            has_more:
+              type: boolean
+          # TODO: Paginierungs-Format bestätigen
+
+  parameters:
+    cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+      description: Paginierungs-Cursor
+    limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 50
+        maximum: 500
+      description: Maximale Anzahl Ergebnisse
+
+paths:
+  /devices:
+    get:
+      operationId: listDevices
+      summary: Registrierte Geräte abrufen
+      tags: [Devices]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/cursor"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Liste der Geräte
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Device"
+        "401":
+          description: Nicht authentifiziert
+        "403":
+          description: Unzureichende Berechtigungen (scope devices:read erforderlich)
+
+  /threats:
+    get:
+      operationId: listThreats
+      summary: Erkannte Bedrohungen auflisten
+      tags: [Threats]
+      parameters:
+        - $ref: "#/components/parameters/cursor"
+        - $ref: "#/components/parameters/limit"
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Nur Bedrohungen nach diesem Zeitpunkt
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Filter nach Bedrohungskategorie
+        - name: device_id
+          in: query
+          schema:
+            type: string
+          description: Filter nach Gerät
+      responses:
+        "200":
+          description: Liste erkannter Bedrohungen
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Threat"
+              example:
+                data:
+                  - id: "thr_abc123"
+                    timestamp: "2025-01-15T14:32:00Z"
+                    device_id: "dev_xyz789"
+                    category: "phone_scam"
+                    confidence: 0.92
+                    status: "mitigated"
+                    description: "Verdächtiger Anruf von bekannter Scam-Nummer"
+                    indicators:
+                      - "known_scam_number"
+                      - "spoofed_caller_id"
+                pagination:
+                  cursor: "eyJpZCI6InRocl9hYmMxMjMifQ"
+                  has_more: true
+
+  /alerts:
+    get:
+      operationId: listAlerts
+      summary: Benachrichtigungsregeln abrufen
+      tags: [Alerts]
+      parameters:
+        - $ref: "#/components/parameters/cursor"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Liste der Benachrichtigungsregeln
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Alert"
+
+  /scan:
+    post:
+      operationId: submitScan
+      summary: Inhalt zur Bedrohungsanalyse übergeben
+      tags: [Scan]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScanRequest"
+            example:
+              type: "url"
+              content: "https://example.com/suspicious-page"
+      responses:
+        "200":
+          description: Analyseergebnis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanResult"
+              example:
+                scan_id: "scn_def456"
+                status: "malicious"
+                threats:
+                  - id: "thr_new789"
+                    category: "phishing"
+                    confidence: 0.87
+                    description: "Phishing-Seite erkannt"
+        "422":
+          description: Ungültige Eingabe
+
+  /events:
+    get:
+      operationId: listEvents
+      summary: Audit-Events abrufen
+      description: |
+        # TODO: Implementierungsstatus bestätigen (nur in siem-integration.mdx dokumentiert)
+      tags: [Events]
+      parameters:
+        - $ref: "#/components/parameters/cursor"
+        - $ref: "#/components/parameters/limit"
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: severity
+          in: query
+          schema:
+            type: string
+            enum: [low, medium, high, critical]
+            # TODO: Severity-Level bestätigen
+      responses:
+        "200":
+          description: Liste der Events
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Event"
+
+  /status:
+    get:
+      operationId: getStatus
+      summary: Schutzstatus aller Geräte abrufen
+      description: |
+        # TODO: Implementierungsstatus bestätigen (nur in configuration.mdx dokumentiert)
+      tags: [Status]
+      responses:
+        "200":
+          description: Schutzstatus
+          # TODO: Response-Schema definieren
+
+  /rules:
+    post:
+      operationId: createRule
+      summary: Schutzregel erstellen oder ändern
+      description: |
+        # TODO: Implementierungsstatus bestätigen (nur in configuration.mdx dokumentiert)
+      tags: [Rules]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              # TODO: Rule-Schema definieren
+      responses:
+        "201":
+          description: Regel erstellt
+        "200":
+          description: Regel aktualisiert
+
+  /family:
+    get:
+      operationId: listFamilyProfiles
+      summary: Familienprofile und Geräte abrufen
+      description: |
+        # TODO: Implementierungsstatus bestätigen (nur in configuration.mdx dokumentiert)
+        # TODO: Feature-Status klären (features.mdx markiert als "Beta")
+      tags: [Family]
+      responses:
+        "200":
+          description: Familienprofile
+          # TODO: Response-Schema definieren
+
+  /whitelist:
+    post:
+      operationId: addWhitelistEntry
+      summary: Eintrag zur Whitelist hinzufügen
+      description: |
+        # TODO: Implementierungsstatus bestätigen (nur in configuration.mdx dokumentiert)
+      tags: [Whitelist]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              # TODO: Whitelist-Entry-Schema definieren
+      responses:
+        "201":
+          description: Eintrag erstellt
+
+  /report:
+    post:
+      operationId: generateReport
+      summary: Bedrohungsbericht generieren
+      description: |
+        # TODO: Implementierungsstatus bestätigen (nur in configuration.mdx dokumentiert)
+      tags: [Reports]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              # TODO: Report-Request-Schema definieren
+      responses:
+        "200":
+          description: Generierter Bericht
+          # TODO: Response-Format (JSON? PDF?)

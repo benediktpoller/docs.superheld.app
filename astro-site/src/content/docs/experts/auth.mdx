@@ -4,52 +4,65 @@ sidebar:
   order: 12
 ---
 
-Die Superheld API bietet zwei Authentifizierungsmechanismen: **API-Schlüssel** für einfache Integrationen und **OAuth2** für komplexere Szenarien mit delegiertem Zugriff. Beide Verfahren arbeiten mit scope-basierter Autorisierung, die den Zugriff auf einzelne Ressourcen granular steuert.
+Die Superheld API unterstützt zwei Authentifizierungsmechanismen: **API-Schlüssel** für direkte Integrationen und **OAuth2** für delegierten Zugriff durch Drittanwendungen. Beide Verfahren verwenden scope-basierte Autorisierung.
 
 ## API-Schlüssel
 
-### Erstellung
+### Format
 
-API-Schlüssel werden im Superheld-Dashboard unter **Einstellungen → API-Zugang → Neuer Schlüssel** erstellt. Bei der Erstellung wählen Sie einen Namen, die gewünschten Scopes und optional ein Ablaufdatum. Der Schlüssel wird nur einmal vollständig angezeigt — speichern Sie ihn sofort in einem sicheren Credential-Manager.
+TODO: API-Schlüssel-Format mit Engineering bestätigen.
+
+API-Schlüssel verwenden folgende Präfixe:
+
+| Präfix | Umgebung |
+|---|---|
+| `sh_live_` | Produktionsumgebung |
+| `sh_test_` | Testumgebung |
+
+Beispiel:
 
 ```
 sh_live_abc123xyz456
 ```
 
-Schlüssel mit dem Präfix `sh_live_` gelten für die Produktionsumgebung, `sh_test_` für die Testumgebung.
+### Erstellung
+
+API-Schlüssel werden im Superheld-Dashboard unter **Einstellungen → API-Zugang → Neuer Schlüssel** erstellt. Bei der Erstellung wählen Sie einen Namen, die gewünschten Scopes und optional ein Ablaufdatum. Der Schlüssel wird nur einmal vollständig angezeigt — speichern Sie ihn sofort in einem Credential-Manager.
 
 ### Verwendung
 
-Übermitteln Sie den API-Schlüssel im `Authorization`-Header jeder Anfrage:
+API-Schlüssel werden im `Authorization`-Header übergeben:
 
 ```bash
 curl -X GET https://api.superheld.app/api/v1/devices \
   -H "Authorization: Bearer sh_live_abc123xyz456"
 ```
 
-Übermitteln Sie Schlüssel niemals im Query-String oder Request-Body. Alle Anfragen müssen über HTTPS erfolgen.
+Schlüssel dürfen nicht im Query-String oder Request-Body übermittelt werden. Alle Anfragen müssen über HTTPS erfolgen.
 
 ### Rotation
 
-Regelmäßige Schlüsselrotation reduziert das Risiko bei Kompromittierung. Empfohlene Vorgehensweise:
+Empfohlene Vorgehensweise zur Schlüsselrotation:
 
-1. **Neuen Schlüssel erstellen** mit identischen Scopes im Dashboard.
-2. **Integration aktualisieren** — den neuen Schlüssel in Ihrer Anwendung hinterlegen.
-3. **Alten Schlüssel widerrufen**, sobald die Integration erfolgreich mit dem neuen Schlüssel arbeitet.
+1. Neuen Schlüssel mit identischen Scopes im Dashboard erstellen.
+2. Integration aktualisieren — neuen Schlüssel in der Anwendung hinterlegen.
+3. Alten Schlüssel widerrufen, sobald die Integration mit dem neuen Schlüssel arbeitet.
 
-Wir empfehlen eine Rotation alle **90 Tage**. In sicherheitskritischen Umgebungen kann ein kürzerer Zyklus von 30 Tagen sinnvoll sein.
+Empfohlener Rotationszyklus: alle 90 Tage. In sicherheitskritischen Umgebungen: 30 Tage.
 
 ### Widerruf
 
-Kompromittierte Schlüssel können jederzeit unter **Einstellungen → API-Zugang** sofort widerrufen werden. Der Widerruf ist unwiderruflich und wirkt sofort — alle laufenden Anfragen mit diesem Schlüssel erhalten ab diesem Zeitpunkt `401 Unauthorized`.
+Kompromittierte Schlüssel können unter **Einstellungen → API-Zugang** sofort widerrufen werden. Der Widerruf ist unwiderruflich und wirkt sofort — alle Anfragen mit diesem Schlüssel erhalten ab diesem Zeitpunkt `401 Unauthorized`.
 
 ## OAuth2
 
-Für Szenarien, in denen Drittanwendungen im Namen eines Benutzers auf die API zugreifen, unterstützt Superheld OAuth2.
+TODO: OAuth2-Endpunkt-URLs mit Engineering bestätigen.
+
+Für Szenarien, in denen Drittanwendungen im Namen eines Benutzers auf die API zugreifen.
 
 ### Authorization Code Flow
 
-Geeignet für Webanwendungen, bei denen ein Benutzer den Zugriff explizit autorisiert:
+Für Webanwendungen, bei denen ein Benutzer den Zugriff explizit autorisiert:
 
 ```bash
 # 1. Benutzer zur Autorisierung weiterleiten
@@ -67,9 +80,11 @@ curl -X POST https://auth.superheld.app/token \
 
 Die Antwort enthält ein `access_token` und ein `refresh_token`. Das Access-Token ist 60 Minuten gültig.
 
+TODO: Token-Refresh-Mechanismus dokumentieren.
+
 ### Client Credentials Flow
 
-Geeignet für Server-zu-Server-Integrationen ohne Benutzerinteraktion:
+Für Server-zu-Server-Integrationen ohne Benutzerinteraktion:
 
 ```bash
 curl -X POST https://auth.superheld.app/token \
@@ -97,16 +112,23 @@ curl -X GET https://api.superheld.app/api/v1/threats \
 
 ## Scope-basierte Autorisierung
 
-Scopes begrenzen den Zugriff eines Schlüssels oder Tokens auf bestimmte Ressourcen und Aktionen:
+Scopes begrenzen den Zugriff eines Schlüssels oder Tokens auf bestimmte Ressourcen und Aktionen. Die folgende Tabelle enthält alle Scopes, die für die kanonischen Endpunkte (siehe [API-Übersicht](/experts/api/)) erforderlich sind.
 
-| Scope            | Berechtigung                                |
-|------------------|---------------------------------------------|
-| `devices:read`   | Geräte auflisten und Details abrufen        |
-| `devices:write`  | Geräte registrieren und konfigurieren       |
-| `threats:read`   | Bedrohungen auflisten und Details abrufen   |
-| `alerts:read`    | Benachrichtigungsregeln anzeigen            |
-| `alerts:write`   | Benachrichtigungsregeln erstellen/ändern    |
-| `scan:execute`   | Inhalte zur Analyse übergeben               |
+| Scope | Berechtigung | Status |
+|---|---|---|
+| `devices:read` | Geräte auflisten und Details abrufen | Documented |
+| `devices:write` | Geräte registrieren und konfigurieren | Documented |
+| `threats:read` | Bedrohungen auflisten und Details abrufen | Documented |
+| `alerts:read` | Benachrichtigungsregeln anzeigen | Documented |
+| `alerts:write` | Benachrichtigungsregeln erstellen/ändern | Documented |
+| `scan:execute` | Inhalte zur Analyse übergeben | Documented |
+| `status:read` | Schutzstatus abrufen | TODO: Scope mit Engineering bestätigen |
+| `events:read` | Ereignisse abrufen (SIEM-Integration) | TODO: Scope mit Engineering bestätigen |
+| `rules:write` | Schutzregeln erstellen und ändern | TODO: Scope mit Engineering bestätigen |
+| `family:read` | Familienprofile abrufen | TODO: Scope mit Engineering bestätigen |
+| `family:write` | Familienprofile erstellen und ändern | TODO: Scope mit Engineering bestätigen |
+| `whitelist:write` | Whitelist-Einträge hinzufügen | TODO: Scope mit Engineering bestätigen |
+| `reports:read` | Bedrohungsberichte abrufen und generieren | TODO: Scope mit Engineering bestätigen |
 
 Anfragen, deren Scope nicht ausreicht, werden mit `403 Forbidden` beantwortet:
 
@@ -120,7 +142,7 @@ Anfragen, deren Scope nicht ausreicht, werden mit `403 Forbidden` beantwortet:
 }
 ```
 
-**Best Practice:** Vergeben Sie immer nur die minimal notwendigen Scopes. Eine Integration, die ausschließlich Bedrohungen überwacht, benötigt lediglich `threats:read` — nicht `devices:write` oder `alerts:write`.
+Vergeben Sie immer nur die minimal notwendigen Scopes. Eine Integration, die ausschließlich Bedrohungen überwacht, benötigt lediglich `threats:read`.
 
 :::caution
 **Sicherheitshinweise für API-Schlüssel:**

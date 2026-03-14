@@ -4,33 +4,62 @@ sidebar:
   order: 13
 ---
 
-Superheld erzeugt strukturierte Telemetriedaten, die Sicherheitsvorfälle transparent dokumentieren und gleichzeitig die Privatsphäre der Nutzer wahren. Diese Seite beschreibt die verfügbaren Log-Typen, deren Aufbau und die geltenden Datenschutz- und Aufbewahrungsregeln.
+Superheld erzeugt strukturierte Telemetriedaten, die Sicherheitsvorfälle dokumentieren. Diese Seite beschreibt die Log-Typen, das kanonische Event-Schema, Datenschutzregeln und Aufbewahrungsfristen.
 
-## Event Logs
+## Event-Kategorien
 
 Superheld protokolliert sicherheitsrelevante Ereignisse in drei Kategorien:
 
-- **Detection Events** — Erkannte Bedrohungen wie Phishing-Versuche, Malware-Downloads oder Social-Engineering-Angriffe.
-- **User Actions** — Sicherheitsrelevante Nutzeraktionen wie das Freigeben einer blockierten URL, das Ignorieren einer Warnung oder das manuelle Starten eines Scans.
-- **Policy Changes** — Änderungen an Sicherheitsrichtlinien, z. B. das Anpassen von Schwellenwerten, das Aktivieren neuer Schutzmodule oder das Ändern von Alert-Regeln.
+- **Detection Events** — Erkannte Bedrohungen (Phishing-Versuche, Social-Engineering-Angriffe, schädliche Apps etc.).
+- **User Actions** — Sicherheitsrelevante Nutzeraktionen (Freigeben einer blockierten URL, Ignorieren einer Warnung, manuelles Starten eines Scans).
+- **Policy Changes** — Änderungen an Sicherheitsrichtlinien (Schwellenwerte, Schutzmodule, Alert-Regeln).
 
 Jedes Event enthält einen ISO-8601-Zeitstempel, eine eindeutige Event-ID und die Geräte-ID des betroffenen Endpunkts.
 
-## Detection Events
+## Kanonisches Event-Schema
 
-Detection Events bilden den Kern der Superheld-Telemetrie. Jeder Erkennungsdatensatz folgt einem einheitlichen Schema:
+TODO: Kanonisches Event-Schema mit Engineering abstimmen.
 
-| Feld              | Typ      | Beschreibung                                              |
-|-------------------|----------|-----------------------------------------------------------|
-| `event_id`        | string   | Eindeutige Kennung des Ereignisses                        |
-| `timestamp`       | string   | ISO-8601-Zeitstempel der Erkennung                        |
-| `device_id`       | string   | Pseudonymisierte Gerätekennung                            |
-| `threat_type`     | string   | Kategorie: `phishing`, `malware`, `social_engineering`    |
-| `severity`        | string   | Schweregrad: `low`, `medium`, `high`, `critical`          |
-| `confidence`      | float    | Konfidenzwert des KI-Modells (0.0–1.0)                    |
-| `action_taken`    | string   | Automatische Reaktion: `blocked`, `quarantined`, `warned` |
-| `source_channel`  | string   | Herkunftskanal: `email`, `browser`, `file_system`         |
-| `description`     | string   | Menschenlesbare Zusammenfassung                           |
+Das folgende Schema definiert die Struktur eines Detection Events. Dieses Schema gilt auch für die SIEM-Integration (siehe [SIEM-Integration](/experts/siem-integration)).
+
+```json
+{
+  "event_id": "evt_abc123",
+  "timestamp": "2025-01-15T14:32:00Z",
+  "device_id": "dev_xyz789",
+  "threat_category": "phone_scam",
+  "confidence": 0.92,
+  "action_taken": "block",
+  "policy_id": "pol_default",
+  "metadata": {}
+}
+```
+
+### Feldübersicht
+
+| Feld | Typ | Beschreibung |
+|---|---|---|
+| `event_id` | string | Eindeutige Kennung des Ereignisses (Präfix `evt_`) |
+| `timestamp` | string | ISO-8601-Zeitstempel der Erkennung |
+| `device_id` | string | Pseudonymisierte Gerätekennung (Präfix `dev_`) |
+| `threat_category` | string | Bedrohungskategorie (siehe unten) |
+| `confidence` | float | Konfidenzwert des Erkennungsmodells (0.0–1.0) |
+| `action_taken` | string | Automatische Reaktion (`block`, `quarantine`, `warn`) |
+| `policy_id` | string | ID der angewandten Schutzrichtlinie (Präfix `pol_`) |
+| `metadata` | object | Zusätzliche kontextabhängige Daten |
+
+### Bedrohungskategorien
+
+TODO: Vollständige Liste der Bedrohungskategorien mit Engineering bestätigen.
+
+| Kategorie | Beschreibung |
+|---|---|
+| `phone_scam` | Telefonbetrug |
+| `social_engineering` | Social-Engineering-Angriff |
+| `malicious_app` | Schädliche Anwendung |
+| `phishing` | Phishing-Versuch |
+| `remote_control` | Unerlaubte Fernsteuerung |
+| `deepfake` | Deepfake-Erkennung |
 
 :::note
 Detection Events werden lokal auf dem Gerät erzeugt. Nur anonymisierte Metadaten (ohne Inhalte oder PII) werden an die Cloud übertragen, wenn der Nutzer die zentrale Telemetrie aktiviert hat.
@@ -38,9 +67,9 @@ Detection Events werden lokal auf dem Gerät erzeugt. Nur anonymisierte Metadate
 
 ## Audit Logs
 
-Audit Logs dokumentieren administrative Aktionen und Konfigurationsänderungen innerhalb eines Superheld-Kontos. Sie sind insbesondere für Team- und Enterprise-Accounts relevant.
+Audit Logs dokumentieren administrative Aktionen und Konfigurationsänderungen innerhalb eines Superheld-Kontos. Relevant für Team- und Enterprise-Accounts.
 
-Protokollierte Aktionen umfassen:
+Protokollierte Aktionen:
 
 - **Konfigurationsänderungen** — Anpassungen an Schutzrichtlinien, Schwellenwerten oder Modellparametern.
 - **Zugriffsverwaltung** — Hinzufügen oder Entfernen von Teammitgliedern, Änderungen an Rollen und Berechtigungen.
@@ -48,15 +77,17 @@ Protokollierte Aktionen umfassen:
 - **Alert-Konfiguration** — Erstellen, Ändern oder Löschen von Benachrichtigungsregeln.
 - **Geräteregistrierung** — Hinzufügen oder Entfernen von Endgeräten.
 
-Jeder Audit-Log-Eintrag enthält die Identität des handelnden Nutzers, den Zeitstempel, die durchgeführte Aktion und den vorherigen sowie neuen Zustand der geänderten Ressource.
+Jeder Audit-Log-Eintrag enthält: Identität des handelnden Nutzers, Zeitstempel, durchgeführte Aktion, vorheriger und neuer Zustand der geänderten Ressource.
 
 ## Redaction und Datenschutz
+
+TODO: Vollständige Redaktionsregeln mit Datenschutzteam dokumentieren.
 
 Superheld wendet automatische Redaktionsregeln an, bevor Telemetriedaten das Gerät verlassen:
 
 - **Personenbezogene Daten (PII)** — E-Mail-Adressen, Namen und Telefonnummern werden durch Platzhalter ersetzt (z. B. `[REDACTED_EMAIL]`).
-- **Nachrichteninhalte** — E-Mail-Bodys, Chat-Nachrichten und Dateiinhalte werden grundsätzlich nicht in Telemetriedaten aufgenommen.
-- **URLs** — Erkannte Phishing-URLs werden als gehashte Werte übertragen. Die vollständige URL verbleibt ausschließlich lokal.
+- **Nachrichteninhalte** — E-Mail-Bodys, Chat-Nachrichten und Dateiinhalte werden nicht in Telemetriedaten aufgenommen.
+- **URLs** — Erkannte Phishing-URLs werden als gehashte Werte übertragen. Die vollständige URL verbleibt lokal.
 - **IP-Adressen** — Quell-IP-Adressen werden vor der Übertragung auf Netzwerk-Ebene gekürzt (/24 für IPv4, /48 für IPv6).
 
 :::caution
@@ -65,23 +96,26 @@ Die Redaktionsregeln greifen ausschließlich bei der Cloud-Übertragung. Lokale 
 
 ## Aufbewahrungsrichtlinien
 
-| Datentyp                | Speicherort          | Aufbewahrungsdauer              |
-|-------------------------|----------------------|---------------------------------|
-| Detection Events (lokal)| Gerät                | 90 Tage, dann automatisch gelöscht |
-| Detection Events (Cloud)| EU-Server (Frankfurt)| 180 Tage                       |
-| Audit Logs              | EU-Server (Frankfurt)| 12 Monate                      |
-| Aggregierte Metriken    | EU-Server (Frankfurt)| 24 Monate, dann anonymisiert   |
+Die folgende Tabelle enthält die kanonischen Aufbewahrungsfristen. Bei Widersprüchen zu anderen Dokumentationsseiten gilt diese Tabelle.
 
-Nach Ablauf der Aufbewahrungsfrist werden Daten unwiderruflich gelöscht. Eine vorzeitige Löschung kann jederzeit über das Dashboard oder die API angefordert werden.
+| Datentyp | Speicherort | Aufbewahrung | Status |
+|---|---|---|---|
+| Detection Events (lokal) | Gerät | 90 Tage | TODO: bestätigen |
+| Detection Events (Cloud) | EU-Server | 180 Tage | TODO: bestätigen |
+| Audit Logs | EU-Server | 12 Monate | TODO: bestätigen |
+| Aggregierte Metriken | EU-Server | 24 Monate | TODO: bestätigen |
+| Account-Daten | EU-Server | Bis Kontolöschung + 30 Tage | TODO: bestätigen |
+
+Nach Ablauf der Aufbewahrungsfrist werden Daten unwiderruflich gelöscht. Eine vorzeitige Löschung kann über das Dashboard oder die API angefordert werden.
 
 ## Export an SIEM-Plattformen
 
-Superheld unterstützt den Export von Telemetriedaten an externe SIEM-Systeme (Security Information and Event Management). Dafür stehen zwei Mechanismen zur Verfügung:
+Superheld unterstützt den Export von Telemetriedaten an externe SIEM-Systeme (Security Information and Event Management):
 
-- **Webhook-Push** — Superheld sendet Ereignisse in Echtzeit an einen konfigurierbaren HTTPS-Endpunkt. Das Payload-Format entspricht dem Detection-Event-Schema (siehe oben) und ist mit gängigen SIEM-Plattformen wie Splunk, Microsoft Sentinel und Elastic Security kompatibel.
-- **Polling-API** — Über den Endpunkt `GET /api/v1/events` können SIEM-Systeme Ereignisse periodisch abrufen. Pagination und Zeitfilter ermöglichen eine effiziente Synchronisation.
+- **Webhook-Push** — Superheld sendet Ereignisse in Echtzeit an einen konfigurierbaren HTTPS-Endpunkt. Das Payload-Format entspricht dem kanonischen Event-Schema (siehe oben).
+- **Polling-API** — Über den Endpunkt `GET /api/v1/events` können SIEM-Systeme Ereignisse periodisch abrufen. Paginierung und Zeitfilter ermöglichen effiziente Synchronisation.
 
-Details zur SIEM-Integration, einschließlich Beispielkonfigurationen und Workflow-Diagrammen, finden Sie auf der Seite [SIEM-Integration](/experts/siem-integration).
+Details zur SIEM-Integration: [SIEM-Integration](/experts/siem-integration).
 
 ---
 

@@ -1,0 +1,142 @@
+---
+title: "Glossar und Definitionen"
+sidebar:
+  order: 19
+---
+
+Dieses Glossar definiert die kanonischen Begriffe der Superheld-Plattform. Alle Dokumentationsseiten verwenden diese Definitionen einheitlich.
+
+### Device
+
+**Definition:** Ein Endgerät (Smartphone, Tablet, Desktop), auf dem der Device Agent installiert ist. Identifiziert durch eine kryptografisch generierte Device-ID.
+
+**Scope:** Gesamte Plattform — jede Interaktion beginnt auf einem Device.
+
+**Nicht zu verwechseln mit:** Benutzer (ein Benutzer kann mehrere Devices besitzen).
+
+### Device Agent
+
+**Definition:** Ein lokaler Systemdienst auf dem Gerät des Benutzers. Erfasst Signale, führt lokale Analyse durch und setzt Richtlinienentscheidungen um. Arbeitet mit minimalen Systemrechten.
+
+**Scope:** Endgeräte — läuft lokal auf jedem registrierten Device.
+
+**Nicht zu verwechseln mit:** Cloud-Dienst (der Device Agent arbeitet lokal, nicht serverseitig).
+
+### Signal
+
+**Definition:** Ein einzelnes, vom Device Agent erfasstes Rohereignis. Beispiele: eingehender Anruf, App-Installation, Berechtigungsänderung, DNS-Anfrage. Signale sind die Eingabe der Erkennungspipeline.
+
+**Scope:** Erste Stufe der Detection Pipeline — Signal Collection.
+
+**Nicht zu verwechseln mit:** Event (ein Event ist ein Audit-Log-Eintrag, kein Rohereignis).
+
+### Threat
+
+**Definition:** Eine klassifizierte Bedrohung, die aus einem oder mehreren Signalen abgeleitet wurde. Enthält eine Bedrohungskategorie und einen Konfidenzwert (0.0–1.0). Kanonische Kategorien: `phone_scam`, `social_engineering`, `malicious_app`, `phishing`, `remote_control`, `deepfake`.
+
+**Scope:** Ergebnis der lokalen oder cloudbasierten Analyse innerhalb der Detection Pipeline.
+
+**Nicht zu verwechseln mit:** Alert (nicht jeder Threat erzeugt einen Alert).
+
+{/* TODO: Kanonische Kategorie-Liste mit Produktteam abstimmen. */}
+
+### Alert
+
+**Definition:** Eine benutzerseitige Benachrichtigung über eine erkannte Bedrohung. Wird durch eine Richtlinienentscheidung ausgelöst. Nicht jeder Threat erzeugt einen Alert — nur Threats, deren Konfidenzwert den konfigurierten Schwellenwert überschreitet.
+
+**Scope:** Benutzeroberfläche und Benachrichtigungssystem.
+
+**Nicht zu verwechseln mit:** Event (ein Event dokumentiert die Entscheidung, ein Alert informiert den Benutzer).
+
+### Event
+
+**Definition:** Ein unveränderlicher Audit-Log-Eintrag, der eine Richtlinienentscheidung dokumentiert. Enthält: Zeitstempel, Threat-Referenz, angewandte Richtlinie, Entscheidung (allow/warn/block), Konfidenzwert. Events sind die Ausgabe der Erkennungspipeline.
+
+**Scope:** Audit-Log und Compliance — jede Richtlinienentscheidung erzeugt genau ein Event.
+
+**Nicht zu verwechseln mit:** Signal (ein Signal ist ein Rohereignis, ein Event ist ein verarbeiteter Audit-Eintrag).
+
+### Policy
+
+**Definition:** Eine Regel, die definiert, wie auf einen Threat reagiert wird. Konfigurierbar durch Benutzer oder Administrator. Enthält: Schwellenwerte, Whitelist/Blacklist-Einträge, organisationsspezifische Regeln.
+
+**Scope:** Policy Engine — steuert die Entscheidungslogik zwischen Threat-Erkennung und Event-Erzeugung.
+
+**Nicht zu verwechseln mit:** Configuration (allgemeine Einstellungen des Systems, nicht bedrohungsspezifisch).
+
+### Integration
+
+**Definition:** Eine Verbindung zu einem externen System (SIEM, Ticketing, Monitoring). Realisiert über REST-API oder Webhooks.
+
+**Scope:** Schnittstellen zu Drittsystemen — betrifft Event-Export und externe Benachrichtigungen.
+
+**Nicht zu verwechseln mit:** API (die API ist das technische Protokoll, eine Integration ist die konfigurierte Verbindung).
+
+### Confidence Score (Konfidenzwert)
+
+**Definition:** Ein numerischer Wert zwischen 0.0 und 1.0, der die Sicherheit einer Bedrohungsklassifikation ausdrückt. Standard-Schwellenwerte: 0.0–0.3 = Allow, 0.3–0.7 = Warn, 0.7+ = Block. Schwellenwerte sind konfigurierbar via Policy Engine.
+
+**Scope:** Detection Pipeline und Policy Engine — bestimmt die Reaktion auf einen Threat.
+
+**Nicht zu verwechseln mit:** Severity (Schweregrad einer Bedrohung, unabhängig von der Klassifikationssicherheit).
+
+### Cloud Enrichment
+
+**Definition:** Optionale Stufe der Erkennungspipeline, bei der anonymisierte Daten an die Superheld Threat-Intelligence-Plattform gesendet werden. Sendet: (1) kryptografische Hashes (SHA-256) für Lookups, (2) anonymisierte Feature-Vektoren bei Eskalation komplexer Fälle.
+
+**Scope:** Detection Pipeline — zwischen Local Detection und Policy Decision.
+
+**Nicht zu verwechseln mit:** Cloud Intelligence (eine Architektur-Komponente, nicht eine Pipeline-Stufe).
+
+{/* TODO: Exakte Definition von "Feature-Vektor" — welche Dimensionsreduktion, welche Differential-Privacy-Parameter? */}
+
+### Feature-Vektor
+
+**Definition:** TODO: Exakte technische Definition fehlt. Vermutlich eine komprimierte numerische Repräsentation von Signalmerkmalen, die durch Dimensionsreduktion und Differential Privacy anonymisiert wird. Nicht reversibel auf Originalinhalte.
+
+**Scope:** Cloud Enrichment — wird nur bei Eskalation komplexer Fälle übertragen.
+
+**Nicht zu verwechseln mit:** Hash (ein Hash ist ein Einweg-Lookup-Schlüssel, ein Feature-Vektor ist eine analytische Repräsentation).
+
+{/* TODO: Transformationsverfahren, Dimensionalität und Privacy-Parameter mit Engineering-Team klären. */}
+
+### Hash (Signatur-Hash)
+
+**Definition:** Ein SHA-256-Einweg-Hash eines Signalmerkmals (z.B. Rufnummer, App-Signatur, Domain). Wird für Threat-Intelligence-Lookups an die Cloud gesendet. Nicht reversibel.
+
+**Scope:** Cloud Enrichment — primärer Mechanismus für Threat-Intelligence-Abfragen.
+
+**Nicht zu verwechseln mit:** Feature-Vektor (ein Feature-Vektor ist eine analytische Repräsentation, kein Lookup-Schlüssel).
+
+### Detection Pipeline
+
+**Definition:** Die mehrstufige Verarbeitungskette: Signal Collection → Local Detection → (Optional) Cloud Enrichment → Policy Decision → Event Generation → Alert Exposure. Synonym: Erkennungspipeline.
+
+**Scope:** Gesamte Bedrohungserkennung — vom Rohereignis bis zur Benutzerbenachrichtigung.
+
+**Nicht zu verwechseln mit:** Device Agent (der Device Agent ist eine Komponente innerhalb der Pipeline, nicht die Pipeline selbst).
+
+### Redaction (Redaktion)
+
+**Definition:** Automatische Entfernung personenbezogener Daten vor der Übertragung an Cloud-Dienste oder externe Systeme.
+
+**Scope:** Datenschutz — wird angewendet vor Cloud Enrichment und Integrationen.
+
+**Nicht zu verwechseln mit:** Anonymisierung (Redaction entfernt Felder vollständig, Anonymisierung transformiert sie).
+
+{/* TODO: Welche Felder werden redaktiert? Welche Regeln gelten? */}
+
+## Abgrenzungen
+
+| Begriff | Bedeutung | NICHT verwechseln mit |
+|---|---|---|
+| Signal | Rohdaten vom Device Agent | Event (Audit-Log-Eintrag) |
+| Threat | Klassifizierte Bedrohung | Alert (Benutzerbenachrichtigung) |
+| Event | Unveränderlicher Audit-Eintrag | Signal (Rohdaten) |
+| Alert | Benachrichtigung an Benutzer | Event (Audit-Eintrag) |
+| Policy | Reaktionsregel | Configuration (allgemeine Einstellungen) |
+| Cloud Enrichment | Optionale Pipeline-Stufe | Cloud Intelligence (Architektur-Komponente) |
+
+:::note
+Dieses Glossar ist die kanonische Referenz. Bei Widersprüchen zwischen diesem Glossar und anderen Dokumentationsseiten gilt die Definition im Glossar. Abweichungen bitte an das Dokumentationsteam melden.
+:::

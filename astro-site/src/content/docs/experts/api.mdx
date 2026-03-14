@@ -4,46 +4,76 @@ sidebar:
   order: 11
 ---
 
-Die Superheld API ermöglicht die programmatische Integration von Bedrohungserkennung, Geräteverwaltung und Alerting in bestehende Sicherheits-Workflows. Diese Seite beschreibt die zentralen Designprinzipien, das Authentifizierungsmodell und typische Integrationsmuster.
+Die Superheld API ermöglicht die programmatische Integration von Bedrohungserkennung, Geräteverwaltung und Alerting. Diese Seite beschreibt Endpunkte, Authentifizierung, Paginierung und Fehlerformate.
 
-## API-Prinzipien
+## Basis-URL und Versionierung
 
-Die API folgt dem **REST**-Architekturstil. Alle Endpunkte akzeptieren und liefern **JSON**. Die Basis-URL lautet:
+Alle Endpunkte verwenden die Basis-URL:
 
 ```
 https://api.superheld.app/api/v1/
 ```
 
-Jede Anfrage muss über **HTTPS** erfolgen — unverschlüsselte Verbindungen werden abgelehnt. Die API ist **versioniert**: Das Präfix `/v1/` garantiert Abwärtskompatibilität innerhalb einer Hauptversion. Änderungen an bestehenden Feldern oder Endpunkten werden erst mit `/v2/` eingeführt.
+- Transport: ausschließlich HTTPS. Unverschlüsselte Verbindungen werden abgelehnt.
+- Versionierung: Das Präfix `/v1/` kennzeichnet die aktuelle API-Version. TODO: Abwärtskompatibilitätsgarantien mit Engineering bestätigen.
+- Datenformat: JSON (Request und Response).
 
-**Rate Limiting** schützt die Infrastruktur. Pro API-Schlüssel sind **120 Anfragen pro Minute** erlaubt. Bei Überschreitung antwortet die API mit `429 Too Many Requests`. Die Header `X-RateLimit-Limit`, `X-RateLimit-Remaining` und `X-RateLimit-Reset` informieren über den aktuellen Status.
+## Authentifizierung
 
-## Authentifizierungsmodell
-
-Alle Anfragen erfordern einen gültigen API-Schlüssel im `Authorization`-Header:
+Alle Anfragen erfordern einen gültigen API-Schlüssel oder ein OAuth2-Token im `Authorization`-Header:
 
 ```
 Authorization: Bearer sh_live_abc123xyz456
 ```
 
-API-Schlüssel werden im Dashboard unter **Einstellungen → API-Zugang** erstellt. Für erweiterte Szenarien unterstützt die API zusätzlich **OAuth2** mit dem Authorization-Code-Flow und Client-Credentials-Flow. OAuth2-Token erhalten **Scopes**, die den Zugriff granular steuern — beispielsweise `devices:read`, `threats:read`, `alerts:write` oder `scan:execute`. Details zur Authentifizierung finden Sie auf der Seite [Authentifizierung und Autorisierung](/experts/auth/).
+Details zu API-Schlüsseln, OAuth2-Flows und Scopes: [Authentifizierung und Autorisierung](/experts/auth/).
 
-## Multi-Tenant-Modell
+## Rate Limiting
 
-Die API arbeitet mit **organisationsbasierter Mandantentrennung**. Jeder API-Schlüssel ist genau einer Organisation zugeordnet. Anfragen liefern ausschließlich Daten der zugehörigen Organisation — ein übergreifender Zugriff ist nicht möglich. Geräte, Bedrohungen und Alerts sind strikt isoliert. Organisationsadministratoren können mehrere API-Schlüssel mit unterschiedlichen Scopes für verschiedene Integrationen erstellen.
+TODO: Rate-Limits mit Engineering bestätigen.
 
-## Zentrale Endpunkte
+Pro API-Schlüssel sind derzeit **120 Anfragen pro Minute** dokumentiert. Bei Überschreitung antwortet die API mit `429 Too Many Requests`. Relevante Response-Header:
 
-Die wichtigsten Ressourcen der API:
+| Header | Beschreibung |
+|---|---|
+| `X-RateLimit-Limit` | Maximale Anfragen pro Zeitfenster |
+| `X-RateLimit-Remaining` | Verbleibende Anfragen im aktuellen Zeitfenster |
+| `X-RateLimit-Reset` | Unix-Timestamp, wann das Zeitfenster zurückgesetzt wird |
 
-| Methode | Endpunkt         | Beschreibung                              |
-|---------|------------------|-------------------------------------------|
-| `GET`   | `/devices`       | Alle registrierten Geräte abrufen         |
-| `GET`   | `/threats`       | Erkannte Bedrohungen auflisten            |
-| `GET`   | `/alerts`        | Konfigurierte Benachrichtigungsregeln     |
-| `POST`  | `/scan`          | Inhalt zur Bedrohungsanalyse übergeben    |
+## Paginierung
 
-### Beispiel: GET /threats
+TODO: Paginierungsverhalten mit Engineering bestätigen.
+
+Die API verwendet cursor-basierte Paginierung. Antworten mit mehreren Ergebnissen enthalten ein `has_more`-Feld und einen `cursor`-Wert für die nächste Seite:
+
+```bash
+GET /api/v1/threats?cursor=abc123&limit=50
+```
+
+TODO: Standardwerte für `limit` und maximale Seitengröße dokumentieren.
+
+## Kanonische Endpunkt-Tabelle
+
+Die folgende Tabelle enthält alle dokumentierten Endpunkte. Endpunkte, die nur in einer einzigen Dokumentationsseite erwähnt werden, sind entsprechend markiert.
+
+| Methode | Pfad | Beschreibung | Status |
+|---|---|---|---|
+| `GET` | `/api/v1/devices` | Registrierte Geräte abrufen | Documented |
+| `GET` | `/api/v1/threats` | Erkannte Bedrohungen auflisten | Documented |
+| `GET` | `/api/v1/alerts` | Benachrichtigungsregeln abrufen | Documented |
+| `POST` | `/api/v1/scan` | Inhalt zur Analyse übergeben | Documented |
+| `GET` | `/api/v1/status` | Schutzstatus abrufen | TODO: Nur in configuration.mdx erwähnt |
+| `GET` | `/api/v1/events` | Ereignisse abrufen | TODO: Nur in siem-integration.mdx erwähnt |
+| `POST` | `/api/v1/rules` | Schutzregel erstellen/ändern | TODO: Nur in configuration.mdx erwähnt |
+| `GET` | `/api/v1/family` | Familienprofile abrufen | TODO: Nur in configuration.mdx erwähnt |
+| `POST` | `/api/v1/whitelist` | Whitelist-Eintrag hinzufügen | TODO: Nur in configuration.mdx erwähnt |
+| `POST` | `/api/v1/report` | Bedrohungsbericht generieren | TODO: Nur in configuration.mdx erwähnt |
+
+## Beispiel-Antworten
+
+### GET /threats
+
+TODO: Response-Schema mit Engineering bestätigen.
 
 ```json
 {
@@ -62,7 +92,9 @@ Die wichtigsten Ressourcen der API:
 }
 ```
 
-### Beispiel: POST /scan
+### POST /scan
+
+TODO: Response-Schema mit Engineering bestätigen.
 
 ```json
 {
@@ -75,25 +107,51 @@ Die wichtigsten Ressourcen der API:
 }
 ```
 
-## Event-Modell
+## Fehlerformat
 
-Bedrohungen durchlaufen in der API einen definierten Lebenszyklus: **Erkennung → Klassifizierung → Benachrichtigung → Behebung**. Bei der Erkennung wird ein Threat-Objekt mit Typ, Schweregrad und Quelle erstellt. Die Klassifizierung ordnet die Bedrohung einer Kategorie zu (`phishing`, `malware`, `social_engineering`). Konfigurierte Alert-Regeln prüfen den Schweregrad und lösen Benachrichtigungen über den gewählten Kanal aus. Über die API können Bedrohungen anschließend als behoben markiert werden.
+TODO: Fehlerformat mit Engineering bestätigen.
+
+Die API liefert Fehler in folgendem Format:
+
+```json
+{
+  "error": {
+    "code": "error_code",
+    "message": "Beschreibung des Fehlers.",
+    "status": 400
+  }
+}
+```
+
+Relevante HTTP-Statuscodes:
+
+| Code | Bedeutung |
+|---|---|
+| `400` | Ungültige Anfrage (fehlende oder fehlerhafte Parameter) |
+| `401` | Authentifizierung fehlgeschlagen |
+| `403` | Fehlender Scope oder unzureichende Berechtigung |
+| `404` | Ressource nicht gefunden |
+| `429` | Rate Limit überschritten |
+| `500` | Interner Serverfehler |
+
+## Multi-Tenant-Modell
+
+Die API arbeitet mit organisationsbasierter Mandantentrennung. Jeder API-Schlüssel ist genau einer Organisation zugeordnet. Anfragen liefern ausschließlich Daten der zugehörigen Organisation. Geräte, Bedrohungen und Alerts sind strikt isoliert.
 
 ## Integrationsmuster
 
 ### Pull-Integration (Polling)
 
-Bei der Pull-Integration fragt Ihr System die API regelmäßig nach neuen Daten ab. Das eignet sich für Dashboards, Berichte und periodische Synchronisierungen. Beachten Sie das Rate Limit von 120 Anfragen pro Minute — ein Polling-Intervall von 30 Sekunden pro Endpunkt ist empfehlenswert.
+Bei der Pull-Integration fragt Ihr System die API regelmäßig nach neuen Daten ab. Beachten Sie das Rate Limit.
 
 ```bash
-# Alle 30 Sekunden neue Bedrohungen abfragen
 curl -X GET "https://api.superheld.app/api/v1/threats?since=2026-03-14T09:00:00Z" \
   -H "Authorization: Bearer sh_live_abc123xyz456"
 ```
 
 ### Push-Integration (Webhooks)
 
-Bei der Push-Integration sendet Superheld Ereignisse aktiv an Ihren Endpunkt. Sie konfigurieren eine Alert-Regel mit `channel: "webhook"` und einer Ziel-URL. Bei jeder relevanten Bedrohung sendet die API einen `POST`-Request mit dem vollständigen Event-Objekt an Ihre URL. Webhooks sind effizienter als Polling und ermöglichen Echtzeit-Reaktionen.
+Bei der Push-Integration sendet Superheld Ereignisse an Ihren HTTPS-Endpunkt. Konfiguration über Alert-Regeln mit `channel: "webhook"`:
 
 ```bash
 curl -X POST https://api.superheld.app/api/v1/alerts \
@@ -107,4 +165,4 @@ curl -X POST https://api.superheld.app/api/v1/alerts \
   }'
 ```
 
-**Empfehlung:** Nutzen Sie Webhooks für zeitkritische Sicherheitsereignisse und Polling für regelmäßige Bestandsabgleiche. Kombinieren Sie beide Muster für eine robuste Integration, bei der Webhooks die primäre Quelle bilden und Polling als Fallback dient.
+Webhooks eignen sich für zeitkritische Sicherheitsereignisse. Polling eignet sich für regelmäßige Bestandsabgleiche. Beide Muster lassen sich kombinieren: Webhooks als primäre Quelle, Polling als Fallback.

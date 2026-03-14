@@ -80,6 +80,7 @@ PAGES = [
     ("/experts/attack-simulations/", "Angriffsszenarien"),
     ("/experts/roadmap/", "Roadmap"),
     ("/experts/responsible-disclosure/", "Responsible Disclosure"),
+    ("/experts/glossary/", "Glossar und Definitionen"),
 ]
 
 

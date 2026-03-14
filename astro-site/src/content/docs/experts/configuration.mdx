@@ -28,7 +28,7 @@ Einstellungen → Schutzrichtlinien → Regeln
 | **Unbekannte Nummern** | Warnung oder Blockierung bei Anrufen von unbekannten Nummern | Warnung |
 | **Auslaendische Nummern** | Konfigurierbar: erlauben, warnen oder blockieren | Warnung |
 | **Mustererkennung** | Erkennung typischer Betrugsmuster (z.B. Anrufhaeufigkeit, Gespraechsdauer) | Aktiviert |
-| **KI-Stimmanalyse** | Erkennung synthetischer Stimmen und Deepfakes | Aktiviert (Premium) |
+| **KI-Stimmanalyse** | Erkennung synthetischer Stimmen und Deepfakes. TODO: Klaeren ob lokal oder Cloud-basiert. Falls Cloud: Datenschutzimplikationen dokumentieren. | Aktiviert (Premium) |
 
 #### App-Scanner-Regeln
 
@@ -82,7 +82,7 @@ Jedes Familienprofil hat eigene Schutzrichtlinien:
 | **App-Genehmigungen** | Ob App-Installationen genehmigt werden muessen |
 | **Anrufregeln** | Welche Anrufe blockiert/erlaubt werden |
 | **Aenderungssperre** | Ob das Profil vom Nutzer selbst geaendert werden kann |
-| **Standort-Benachrichtigung** | Benachrichtigung bei Verlassen definierter Bereiche (optional) |
+| **Standort-Benachrichtigung** | Benachrichtigung bei Verlassen definierter Bereiche (optional). TODO: Implementierungsstatus und Datenschutzimplikationen klaeren — welche Standortdaten werden verarbeitet, gespeichert, uebertragen? |
 
 #### Profil erstellen
 
@@ -120,21 +120,12 @@ Einstellungen → Schutzrichtlinien → Listen
 Einstellungen → Erweitert → API
 ```
 
-Superheld bietet eine REST-API fuer Integration mit bestehenden Systemen:
+Superheld bietet eine REST-API fuer Integration mit bestehenden Systemen. Die kanonische Endpunkt-Referenz und das OpenAPI-Schema findest du unter [API-Uebersicht](/experts/api).
 
-| Endpunkt | Beschreibung |
-|---|---|
-| `GET /api/v1/status` | Schutzstatus aller Geraete |
-| `GET /api/v1/threats` | Liste erkannter Bedrohungen |
-| `POST /api/v1/rules` | Schutzregel hinzufuegen oder aendern |
-| `GET /api/v1/family` | Familienprofile und Geraete abrufen |
-| `POST /api/v1/whitelist` | Eintrag zur Whitelist hinzufuegen |
-| `POST /api/v1/report` | Bedrohungsbericht generieren |
-
-API-Keys werden unter **Einstellungen → Erweitert → API → Key generieren** erstellt. Jeder Key kann mit spezifischen Berechtigungen versehen werden.
+API-Keys werden unter **Einstellungen → Erweitert → API → Key generieren** erstellt. Jeder Key kann mit scope-basierten Berechtigungen versehen werden. Details unter [Authentifizierung](/experts/auth).
 
 :::note
-Die vollstaendige API-Dokumentation mit Beispielen findest du unter [API-Referenz](/experts/api).
+Fuer die vollstaendige API-Dokumentation mit Endpunkten, Schemas und Beispielen siehe [API-Uebersicht](/experts/api) und [OpenAPI-Spezifikation](/openapi.yaml).
 :::
 
 ---
