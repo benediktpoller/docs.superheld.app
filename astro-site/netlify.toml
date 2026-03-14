@@ -5,15 +5,15 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Old Hugo /docs/ URLs → new root paths
+# Old Hugo /docs/ URLs → new English paths
 [[redirects]]
   from = "/docs/einfuehrung/*"
-  to = "/einfuehrung/:splat"
+  to = "/getting-started/:splat"
   status = 301
 
 [[redirects]]
   from = "/docs/experten/*"
-  to = "/experten/:splat"
+  to = "/experts/:splat"
   status = 301
 
 [[redirects]]
@@ -24,56 +24,67 @@
 # Old Umlaut URLs
 [[redirects]]
   from = "/docs/einführung/*"
-  to = "/einfuehrung/:splat"
+  to = "/getting-started/:splat"
   status = 301
 
 [[redirects]]
   from = "/docs/einf%C3%BChrung/*"
-  to = "/einfuehrung/:splat"
+  to = "/getting-started/:splat"
   status = 301
 
 # Old flat Hugo aliases
 [[redirects]]
   from = "/docs/apps"
-  to = "/experten/apps/"
+  to = "/experts/apps/"
   status = 301
 
 [[redirects]]
   from = "/docs/faq"
-  to = "/einfuehrung/faq/"
+  to = "/getting-started/faq/"
   status = 301
 
 [[redirects]]
   from = "/docs/intro"
-  to = "/einfuehrung/intro/"
+  to = "/getting-started/intro/"
   status = 301
 
 [[redirects]]
   from = "/docs/konfiguration"
-  to = "/experten/konfiguration/"
+  to = "/experts/configuration/"
   status = 301
 
 [[redirects]]
   from = "/docs/privacy-sicherheit"
-  to = "/experten/privacy-sicherheit/"
+  to = "/experts/privacy-security/"
   status = 301
 
 [[redirects]]
   from = "/docs/migration"
-  to = "/experten/migration/"
+  to = "/experts/migration/"
   status = 301
 
 [[redirects]]
   from = "/docs/use-cases"
-  to = "/experten/use-cases/"
+  to = "/experts/use-cases/"
   status = 301
 
 [[redirects]]
   from = "/docs/nutzung"
-  to = "/einfuehrung/nutzung/"
+  to = "/getting-started/usage/"
   status = 301
 
 [[redirects]]
   from = "/docs/screenshots"
-  to = "/experten/screenshots/"
+  to = "/experts/screenshots/"
+  status = 301
+
+# Old German URL paths → new English paths
+[[redirects]]
+  from = "/einfuehrung/*"
+  to = "/getting-started/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/experten/*"
+  to = "/experts/:splat"
   status = 301

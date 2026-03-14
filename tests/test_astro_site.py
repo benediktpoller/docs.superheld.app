@@ -55,19 +55,19 @@ BROWSERS = ["chromium", "firefox", "webkit"]
 # All pages that must exist
 PAGES = [
     ("/", "Landing Page"),
-    ("/einfuehrung/", "Erste Schritte"),
-    ("/einfuehrung/intro/", "Was ist superheld.app?"),
-    ("/einfuehrung/installation-v2/", "Installation"),
-    ("/einfuehrung/setup/", "Erstkonfiguration"),
-    ("/einfuehrung/nutzung/", "Tägliche Nutzung"),
-    ("/einfuehrung/faq/", "FAQ"),
-    ("/experten/", "Für Experten"),
-    ("/experten/konfiguration/", "Konfiguration"),
-    ("/experten/privacy-sicherheit/", "Privatsphäre & Sicherheit"),
-    ("/experten/apps/", "Apps & Plattformen"),
-    ("/experten/migration/", "Migration"),
-    ("/experten/use-cases/", "Use Cases"),
-    ("/experten/screenshots/", "Screenshots"),
+    ("/getting-started/", "Erste Schritte"),
+    ("/getting-started/intro/", "Was ist superheld.app?"),
+    ("/getting-started/installation/", "Installation"),
+    ("/getting-started/setup/", "Erstkonfiguration"),
+    ("/getting-started/usage/", "Tägliche Nutzung"),
+    ("/getting-started/faq/", "FAQ"),
+    ("/experts/", "Für Experten"),
+    ("/experts/configuration/", "Konfiguration"),
+    ("/experts/privacy-security/", "Privatsphäre & Sicherheit"),
+    ("/experts/apps/", "Apps & Plattformen"),
+    ("/experts/migration/", "Migration"),
+    ("/experts/use-cases/", "Use Cases"),
+    ("/experts/screenshots/", "Screenshots"),
 ]
 
 
@@ -147,7 +147,7 @@ def test_docs_page_structure(viewport, astro_server):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": width, "height": height})
-        page.goto(f"{BASE_URL}/einfuehrung/intro/", wait_until="networkidle")
+        page.goto(f"{BASE_URL}/getting-started/intro/", wait_until="networkidle")
 
         # Page title
         title = page.locator("h1")
@@ -283,5 +283,170 @@ def test_dark_mode_toggle(astro_server):
         # Starlight has a theme toggle button
         toggle = page.locator("starlight-theme-select, [data-theme-toggle]")
         assert toggle.count() >= 1 or page.locator("select").count() >= 1, "Theme toggle not found"
+
+        browser.close()
+
+
+# --- Test 10: All SVGs are valid XML ---
+
+def test_svg_files_are_valid_xml():
+    """Every SVG in public/images/ must be valid XML."""
+    import xml.etree.ElementTree as ET
+
+    svg_dir = os.path.join(os.path.dirname(__file__), "..", "astro-site", "public", "images")
+    svg_dir = os.path.abspath(svg_dir)
+    if not os.path.isdir(svg_dir):
+        pytest.skip("No images directory found")
+
+    invalid = []
+    for fname in sorted(os.listdir(svg_dir)):
+        if not fname.endswith(".svg"):
+            continue
+        path = os.path.join(svg_dir, fname)
+        try:
+            ET.parse(path)
+        except ET.ParseError as e:
+            invalid.append(f"{fname}: {e}")
+
+    assert len(invalid) == 0, f"Invalid SVG files:\n" + "\n".join(invalid)
+
+
+# --- Test 11: All images render visually on every page ---
+
+@pytest.mark.parametrize("path,name", PAGES)
+def test_all_images_render(path, name, astro_server):
+    """Every <img> on the page must load successfully and have non-zero dimensions."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(viewport={"width": 1280, "height": 800})
+
+        failed_requests = []
+        page.on("requestfailed", lambda req: failed_requests.append(req.url))
+
+        page.goto(f"{BASE_URL}{path}", wait_until="networkidle")
+
+        image_failures = [
+            url for url in failed_requests
+            if any(ext in url for ext in (".svg", ".png", ".jpg", ".webp", ".ico"))
+        ]
+        assert len(image_failures) == 0, f"Failed image requests on {name}: {image_failures}"
+
+        # Check every <img> has naturalWidth > 0 (means it actually rendered)
+        broken_images = page.evaluate("""() => {
+            const imgs = document.querySelectorAll('img');
+            const broken = [];
+            for (const img of imgs) {
+                if (img.naturalWidth === 0) {
+                    broken.push(img.src + ' (alt: ' + (img.alt || 'none') + ')');
+                }
+            }
+            return broken;
+        }""")
+        assert len(broken_images) == 0, f"Images with zero dimensions on {name}: {broken_images}"
+
+        browser.close()
+
+
+# --- Test 12: Meta tags and lang attribute ---
+
+@pytest.mark.parametrize("path,name", PAGES)
+def test_meta_tags(path, name, astro_server):
+    """Every page must have lang='de', a <title>, and og:image."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(f"{BASE_URL}{path}", wait_until="networkidle")
+
+        lang = page.evaluate("() => document.documentElement.lang")
+        assert lang == "de", f"{name}: expected lang='de', got '{lang}'"
+
+        title = page.title()
+        assert len(title) > 0, f"{name}: empty <title>"
+
+        og_image = page.evaluate(
+            "() => document.querySelector('meta[property=\"og:image\"]')?.content"
+        )
+        assert og_image, f"{name}: og:image meta tag missing"
+
+        browser.close()
+
+
+# --- Test 13: Heading hierarchy (accessibility) ---
+
+@pytest.mark.parametrize("path,name", PAGES[1:])  # skip landing page
+def test_heading_hierarchy(path, name, astro_server):
+    """Headings must not skip levels (e.g. h1 -> h3 without h2)."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(f"{BASE_URL}{path}", wait_until="networkidle")
+
+        violations = page.evaluate("""() => {
+            const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            const issues = [];
+            let lastLevel = 0;
+            for (const h of headings) {
+                const level = parseInt(h.tagName[1]);
+                if (lastLevel > 0 && level > lastLevel + 1) {
+                    issues.push(`${h.tagName} after H${lastLevel}: "${h.textContent.trim().slice(0, 40)}"`);
+                }
+                lastLevel = level;
+            }
+            return issues;
+        }""")
+        assert len(violations) == 0, f"Heading hierarchy issues on {name}: {violations}"
+
+        browser.close()
+
+
+# --- Test 14: Sidebar links all resolve ---
+
+def test_sidebar_links(astro_server):
+    """All sidebar navigation links must point to valid pages."""
+    import requests
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(f"{BASE_URL}/getting-started/intro/", wait_until="networkidle")
+
+        links = page.eval_on_selector_all(
+            "nav a[href^='/']",
+            "els => els.map(e => e.getAttribute('href'))",
+        )
+
+        unique_links = set()
+        for link in links:
+            clean = link.split("#")[0]
+            if clean:
+                unique_links.add(clean)
+
+        broken = []
+        for link in sorted(unique_links):
+            r = requests.get(f"{BASE_URL}{link}", timeout=10, allow_redirects=True)
+            if r.status_code != 200:
+                broken.append(f"{link} → {r.status_code}")
+
+        assert len(broken) == 0, f"Broken sidebar links: {broken}"
+
+        browser.close()
+
+
+# --- Test 15: Docs pages have real content ---
+
+@pytest.mark.parametrize("path,name", PAGES[1:])  # skip landing page
+def test_page_has_content(path, name, astro_server):
+    """Every docs page must have meaningful content beyond just the title."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(f"{BASE_URL}{path}", wait_until="networkidle")
+
+        content_length = page.evaluate("""() => {
+            const main = document.querySelector('main, [role="main"], .content-panel');
+            if (!main) return 0;
+            return main.textContent.trim().length;
+        }""")
+        assert content_length > 50, f"{name}: page content too short ({content_length} chars)"
 
         browser.close()

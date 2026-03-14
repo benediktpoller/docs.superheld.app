@@ -15,21 +15,15 @@ export default defineConfig({
 				light: './src/assets/logo.svg',
 				dark: './src/assets/logo-dark.svg',
 			},
-			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com/benediktpoller/docs.superheld.app' },
-			],
-			editLink: {
-				baseUrl: 'https://github.com/benediktpoller/docs.superheld.app/edit/main/astro-site/',
-			},
-			lastUpdated: true,
+				lastUpdated: true,
 			sidebar: [
 				{
 					label: 'Erste Schritte',
-					autogenerate: { directory: 'einfuehrung' },
+					autogenerate: { directory: 'getting-started' },
 				},
 				{
 					label: 'Für Experten',
-					autogenerate: { directory: 'experten' },
+					autogenerate: { directory: 'experts' },
 				},
 			],
 			head: [
