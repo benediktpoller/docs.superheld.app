@@ -4,11 +4,11 @@ sidebar:
   order: 8
 ---
 
-## Plattformuebergreifender Schutz
+## Plattformübergreifender Schutz
 
-Superheld bietet auf jedem Geraet eine konsistente Schutzschicht. Alle Apps teilen dieselbe Kern-Schutzlogik — die Umsetzung passt sich an die Moeglichkeiten und Einschraenkungen jeder Plattform an.
+Superheld bietet auf jedem Gerät eine konsistente Schutzschicht. Alle Apps teilen dieselbe Kern-Schutzlogik — die Umsetzung passt sich an die Möglichkeiten und Einschränkungen jeder Plattform an.
 
-> Diese Seite beschreibt die plattformspezifischen Schutzfunktionen fuer **Android, iOS, Windows, macOS und Linux** sowie die Unterschiede im Funktionsumfang.
+> Diese Seite beschreibt die plattformspezifischen Schutzfunktionen für **Android, iOS, Windows, macOS und Linux** sowie die Unterschiede im Funktionsumfang.
 
 <div class="sh-gallery" style="margin-top: 2rem;">
   <div class="sh-gallery-phone">
@@ -18,7 +18,7 @@ Superheld bietet auf jedem Geraet eine konsistente Schutzschicht. Alle Apps teil
   </div>
   <div class="sh-gallery-desktop">
     <div class="sh-screenshot">
-      <img src="/images/screenshot-geraete.svg" alt="Geraetefamilie im Ueberblick" loading="lazy" />
+      <img src="/images/screenshot-geraete.svg" alt="Gerätefamilie im Überblick" loading="lazy" />
     </div>
   </div>
   <div class="sh-gallery-phone">
@@ -35,12 +35,12 @@ Superheld bietet auf jedem Geraet eine konsistente Schutzschicht. Alle Apps teil
 | Funktion | Android | iOS | Windows | macOS | Linux |
 |---|---|---|---|---|---|
 | **Anrufschutz** | Voll | Voll | — | — | — |
-| **App-Scanner** | Voll | Eingeschraenkt | Voll | Voll | CLI |
+| **App-Scanner** | Voll | Eingeschränkt | Voll | Voll | CLI |
 | **Fernsteuerungsschutz** | Voll | Teilweise | Voll | Voll | CLI |
 | **KI-Erkennung** | Voll | Voll | Voll | Voll | CLI |
 | **Familienprofile** | Voll | Voll | Voll | Voll | Verwaltung |
 | **Biometrische Sperre** | Ja | Ja | Windows Hello | Touch ID | — |
-| **Hintergrundschutz** | Ja | Eingeschraenkt | Ja | Ja | Ja |
+| **Hintergrundschutz** | Ja | Eingeschränkt | Ja | Ja | Ja |
 
 ---
 
@@ -48,26 +48,26 @@ Superheld bietet auf jedem Geraet eine konsistente Schutzschicht. Alle Apps teil
 
 ### Schutzfunktionen
 
-Android bietet den umfassendsten Schutz, da das Betriebssystem tiefgehende Integrationsmoeglichkeiten erlaubt:
+Android bietet den umfassendsten Schutz, da das Betriebssystem tiefgehende Integrationsmöglichkeiten erlaubt:
 
-- **Anrufschutz** — Echtzeit-Analyse eingehender Anrufe mit Warnungs-Overlay waehrend des Gespraeachs
-- **Zugangsdienst-Integration** — Erkennung von Fernsteuerungssoftware, betruegerischen Overlays und schaedlichen Bildschirmaktionen
-- **App-Scanner** — Ueberpruefung aller installierten Apps und Echtzeitanalyse neuer Installationen
-- **Berechtigungsueberwachung** — Warnung bei Apps, die uebermmaessige Berechtigungen anfordern
-- **Hintergrundschutz** — laeuft als dauerhafter Dienst im Hintergrund
+- **Anrufschutz** — Echtzeit-Analyse eingehender Anrufe mit Warnungs-Overlay während des Gesprächs
+- **Zugangsdienst-Integration** — Erkennung von Fernsteuerungssoftware, betrügerischen Overlays und schädlichen Bildschirmaktionen
+- **App-Scanner** — Überprüfung aller installierten Apps und Echtzeitanalyse neuer Installationen
+- **Berechtigungsüberwachung** — Warnung bei Apps, die übermäßige Berechtigungen anfordern
+- **Hintergrundschutz** — läuft als dauerhafter Dienst im Hintergrund
 
 ### Besonderheiten
 
-- Der Zugangsdienst (Accessibility Service) ist erforderlich fuer den Fernsteuerungsschutz
-- Battery-Optimierung sollte fuer Superheld deaktiviert werden
-- Unterstuetzt Android 11 und neuer
+- Der Zugangsdienst (Accessibility Service) ist erforderlich für den Fernsteuerungsschutz
+- Battery-Optimierung sollte für Superheld deaktiviert werden
+- Unterstützt Android 11 und neuer
 
 ### Kurzanleitung
 
 1. App aus dem Google Play Store installieren
 2. Konto erstellen oder anmelden
 3. Berechtigungen erteilen: Anruferkennung, Benachrichtigungen, Zugangsdienst
-4. Schutzmodus waehlen und Schutzschichten aktivieren
+4. Schutzmodus wählen und Schutzschichten aktivieren
 
 ---
 
@@ -77,27 +77,27 @@ Android bietet den umfassendsten Schutz, da das Betriebssystem tiefgehende Integ
 
 iOS bietet starken Schutz innerhalb der von Apple vorgegebenen Systemgrenzen:
 
-- **Anrufschutz** — Nutzung der CallKit-API fuer Anruferkennung und Spam-Blockierung
-- **KI-Erkennung** — Analyse verdaechtiger Nachrichten und Kommunikationsmuster
-- **Familien-Schutz** — Profile und Genehmigungsworkflows fuer Familiengeraete
-- **Biometrische Sperre** — Face ID und Touch ID fuer den Zugang zu Schutzeinstellungen
+- **Anrufschutz** — Nutzung der CallKit-API für Anruferkennung und Spam-Blockierung
+- **KI-Erkennung** — Analyse verdächtiger Nachrichten und Kommunikationsmuster
+- **Familien-Schutz** — Profile und Genehmigungsworkflows für Familiengeräte
+- **Biometrische Sperre** — Face ID und Touch ID für den Zugang zu Schutzeinstellungen
 
-### Einschraenkungen
+### Einschränkungen
 
-- **Kein Zugangsdienst** — iOS erlaubt keinen Accessibility Service, daher ist der Fernsteuerungsschutz eingeschraenkt (Erkennung erfolgt ueber Netzwerkanalyse statt Bildschirmueberwachung)
-- **Hintergrundlaufzeit** — iOS begrenzt Hintergrundaktivitaeten, der Schutz wird bei App-Nutzung und per Push-Notification aktualisiert
-- **App-Scanner** — Kann nur installierte Apps analysieren, keine Echtzeit-Installationsueberwachung (Apple erlaubt keinen Zugriff auf den Installationsprozess)
+- **Kein Zugangsdienst** — iOS erlaubt keinen Accessibility Service, daher ist der Fernsteuerungsschutz eingeschränkt (Erkennung erfolgt über Netzwerkanalyse statt Bildschirmüberwachung)
+- **Hintergrundlaufzeit** — iOS begrenzt Hintergrundaktivitäten, der Schutz wird bei App-Nutzung und per Push-Notification aktualisiert
+- **App-Scanner** — Kann nur installierte Apps analysieren, keine Echtzeit-Installationsüberwachung (Apple erlaubt keinen Zugriff auf den Installationsprozess)
 
 ### Besonderheiten
 
-- Passkey und Face ID werden nativ unterstuetzt
+- Passkey und Face ID werden nativ unterstützt
 - Anrufschutz erfordert Aktivierung unter iOS-Einstellungen → Telefon → Anrufblockierung
-- Unterstuetzt iOS 15 und neuer
+- Unterstützt iOS 15 und neuer
 
 ### Kurzanleitung
 
-1. App Store oeffnen, nach "Superheld" suchen
-2. App installieren und oeffnen
+1. App Store öffnen, nach "Superheld" suchen
+2. App installieren und öffnen
 3. Konto erstellen und biometrische Sperre aktivieren
 4. Schutzprofil aktivieren und Anrufschutz in den iOS-Einstellungen freigeben
 
@@ -109,30 +109,30 @@ iOS bietet starken Schutz innerhalb der von Apple vorgegebenen Systemgrenzen:
 
 Die Windows-App bietet Desktop-optimierten Schutz:
 
-- **App-Scanner** — Ueberpruefung installierter Programme auf schaedliches Verhalten und bekannte Bedrohungen
+- **App-Scanner** — Überprüfung installierter Programme auf schädliches Verhalten und bekannte Bedrohungen
 - **Fernsteuerungsschutz** — Erkennung und Blockierung nicht autorisierter Remote-Desktop-Verbindungen (RDP, AnyDesk, TeamViewer)
-- **KI-Erkennung** — Analyse verdaechtiger E-Mails und Nachrichten in Browsern
-- **Geraete-Dashboard** — Uebersicht ueber Sicherheitsstatus, installierte Apps und erkannte Risiken
+- **KI-Erkennung** — Analyse verdächtiger E-Mails und Nachrichten in Browsern
+- **Geräte-Dashboard** — Übersicht über Sicherheitsstatus, installierte Apps und erkannte Risiken
 
 ### Besonderheiten
 
-- Unterstuetzt Windows Hello fuer biometrische Sperre
-- Split-Tunnel-Modus fuer selektive Ueberwachung verfuegbar
+- Unterstützt Windows Hello für biometrische Sperre
+- Split-Tunnel-Modus für selektive Überwachung verfügbar
 - Integration mit Windows Security Center
-- Unterstuetzt Windows 10 und neuer
+- Unterstützt Windows 10 und neuer
 
 ### Kurzanleitung
 
 1. Installer von downloads.superheld.app herunterladen
-2. Installer ausfuehren und Anweisungen folgen
+2. Installer ausführen und Anweisungen folgen
 3. Anmelden und Schutz aktivieren
-4. Windows-Firewall-Integration bestaetigen
+4. Windows-Firewall-Integration bestätigen
 
-### Fuer Administratoren
+### Für Administratoren
 
-- **Gruppenrichtlinien** — Schutzeinstellungen koennen ueber GPO verteilt werden
-- **Remote-Verwaltung** — Mehrere Windows-Geraete zentral verwalten
-- **Audit-Logs** — Exportierbare Ereignisprotokolle fuer Compliance
+- **Gruppenrichtlinien** — Schutzeinstellungen können über GPO verteilt werden
+- **Remote-Verwaltung** — Mehrere Windows-Geräte zentral verwalten
+- **Audit-Logs** — Exportierbare Ereignisprotokolle für Compliance
 
 ---
 
@@ -140,19 +140,19 @@ Die Windows-App bietet Desktop-optimierten Schutz:
 
 ### Schutzfunktionen
 
-Die macOS-App nutzt System-APIs fuer effektiven Schutz:
+Die macOS-App nutzt System-APIs für effektiven Schutz:
 
 - **App-Scanner** — Analyse installierter Programme und neuer Downloads
 - **Fernsteuerungsschutz** — Erkennung nicht autorisierter Bildschirmfreigaben und Remote-Zugriffe
-- **KI-Erkennung** — Analyse verdaechtiger Inhalte in Browsern und E-Mail-Clients
-- **Netzwerk-Ueberwachung** — Erkennung verdaechtiger ausgehender Verbindungen
+- **KI-Erkennung** — Analyse verdächtiger Inhalte in Browsern und E-Mail-Clients
+- **Netzwerk-Überwachung** — Erkennung verdächtiger ausgehender Verbindungen
 
 ### Besonderheiten
 
-- Nutzt die Network Extension API (NEPacketTunnel) fuer Netzwerkanalyse
-- Touch ID wird nativ unterstuetzt
-- Datenschutzkonforme Audit-Logs fuer Netzwerkereignisse
-- Unterstuetzt macOS 12 und neuer
+- Nutzt die Network Extension API (NEPacketTunnel) für Netzwerkanalyse
+- Touch ID wird nativ unterstützt
+- Datenschutzkonforme Audit-Logs für Netzwerkereignisse
+- Unterstützt macOS 12 und neuer
 
 ### Kurzanleitung
 
@@ -161,11 +161,11 @@ Die macOS-App nutzt System-APIs fuer effektiven Schutz:
 3. Anmelden und Schutz aktivieren
 4. Netzwerk- und Benachrichtigungsberechtigungen erteilen
 
-### Fuer versierte Nutzer
+### Für versierte Nutzer
 
-- CLI-Befehle fuer Automatisierung verfuegbar
-- Regelkonfiguration ueber Konfigurationsdateien moeglich
-- Script-Hooks fuer Integration in bestehende Workflows
+- CLI-Befehle für Automatisierung verfügbar
+- Regelkonfiguration über Konfigurationsdateien möglich
+- Script-Hooks für Integration in bestehende Workflows
 
 ---
 
@@ -175,17 +175,17 @@ Die macOS-App nutzt System-APIs fuer effektiven Schutz:
 
 Die Linux-Version bietet CLI-basierten Schutz:
 
-- **App-Scanner** — Ueberpruefung installierter Pakete und laufender Prozesse
+- **App-Scanner** — Überprüfung installierter Pakete und laufender Prozesse
 - **Fernsteuerungsschutz** — Erkennung nicht autorisierter SSH-Verbindungen und Remote-Desktop-Sitzungen
-- **KI-Erkennung** — Analyse verdaechtiger Netzwerkaktivitaeten
-- **Netzwerk-Ueberwachung** — Firewall-Integration und Verbindungsanalyse
+- **KI-Erkennung** — Analyse verdächtiger Netzwerkaktivitäten
+- **Netzwerk-Überwachung** — Firewall-Integration und Verbindungsanalyse
 
 ### Besonderheiten
 
 - CLI-Tool mit optionalem GTK-GUI
 - Paketmanager-Integration (DEB, RPM, AUR)
-- Headless-Modus fuer Server
-- Exportierbare Logs fuer Audit und Compliance
+- Headless-Modus für Server
+- Exportierbare Logs für Audit und Compliance
 
 ### Kurzanleitung
 
@@ -194,12 +194,12 @@ Die Linux-Version bietet CLI-basierten Schutz:
 3. Starten: `superheld-app` oder `superheld-app --gui`
 4. Schutz aktivieren und konfigurieren
 
-### Fuer Administratoren und Power User
+### Für Administratoren und Power User
 
-- Konfiguration ueber `superheld-app config set ...`
-- Headless-Modus fuer Server: `superheld-app --daemon`
-- Integration mit systemd fuer automatischen Start
-- Log-Export fuer SIEM-Systeme
+- Konfiguration über `superheld-app config set ...`
+- Headless-Modus für Server: `superheld-app --daemon`
+- Integration mit systemd für automatischen Start
+- Log-Export für SIEM-Systeme
 
 ---
 
@@ -207,28 +207,28 @@ Die Linux-Version bietet CLI-basierten Schutz:
 
 ### Einzelperson
 
-- Ein-Klick-Schutz ueber das Dashboard
+- Ein-Klick-Schutz über das Dashboard
 - Automatische Bedrohungserkennung im Hintergrund
 - Visuelle Warnungen bei erkannten Gefahren
-- Woechentlicher Sicherheitsbericht
+- Wöchentlicher Sicherheitsbericht
 
 ### Eltern
 
 - Familienprofile mit altersgerechten Schutzeinstellungen
-- Genehmigungsworkflow fuer App-Installationen
-- Benachrichtigungen bei Bedrohungen auf Kindergeraeten
-- Uebersicht ueber alle Familiengeraete
+- Genehmigungsworkflow für App-Installationen
+- Benachrichtigungen bei Bedrohungen auf Kindergeräten
+- Übersicht über alle Familiengeräte
 
 ### Senioren
 
-- Verstaerkter Anrufschutz gegen Enkeltrick und Tech-Support-Betrug
-- Vereinfachte Oberflaeche mit grossen Warnhinweisen
+- Verstärkter Anrufschutz gegen Enkeltrick und Tech-Support-Betrug
+- Vereinfachte Oberfläche mit großen Warnhinweisen
 - Automatische Blockierung bekannter Betrugsmaschen
-- Optionale Familien-Benachrichtigung an Angehoerige
+- Optionale Familien-Benachrichtigung an Angehörige
 
 ### Administratoren
 
-- Zentrale Verwaltung mehrerer Geraete
-- Richtlinienvorlagen (Familie, Buero, Schule)
-- API-Integration fuer Monitoring
+- Zentrale Verwaltung mehrerer Geräte
+- Richtlinienvorlagen (Familie, Büro, Schule)
+- API-Integration für Monitoring
 - Audit-Logs und Compliance-Berichte
