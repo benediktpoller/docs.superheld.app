@@ -1,0 +1,109 @@
+---
+title: "Integrator-Quickstart"
+sidebar:
+  order: 23
+---
+
+## Ziel
+
+Diese Anleitung führt Sie in weniger als 10 Minuten zu einer funktionierenden Integration: API-Authentifizierung, erste Datenabfrage, Webhook-Einrichtung und SIEM-Mapping.
+
+## Voraussetzungen
+
+- Superheld-Account mit API-Zugang
+- Mindestens ein registriertes Gerät
+- `curl` und `jq` (oder ein REST-Client)
+
+## Schritt 1: API-Key erstellen
+
+```
+Einstellungen → Erweitert → API → Key generieren
+```
+
+Wählen Sie die minimal erforderlichen Scopes:
+
+- `devices:read` — Geräteliste abrufen
+- `threats:read` — Bedrohungen abfragen
+- `events:read` — Events für SIEM abrufen
+
+:::caution
+Verwenden Sie für Integrationen einen dedizierten API-Key mit minimalen Berechtigungen (Least Privilege). Teilen Sie API-Keys niemals über unverschlüsselte Kanäle.
+:::
+
+## Schritt 2: Authentifizierung verifizieren
+
+```bash
+curl -s https://api.superheld.app/api/v1/devices \
+  -H "Authorization: Bearer sh_live_IHR_KEY" | jq .
+```
+
+**Erwartete Antwort (HTTP 200):**
+
+```json
+{
+  "data": [
+    {
+      "device_id": "dev_3c8a1f",
+      "platform": "macos",
+      "agent_version": "2.4.1",
+      "status": "active",
+      "last_seen": "2026-03-14T12:00:00Z"
+    }
+  ]
+}
+```
+
+## Schritt 3: Events abrufen (Polling)
+
+```bash
+curl -s "https://api.superheld.app/api/v1/events?since=2026-03-14T00:00:00Z&severity=high,critical&limit=10" \
+  -H "Authorization: Bearer sh_live_IHR_KEY" | jq .
+```
+
+Für Paginierung verwenden Sie den `next_cursor`-Wert aus der Antwort:
+
+```bash
+curl -s "https://api.superheld.app/api/v1/events?cursor=CURSOR_WERT&limit=10" \
+  -H "Authorization: Bearer sh_live_IHR_KEY" | jq .
+```
+
+## Schritt 4: Webhook einrichten
+
+1. Navigieren Sie zu **Einstellungen → Integrationen → SIEM → Webhook**
+2. Geben Sie Ihre HTTPS-Endpunkt-URL ein
+3. Notieren Sie den generierten HMAC-Signing-Secret
+4. Wählen Sie Schweregrad-Filter: `high`, `critical`
+
+**Signaturverifizierung testen:**
+
+```bash
+echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "$SIGNING_SECRET"
+# Vergleichen mit X-Superheld-Signature Header (constant-time!)
+```
+
+## Schritt 5: SIEM-Mapping
+
+Superheld-Events lassen sich direkt auf gängige SIEM-Taxonomien abbilden:
+
+| Superheld-Feld | Splunk CIM | Elastic ECS | Microsoft Sentinel |
+|---|---|---|---|
+| `threat_category` | `signature` | `threat.indicator.type` | `ThreatType` |
+| `severity` | `severity` | `event.severity` | `Severity` |
+| `device_id` | `dest` | `host.id` | `DeviceId` |
+| `action_taken` | `action` | `event.action` | `ActionTaken` |
+
+## Fehlerbehebung
+
+| Fehler | Ursache | Lösung |
+|---|---|---|
+| **401 Unauthorized** | Ungültiger oder abgelaufener API-Key | Key unter Einstellungen → API prüfen und ggf. neu generieren |
+| **403 Forbidden** | Fehlende Scope-Berechtigung | Key-Scopes erweitern (z.B. `events:read` hinzufügen) |
+| **429 Too Many Requests** | Rate-Limit überschritten | Polling-Intervall erhöhen; `Retry-After`-Header beachten |
+| **Signatur-Mismatch** | Falscher Signing Secret oder manipulierter Payload | Secret erneut aus Dashboard kopieren; Payload byte-genau prüfen |
+
+## Nächste Schritte
+
+- [Webhooks: Sicherheit und Zustellung](/experts/webhooks) — Replay-Schutz und Idempotenz
+- [SIEM-Integration](/experts/siem-integration) — Vollständiger SIEM-Workflow
+- [API-Übersicht](/experts/api) — Alle Endpunkte und Schemas
+- [Authentifizierung](/experts/auth) — OAuth2, Scopes und Key-Management

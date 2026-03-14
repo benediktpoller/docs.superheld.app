@@ -1,0 +1,132 @@
+---
+title: "Scope und Nicht-Ziele"
+sidebar:
+  order: 20
+---
+
+Dieses Dokument definiert die Grenzen des Schutzumfangs von Superheld. Es beschreibt explizit, welche Bedrohungen adressiert werden, welche Bereiche bewusst ausgeschlossen sind, und klärt mehrdeutige Begriffe, die in anderen Dokumenten verwendet werden.
+
+---
+
+## Scope (In-Scope Bedrohungen)
+
+Superheld erkennt und schützt aktiv gegen die folgenden Bedrohungskategorien:
+
+| Bedrohung | Kennung | Beschreibung |
+|---|---|---|
+| **Telefonbetrug** | `phone_scam` | Erkennung betrügerischer Anrufe durch Analyse von Anrufmustern und bekannten Betrugsszenarien |
+| **Social Engineering** | `social_engineering` | Erkennung manipulativer Kommunikation in Nachrichten (SMS, Messenger, E-Mail) |
+| **Schädliche Apps** | `malicious_app` | Erkennung und Warnung bei verdächtigen App-Installationen, insbesondere Sideloading |
+| **Phishing** | `phishing` | Erkennung gefälschter Websites und Links in Nachrichten und E-Mails |
+| **Fernsteuerung** | `remote_control` | Erkennung unautorisierter Fernzugriffe durch Tools wie TeamViewer, AnyDesk etc. |
+| **Deepfakes** | `deepfake` | Erkennung synthetischer Stimmen und Medien in Echtzeit-Kommunikation |
+
+:::note
+Jede Bedrohungskategorie wird durch spezialisierte Detektoren in der [Detection Pipeline](/experts/detection-pipeline) abgedeckt. Die Kennungen entsprechen den internen Threat-Type-Identifikatoren.
+:::
+
+---
+
+## Nicht-Ziele (Out of Scope)
+
+Die folgenden Bereiche liegen bewusst außerhalb des Schutzumfangs von Superheld:
+
+| Bereich | Begründung |
+|---|---|
+| **Netzwerk-Firewall / IDS** | Superheld ist kein Netzwerkschutzprodukt. Netzwerk-Traffic-Filterung liegt in der Verantwortung des Betriebssystems oder dedizierter Netzwerklösungen. |
+| **Endpoint Detection and Response (EDR)** | Kein Ersatz für unternehmensweite EDR-Lösungen. Superheld fokussiert auf den Schutz individueller Endnutzer vor Social-Engineering-Angriffen. |
+| **Verschlüsselung von Kommunikation** | Superheld verschlüsselt keine Nachrichten. E2E-Verschlüsselung liegt in der Verantwortung des jeweiligen Messengers bzw. Kommunikationsdienstes. |
+| **Physischer Gerätezugriff** | Schutz vor physischem Diebstahl oder hardwarebasierter Manipulation liegt außerhalb des Scopes. Superheld setzt voraus, dass der physische Zugriff auf das Gerät gesichert ist. |
+| **Supply-Chain-Angriffe auf das Betriebssystem** | Superheld setzt die Integrität des OS voraus. Kompromittierungen auf OS-Ebene (z. B. manipulierte Firmware, Bootloader-Angriffe) werden nicht adressiert. |
+| **DDoS-Abwehr** | Kein Netzwerk-Traffic-Management. Superheld verarbeitet keinen Netzwerk-Traffic und kann daher keine volumetrischen Angriffe erkennen oder mitigieren. |
+| **Content Moderation** | Keine Bewertung legaler aber unerwünschter Inhalte. Superheld erkennt Betrug und Manipulation — nicht unangemessene oder anstößige Inhalte. |
+
+:::caution
+Superheld ist kein vollständiges Sicherheitsprodukt und ersetzt keine bestehende Sicherheitsinfrastruktur. Der Fokus liegt ausschließlich auf der Erkennung und Prävention von Social Engineering, Betrug und betrügerischen digitalen Interaktionen.
+:::
+
+---
+
+## Annahmen
+
+Superheld operiert unter den folgenden Voraussetzungen:
+
+1. **Integrität des Betriebssystems** — Das Betriebssystem (Android/iOS) ist integer und nicht kompromittiert. Ein gerootetes oder gejailbreaktes Gerät kann die Schutzwirkung einschränken.
+2. **Erteilte Berechtigungen** — Der Benutzer hat die erforderlichen Berechtigungen erteilt (z. B. Accessibility Service, Benachrichtigungszugriff). Ohne diese Berechtigungen sind einzelne Detektoren nicht funktionsfähig.
+3. **Konnektivität für Cloud Enrichment** — Für Cloud Enrichment ist eine Internetverbindung erforderlich. Lokale On-Device-Analyse funktioniert vollständig offline.
+4. **Periodische Modell-Updates** — Modell-Updates erfordern periodische Konnektivität. Ohne Updates arbeitet Superheld mit dem zuletzt verfügbaren Modellstand, was die Erkennungsrate bei neuen Bedrohungen reduzieren kann.
+
+---
+
+## Präzisierungen (Ambiguous Terms)
+
+Die folgenden Begriffe werden in der Superheld-Dokumentation verwendet und erfordern eine präzise Definition, um Mehrdeutigkeiten zu vermeiden.
+
+### 1. KI-Analyse (AI Analysis)
+
+On-Device-Klassifikatoren (ML-Modelle) für lokale Bedrohungserkennung. Bei uneindeutigen Fällen erfolgt optional eine Cloud Enrichment auf Basis anonymisierter Feature-Vektoren — niemals Klartext-Inhalte.
+
+:::caution[TODO]
+Genaue Modellarchitektur und Inferenz-Framework dokumentieren. Relevante Details: Modellformat (TFLite, ONNX, Core ML), Modellgröße, Inferenzzeit, unterstützte Hardware-Beschleunigung.
+:::
+
+### 2. Sprachmuster (Voice Patterns)
+
+:::caution[TODO]
+Klären, ob die KI-Stimmanalyse auf Audio-Zugriff (Mikrofon), Transkripte, oder ausschließlich Anruf-Metadaten zugreift.
+
+- **Falls Audio-Zugriff:** Welche Berechtigungen sind erforderlich? Wird Audio im Arbeitsspeicher verarbeitet und sofort verworfen? Wie wird sichergestellt, dass keine Audioaufnahmen persistiert werden?
+- **Falls kein Audio-Zugriff:** Begriff „Sprachmuster" durch „Anruf-Metadaten-Heuristik" ersetzen, um falsche Erwartungen zu vermeiden.
+:::
+
+### 3. Gefährliche Nutzeraktionen (Dangerous User Actions)
+
+OS-beobachtbare Aktionen, die die Policy Engine als risikoreich einstuft. Aktuelle explizite Liste:
+
+- **(a)** Installation aus unbekannten Quellen aktivieren
+- **(b)** Accessibility-Berechtigungen an unbekannte Apps vergeben
+- **(c)** Fernsteuerungs-Apps während eines aktiven Anrufs installieren
+- **(d)** Warnungen der Schutz-Engine ignorieren/überstimmen
+
+:::caution[TODO]
+Vollständige Liste mit Produktteam bestätigen. Insbesondere klären: Gibt es weitere beobachtbare Aktionen (z. B. Deaktivierung von Play Protect, USB-Debugging aktivieren), die als risikoreich eingestuft werden sollten?
+:::
+
+### 4. Prompt-Manipulation
+
+:::caution[TODO]
+Klären, ob ein LLM/Sprachmodell als Produktbestandteil existiert.
+
+- **Falls ja:** Dokumentieren, wo Prompts existieren und wie Prompt Injection mitigiert wird (Input Sanitization, Output Validation, System-Prompt-Härtung).
+- **Falls nein:** Diesen Abschnitt entfernen und durch „KI-generierte Betrugs-Inhalte (extern erzeugt)" ersetzen — also die Erkennung von Inhalten, die durch externe LLMs erzeugt wurden.
+:::
+
+### 5. Federated Learning
+
+:::caution[TODO]
+Implementierungsstatus klären.
+
+- **Falls implementiert:** Opt-in-Modell dokumentieren, Aggregationsverfahren (Secure Aggregation?), Differential-Privacy-Parameter (ε, δ), und exakt definieren, welche Daten das Gerät verlassen (Gradienten, Modell-Updates, aggregierte Statistiken).
+- **Falls nicht implementiert:** Als „Geplant" kennzeichnen und aus aktuellen Architektur-Beschreibungen entfernen oder explizit als Roadmap-Item markieren.
+:::
+
+### 6. Feature-Vektoren
+
+Abgeleitete, numerische Repräsentationen von Signalmerkmalen, die durch Dimensionsreduktion und irreversible Transformationen anonymisiert werden. Feature-Vektoren werden für Cloud Enrichment übertragen, wenn die lokale Analyse kein eindeutiges Ergebnis liefert.
+
+:::caution[TODO]
+- Enthaltene Merkmale (Feature-Liste) dokumentieren
+- Transformationsverfahren beschreiben (Hashing, Projektion, Quantisierung)
+- Dimensionalität der Vektoren angeben
+- Differential-Privacy-Parameter (ε, δ) dokumentieren
+- Grenzen der Nicht-Invertierbarkeits-Garantie dokumentieren: Unter welchen Bedingungen könnten Feature-Vektoren theoretisch re-identifiziert werden?
+:::
+
+---
+
+## Querverweise
+
+- [Kernkonzepte](/experts/core-concepts) — Grundlegende Architekturprinzipien und Terminologie
+- [Bedrohungsmodell](/experts/threat-model) — Detaillierte Bedrohungsanalyse mit Angreiferprofilen und Gegenmaßnahmen
+- [Glossar](/experts/glossary) — Definitionen aller Fachbegriffe
+- [Datenflüsse](/experts/data-flows) — Visualisierung der Datenverarbeitung zwischen On-Device und Cloud-Komponenten

@@ -22,7 +22,7 @@ C4Context
         Container(pipeline, "Erkennungs-Pipeline", "Multi-Stage Analysis", "Mehrstufige Analyse: Heuristik → ML → Deep Analysis")
     }
 
-    System_Boundary(cloud, "Cloud Intelligence") {
+    System_Boundary(cloud, "Cloud Enrichment") {
         Container(threatdb, "Threat Database", "Verteilte DB", "Anonymisierte Bedrohungssignaturen und Indicators of Compromise")
         Container(modelupdate, "Model Update Service", "ML Pipeline", "Federated Learning und Modell-Distribution")
         Container(ai, "AI Analysis Module", "GPU Cluster", "Deepfake-Erkennung, NLP für Social Engineering")
@@ -105,13 +105,13 @@ Bei einer Cloud-Eskalation werden ausschließlich anonymisierte Feature-Vektoren
 
 ---
 
-## Cloud Intelligence
+## Cloud Enrichment
 
-Die Cloud-Komponenten dienen als kollektives Immunsystem: Sie aggregieren anonymisierte Bedrohungsinformationen über alle Installationen hinweg und stellen aktualisierte Erkennungsmodelle bereit.
+Die Cloud-Komponenten dienen als Quelle für kollektive Threat Intelligence und stellen aktualisierte Erkennungsmodelle bereit. Es werden ausschließlich zwei Datentypen an die Cloud übertragen: (1) **SHA-256-Hashes** für Threat-Intelligence-Lookups und (2) **anonymisierte Feature-Vektoren** bei Eskalation komplexer Fälle. Keine Klartext-Inhalte.
 
 - **Threat Database:** Enthält Indicators of Compromise (IoC), anonymisierte Bedrohungssignaturen und Reputationsdaten zu Domains und IPs. Wird kontinuierlich aus den anonymisierten Meldungen aller Agenten gespeist.
-- **Model Update Service:** Verteilt aktualisierte ML-Modelle an die lokalen Schutz-Engines. Verwendet Federated-Learning-Prinzipien — Modelle werden aus aggregierten Gradienten trainiert, ohne Zugriff auf Rohdaten einzelner Benutzer.
-- **AI Analysis Module:** GPU-gestützte Analyse für komplexe Fälle (Deepfake-Erkennung in Video/Audio, fortgeschrittene Social-Engineering-Analyse). Verarbeitet ausschließlich anonymisierte Feature-Vektoren.
+- **Model Update Service:** Verteilt aktualisierte ML-Modelle an die lokalen Schutz-Engines. TODO: Federated Learning — Implementierungsstatus klären. Aktuell dokumentiert als Architekturprinzip; unklar ob in Produktion.
+- **AI Analysis Module:** GPU-gestützte Analyse für komplexe Fälle (Deepfake-Erkennung, fortgeschrittene Social-Engineering-Analyse). Verarbeitet ausschließlich anonymisierte Feature-Vektoren. TODO: Genaue Definition der Feature-Vektoren dokumentieren.
 
 ---
 
@@ -141,9 +141,9 @@ Die Architektur von superheld.app ist so konzipiert, dass Datenschutz kein Featu
 
 1. **Keine Rohdaten in der Cloud.** Nachrichteninhalte, Dateien und personenbezogene Metadaten verlassen das Gerät unter keinen Umständen. Die Cloud erhält ausschließlich anonymisierte Feature-Vektoren und aggregierte Statistiken.
 
-2. **Keine Rekonstruktion möglich.** Die Feature-Vektoren, die bei einer Cloud-Eskalation übertragen werden, sind durch Dimensionsreduktion und Differential Privacy so transformiert, dass eine Rücktransformation in den Originalinhalt mathematisch ausgeschlossen ist.
+2. **Keine Rekonstruktion möglich.** Die Feature-Vektoren, die bei einer Cloud-Eskalation übertragen werden, sind durch Dimensionsreduktion und irreversible Transformationen so verarbeitet, dass eine Rekonstruktion der Originaldaten nach aktuellem Stand der Technik nicht praktikabel ist. TODO: Genaue Transformationsverfahren und Differential-Privacy-Parameter (ε, δ) dokumentieren.
 
-3. **Federated Learning statt zentralem Training.** ML-Modelle werden über aggregierte Gradienten trainiert — kein zentraler Datensatz mit Benutzerdaten existiert.
+3. **Modell-Updates ohne zentrale Rohdaten.** ML-Modelle werden als signierte Pakete an die lokalen Schutz-Engines verteilt. TODO: Federated Learning — Implementierungsstatus klären. Falls implementiert: Opt-in-Modell, Aggregationsverfahren und Privacy-Garantien dokumentieren.
 
 4. **Vollständige Transparenz.** Jede Cloud-Kommunikation wird im lokalen Aktivitätsprotokoll dokumentiert. Benutzer können jederzeit einsehen, welche Daten übertragen wurden.
 

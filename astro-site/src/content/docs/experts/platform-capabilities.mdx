@@ -1,0 +1,175 @@
+---
+title: "Plattform-Fähigkeiten und Einschränkungen"
+sidebar:
+  order: 24
+---
+
+## Übersicht
+
+Der Device Agent ist für alle gängigen Plattformen verfügbar. Die Schutzfähigkeiten variieren je nach Betriebssystem aufgrund unterschiedlicher APIs, Berechtigungsmodelle und Sandbox-Einschränkungen. Diese Seite dokumentiert die Fähigkeiten und Limitierungen pro Plattform.
+
+## Fähigkeitsmatrix
+
+| Fähigkeit | Android | iOS | Windows | macOS | Linux |
+|---|---|---|---|---|---|
+| **Anrufschutz** | ✓ | ✓ (eingeschränkt) | — | — | — |
+| **App-Scanner** | ✓ | ✓ (eingeschränkt) | ✓ | ✓ | ✓ |
+| **Phishing-Erkennung** | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Fernsteuerungsschutz** | ✓ | ✓ (eingeschränkt) | ✓ | ✓ | ✓ |
+| **Deepfake-Erkennung** | TODO | TODO | TODO | TODO | TODO |
+| **Netzwerk-Monitoring** | ✓ | ✓ (VPN-basiert) | ✓ | ✓ | ✓ |
+| **Lokale KI-Inferenz** | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Push-Benachrichtigungen** | ✓ | ✓ | ✓ | ✓ | — |
+| **Familienverwaltung** | ✓ | ✓ | ✓ | ✓ | — |
+
+:::note[TODO]
+Vollständige Fähigkeitsmatrix mit Produktteam bestätigen.
+:::
+
+## Plattform-Details
+
+### Android
+
+**Erforderliche Berechtigungen:**
+
+| Berechtigung | Zweck | Optional? |
+|---|---|---|
+| `CALL_LOG` / `READ_PHONE_STATE` | Anrufschutz — Erkennung verdächtiger Anrufe | Nein (für Anrufschutz) |
+| `PACKAGE_USAGE_STATS` | App-Scanner — Überwachung installierter Apps | Nein (für App-Scanner) |
+| `ACCESSIBILITY_SERVICE` | Fernsteuerungsschutz — Erkennung von Overlay-Angriffen | Nein (für Fernsteuerungsschutz) |
+| `POST_NOTIFICATIONS` | Benachrichtigungen bei Bedrohungen | Nein |
+| `INTERNET` | Cloud Enrichment und Modell-Updates | Nein |
+
+**Einschränkungen:**
+
+- Hintergrund-Dienste können durch aggressive Batterie-Optimierung beeinträchtigt werden (Hersteller-abhängig: Samsung, Xiaomi, Huawei)
+
+:::note[TODO]
+Empfohlene Batterie-Optimierung-Ausnahmen dokumentieren.
+:::
+
+**MDM/Enterprise:**
+
+:::note[TODO]
+Unterstützung für Managed Configurations (Android Enterprise) dokumentieren.
+:::
+
+### iOS
+
+**Erforderliche Berechtigungen:**
+
+| Berechtigung | Zweck | Optional? |
+|---|---|---|
+| CallKit Integration | Anrufschutz — Caller ID und Call Blocking | Nein (für Anrufschutz) |
+| Benachrichtigungen | Push-Alerts | Nein |
+| Netzwerk-Extension (VPN) | Netzwerk-Monitoring und Phishing-Schutz | Nein (für Netzwerkschutz) |
+
+**Einschränkungen:**
+
+- iOS-Sandbox verhindert direkten Zugriff auf andere Apps — App-Scanner beschränkt auf bekannte Signaturen und URL-Prüfung
+- Anrufschutz über CallKit: nur Identifikation und Blockierung, kein Echtzeit-Audio-Zugriff
+- Kein Accessibility-Service-Äquivalent — Fernsteuerungsschutz eingeschränkt auf bekannte App-Erkennung
+
+:::note[TODO]
+Genaue iOS-Einschränkungen mit Engineering bestätigen.
+:::
+
+**MDM/Enterprise:**
+
+:::note[TODO]
+Unterstützung für Managed App Configuration und Supervision dokumentieren.
+:::
+
+### Windows
+
+**Erforderliche Berechtigungen:**
+
+| Berechtigung | Zweck | Optional? |
+|---|---|---|
+| Administrator (Installation) | Agent-Installation als System-Dienst | Nein |
+| Netzwerk-Zugriff | DNS-Monitoring und Phishing-Schutz | Nein |
+| Dateisystem-Zugriff | App- und Datei-Scanner | Nein |
+
+**Einschränkungen:**
+
+- Kein Anrufschutz (keine native Telefonfunktion)
+
+:::note[TODO]
+Windows Defender Kompatibilität dokumentieren.
+:::
+
+**MDM/Enterprise:**
+
+:::note[TODO]
+GPO/Intune-Deployment und Silent Install dokumentieren.
+:::
+
+### macOS
+
+**Erforderliche Berechtigungen:**
+
+| Berechtigung | Zweck | Optional? |
+|---|---|---|
+| System Extension | Netzwerk-Monitoring | Nein |
+| Full Disk Access | Datei-Scanner | Optional |
+| Benachrichtigungen | Push-Alerts | Nein |
+
+**Einschränkungen:**
+
+- Kein Anrufschutz (keine native Telefonfunktion)
+- System Extensions erfordern Benutzerbestätigung in Systemeinstellungen
+
+:::note[TODO]
+Apple Silicon vs. Intel Kompatibilität dokumentieren.
+:::
+
+**MDM/Enterprise:**
+
+:::note[TODO]
+PPPC/TCC-Profile für MDM-Deployment dokumentieren.
+:::
+
+### Linux
+
+**Erforderliche Berechtigungen:**
+
+| Berechtigung | Zweck | Optional? |
+|---|---|---|
+| root (Installation) | Agent-Installation als systemd-Service | Nein |
+| Netzwerk-Zugriff | DNS-Monitoring | Nein |
+
+**Einschränkungen:**
+
+- Kein Anrufschutz
+- Keine Push-Benachrichtigungen — Alerts nur via API/Webhook/E-Mail
+- Keine Familienverwaltung
+
+:::note[TODO]
+Unterstützte Distributionen und Kernel-Versionen dokumentieren.
+:::
+
+**Enterprise:**
+
+:::note[TODO]
+Ansible/Puppet-Deployment-Playbooks dokumentieren.
+:::
+
+## Mindestanforderungen
+
+| Plattform | Mindestversion | Speicher | Netzwerk |
+|---|---|---|---|
+| Android | 8.0 (API 26) | TODO | Optional (für Cloud Enrichment) |
+| iOS | 15.0 | TODO | Optional (für Cloud Enrichment) |
+| Windows | 10 (1903+) | TODO | Optional (für Cloud Enrichment) |
+| macOS | 12.0 (Monterey) | TODO | Optional (für Cloud Enrichment) |
+| Linux | Kernel 5.4+ | TODO | Optional (für Cloud Enrichment) |
+
+:::note[TODO]
+Mindestanforderungen (Speicher, CPU) mit Engineering bestätigen.
+:::
+
+## Querverweise
+
+- [Apps & Plattformen](/experts/apps) — Plattformspezifische Schutzfunktionen im Detail
+- [Kernkonzepte](/experts/core-concepts) — Device Agent und Device-Definitionen
+- [Schutzrichtlinien](/experts/configuration) — Policy-Konfiguration pro Plattform

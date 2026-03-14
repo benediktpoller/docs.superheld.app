@@ -81,6 +81,12 @@ PAGES = [
     ("/experts/roadmap/", "Roadmap"),
     ("/experts/responsible-disclosure/", "Responsible Disclosure"),
     ("/experts/glossary/", "Glossar und Definitionen"),
+    ("/experts/scope-non-goals/", "Scope und Nicht-Ziele"),
+    ("/experts/webhooks/", "Webhooks: Sicherheit und Zustellung"),
+    ("/experts/event-model/", "Event-Modell und Lebenszyklus"),
+    ("/experts/integrator-quickstart/", "Integrator-Quickstart"),
+    ("/experts/platform-capabilities/", "Plattform-Fähigkeiten und Einschränkungen"),
+    ("/experts/trust-center/", "Trust Center"),
 ]
 
 

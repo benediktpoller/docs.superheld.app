@@ -37,6 +37,14 @@ https://superheld.app/.well-known/security.txt
 
 Die Datei `security.txt` folgt dem Standard [RFC 9116](https://www.rfc-editor.org/rfc/rfc9116) und enthält neben dem PGP-Schlüssel auch Kontaktinformationen und bevorzugte Sprachen.
 
+:::caution
+TODO: Die URLs `https://superheld.app/.well-known/security.txt` und `https://superheld.app/.well-known/pgp-key.asc` müssen deployed und erreichbar sein, damit die RFC-9116-Konformität operativ wirksam ist. Deployment-Checkliste:
+1. `security.txt` unter `/.well-known/security.txt` bereitstellen
+2. PGP Public Key unter `/.well-known/pgp-key.asc` bereitstellen
+3. `Expires`-Feld regelmäßig aktualisieren (vor Ablauf erneuern)
+4. Erreichbarkeit in CI/Monitoring prüfen
+:::
+
 ### Vorlage: security.txt
 
 ```txt

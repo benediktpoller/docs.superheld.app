@@ -1,0 +1,78 @@
+---
+title: "Trust Center"
+sidebar:
+  order: 25
+---
+
+## Übersicht
+Das Trust Center bündelt alle sicherheits- und datenschutzrelevanten Dokumentationen der Superheld-Plattform. Es dient als Einstiegspunkt für Sicherheitsreviews, Compliance-Prüfungen und Due-Diligence-Prozesse.
+
+## Sicherheitsarchitektur
+
+<div class="sh-feature-grid" data-cols="2">
+  <a href="/experts/threat-model" class="sh-feature-card">
+    <div class="sh-feature-card-title">Bedrohungsmodell</div>
+    <p class="sh-feature-card-subtitle">Assets, Angreifer, Angriffsflächen und Mitigationen. Definiert die Bedrohungen, gegen die Superheld schützt, und die Annahmen, auf denen der Schutz basiert.</p>
+  </a>
+  <a href="/experts/data-flows" class="sh-feature-card">
+    <div class="sh-feature-card-title">Datenflüsse & Vertrauensgrenzen</div>
+    <p class="sh-feature-card-subtitle">Datenflussdiagramm mit expliziten Trust Boundaries. Dokumentiert, welche Daten das Gerät verlassen und in welcher Form.</p>
+  </a>
+</div>
+
+## Datenschutz & Compliance
+
+<div class="sh-feature-grid" data-cols="2">
+  <a href="/experts/privacy-security" class="sh-feature-card">
+    <div class="sh-feature-card-title">Datenschutz & Sicherheit</div>
+    <p class="sh-feature-card-subtitle">Privacy by Design, DSGVO-Konformität, Verschlüsselung (AES-256, TLS 1.3), Aufbewahrungsfristen und Löschprozesse.</p>
+  </a>
+  <a href="/experts/telemetry" class="sh-feature-card">
+    <div class="sh-feature-card-title">Telemetrie & Logging</div>
+    <p class="sh-feature-card-subtitle">Event-Schema, Redaktionsregeln, Audit-Trail und Aufbewahrungsrichtlinien. Definiert, welche Daten erfasst und wie lange sie gespeichert werden.</p>
+  </a>
+</div>
+
+## Scope & Transparenz
+
+<div class="sh-feature-grid" data-cols="2">
+  <a href="/experts/scope-non-goals" class="sh-feature-card">
+    <div class="sh-feature-card-title">Scope & Nicht-Ziele</div>
+    <p class="sh-feature-card-subtitle">Explizite Abgrenzung: Was Superheld schützt, was nicht, und warum. Präzisierung ambiger Begriffe wie Feature-Vektoren und Federated Learning.</p>
+  </a>
+  <a href="/experts/glossary" class="sh-feature-card">
+    <div class="sh-feature-card-title">Glossar</div>
+    <p class="sh-feature-card-subtitle">Kanonische Definitionen aller Fachbegriffe: Signal, Threat, Alert, Event, Policy, Device Agent, Cloud Enrichment.</p>
+  </a>
+</div>
+
+## Sicherheitsmeldungen
+
+<div class="sh-feature-grid" data-cols="2">
+  <a href="/experts/responsible-disclosure" class="sh-feature-card">
+    <div class="sh-feature-card-title">Responsible Disclosure</div>
+    <p class="sh-feature-card-subtitle">Sicherheitslücken verantwortungsvoll melden. Kontaktinformationen, PGP-Schlüssel, Reaktionszeiten und Safe-Harbor-Richtlinie.</p>
+  </a>
+  <a href="/experts/roadmap" class="sh-feature-card">
+    <div class="sh-feature-card-title">Roadmap</div>
+    <p class="sh-feature-card-subtitle">Geplante Funktionen und Weiterentwicklung. Transparenz über den aktuellen und zukünftigen Funktionsumfang.</p>
+  </a>
+</div>
+
+---
+
+## Artefakte für Sicherheitsreviews
+
+| Artefakt | Ort | Status |
+|---|---|---|
+| Bedrohungsmodell | [/experts/threat-model](/experts/threat-model) | Verfügbar |
+| Datenflussdiagramm | [/experts/data-flows](/experts/data-flows) | Verfügbar |
+| OpenAPI-Spezifikation | [/openapi.yaml](/openapi.yaml) | Verfügbar (TODO: Engineering-Review ausstehend) |
+| security.txt (RFC 9116) | `https://superheld.app/.well-known/security.txt` | TODO: Deployment ausstehend |
+| PGP Public Key | `https://superheld.app/.well-known/pgp-key.asc` | TODO: Deployment ausstehend |
+| Penetrationstest-Bericht | — | TODO: Penetrationstest durchführen |
+| SOC 2 / ISO 27001 | — | TODO: Zertifizierungsstatus klären |
+
+:::note
+Für Sicherheitsfragen kontaktieren Sie security@superheld.app. Für Datenschutz-Anfragen: privacy@superheld.app.
+:::
