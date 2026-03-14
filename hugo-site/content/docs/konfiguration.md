@@ -5,9 +5,9 @@ weight: 60
 
 ## Erweiterte Konfiguration
 
-Der Expert Mode bietet volle Kontrolle. **⚠️ Warnung:** Änderungen hier können die Funktionalität beeinflussen!
+Der Expert Mode bietet volle Kontrolle. **Warnung:** Änderungen hier können die Funktionalität beeinflussen!
 
-### 🔐 API-Keys konfigurieren
+### API-Keys konfigurieren
 
 ```
 Einstellungen → KI-Provider → [Provider] → API-Key hinzufügen
@@ -19,7 +19,7 @@ Unterstützte Provider:
 - Google (`...`)
 - Microsoft (`...`)
 
-### 🎯 Anonymisierungsregeln
+### Anonymisierungsregeln
 
 ```
 Einstellungen → Datenschutz → Regeln anpassen
@@ -32,7 +32,7 @@ Erstelle benutzerdefinierte Filter für:
 - URLs
 - Custom-Patterns
 
-### 🌐 Proxy-Einstellungen
+### Proxy-Einstellungen
 
 ```
 Einstellungen → Netzwerk → Proxy
@@ -43,7 +43,7 @@ Einstellungen:
 - Proxy-Port
 - Authentifizierung (optional)
 
-### 📊 Logging & Debug
+### Logging & Debug
 
 ```
 Einstellungen → Erweitert →Debug-Modus
@@ -54,7 +54,7 @@ Einstellungen → Erweitert →Debug-Modus
 - Logausgabe: `Datei`, `Console`, `Beides`
 - Maximale Dateigröße
 
-### 🔄 Caching
+### Caching
 
 ```
 Einstellungen → Speicher → Cache
@@ -80,7 +80,7 @@ Einstellungen → Speicher → Cache
 
 ---
 
-## Sicherheitswarnung ⚠️
+## Sicherheitswarnung
 
 - **Speichere API-Keys niemals im Web**
 - **Verwende sichere Passwörter** für Premium

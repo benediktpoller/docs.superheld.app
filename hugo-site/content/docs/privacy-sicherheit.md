@@ -3,7 +3,7 @@ title: "Privatsphäre & Sicherheit"
 weight: 30
 ---
 
-## 🔒 Die Philosophie von superheld.app
+## Die Philosophie von superheld.app
 
 **superheld.app ist der Held für deine Privatsphäre – Datenschutz im Kern, nicht als Zusatz.**
 
@@ -11,512 +11,398 @@ Wir glauben, dass deine Daten *dir* gehören. Punkt. Nicht uns, nicht anderen. D
 
 ---
 
-## 🛡️ Wie superheld.app dich schützt
+## Wie superheld.app dich schützt
 
 {{< callout type="info" >}}
 Deine Daten gehören DIR. Nicht uns. Nicht anderen. Darum haben wir superheld.app mit Ende-zu-Ende Verschlüsselung gebaut – von Tag 1, nicht als Zusatz.
 {{< /callout >}}
 
-### 1️⃣ **Ende-zu-Ende Verschlüsselung (E2E)**
+### 1. Ende-zu-Ende Verschlüsselung (E2E)
 
-Alle deine Daten sind verschlüsselt – vom Moment, tippen bis zur Speicherung.
+Alle deine Daten sind verschlüsselt – vom Moment des Tippens bis zur Speicherung.
 
-```
-Dein Gerät
-    ↓
-[Daten getippt]
-    ↓
-🔐 AES-256 Verschlüsselung
-    ↓
-Nur du hast die Schlüssel
-    ↓
-Selbst superheld.app kann nicht lesen! ✅
-    ↓
-Internet-Übertragung (TLS 1.3)
-    ↓
-Server erhält nur verschlüsselte Daten
-    ↓
-Speicherung bleibt verschlüsselt
-```
+{{% steps %}}
 
-### 2️⃣ **Lokale Verarbeitung zuerst**
+#### Daten eingeben
+
+Du tippst deine Daten auf deinem Gerät ein.
+
+#### AES-256 Verschlüsselung
+
+Die Daten werden lokal mit AES-256 verschlüsselt. Nur du hast die Schlüssel – selbst superheld.app kann sie nicht lesen.
+
+#### Sichere Übertragung
+
+Die verschlüsselten Daten werden über TLS 1.3 übertragen.
+
+#### Verschlüsselte Speicherung
+
+Der Server erhält und speichert ausschließlich verschlüsselte Daten.
+
+{{% /steps %}}
+
+### 2. Lokale Verarbeitung zuerst
 
 Die meisten Operationen laufen *auf deinem Gerät* – nicht auf unseren Servern.
 
-**Was läuft lokal ab:**
-- ✅ Encryption/Decryption
-- ✅ Datenfilterung
-- ✅ Workflow-Verarbeitung
-- ✅ Offline-Funktionen
+**Was lokal verarbeitet wird:**
+- **Encryption/Decryption** – Verschlüsselung findet auf deinem Gerät statt
+- **Datenfilterung** – Filterung und Suche laufen lokal
+- **Workflow-Verarbeitung** – Workflows werden geräteseitig ausgeführt
+- **Offline-Funktionen** – Voller Funktionsumfang auch ohne Internet
 
 **Was synchronisiert wird:**
-- 📡 Nur notwendige Metadaten (verschlüsselt)
-- 📡 Backups (verschlüsselt)
-- 📡 Team-Syncs (mit Permissions verschlüsselt)
+- **Metadaten** – Nur notwendige Metadaten (verschlüsselt)
+- **Backups** – Automatische Sicherungen (verschlüsselt)
+- **Team-Syncs** – Teamdaten mit Berechtigungssteuerung (verschlüsselt)
 
-### 3️⃣ **Null-Knowledge Architecture**
+### 3. Null-Knowledge Architecture
 
 Das bedeutet: **Wir wissen nichts über deine Daten.**
 
-```
-Szenario: Du speicherst ein Passwort in superheld.app
+{{% steps %}}
 
-Dein Passwort: "SuperSicheresPassword123!"
+#### Du speicherst ein Passwort
 
-                 ↓
-          
-         [Auf deinem Gerät]
-         Verschlüsselt mit DEINEM Schlüssel
-         
-                 ↓
-         
-      superheld.app Server sieht:
-    "xK9mL2qP!w#vR4sT$Y%uI&oP*aS(dF)gH"
-    
-         (Keine Ahnung was drin ist! 🤷)
-         
-                 ↓
-         
-      Nur DU kannst mit deinem Schlüssel
-      das Passwort wieder lesen
-```
+Beispiel: Du speicherst `SuperSicheresPassword123!` in superheld.app.
 
-**Folge:** Selbst wenn Hacker in unsere Server eindringen – deine Daten bleiben sicher verschlüsselt.
+#### Verschlüsselung auf deinem Gerät
 
-### 4️⃣ **Keine Tracking, keine Werbung, keine Datenverkäufe**
+Das Passwort wird lokal mit deinem persönlichen Schlüssel verschlüsselt.
 
-| Was superheld.app NICHT tut | |
+#### Server sieht nur Kauderwelsch
+
+superheld.app Server speichert lediglich: `xK9mL2qP!w#vR4sT$Y%uI&oP*aS(dF)gH` – ohne jegliche Möglichkeit, den Inhalt zu entschlüsseln.
+
+#### Nur du kannst entschlüsseln
+
+Mit deinem persönlichen Schlüssel kannst nur du das Passwort wieder lesbar machen.
+
+{{% /steps %}}
+
+**Folge:** Selbst wenn Angreifer in unsere Server eindringen, bleiben deine Daten sicher verschlüsselt.
+
+### 4. Kein Tracking, keine Werbung, keine Datenverkäufe
+
+| Was superheld.app NICHT tut | Status |
 |-----|---|
-| 📊 Dein Verhalten tracken | ✅ Nicht getan |
-| 📢 Personalisierte Werbung zeigen | ✅ Nicht getan |
-| 💰 Daten an Dritte verkaufen | ✅ Nicht getan |
-| 📍 Deinen Standort weltweit verbreiten | ✅ Nicht getan |
-| 👁 Deine Kamera/Mikro abhören | ✅ Nicht getan |
+| Dein Verhalten tracken | Nicht getan |
+| Personalisierte Werbung zeigen | Nicht getan |
+| Daten an Dritte verkaufen | Nicht getan |
+| Deinen Standort verbreiten | Nicht getan |
+| Deine Kamera/Mikrofon abhören | Nicht getan |
 
-**Unser Business-Modell:** Du zahlst → Wir beliefern dir den Service. Das ist alles.  
+**Unser Business-Modell:** Du zahlst – wir liefern dir den Service. Das ist alles.
 Deine Daten sind kein Produkt, das verkauft werden kann.
 
-### 5️⃣ **Open Source & Transparent**
+### 5. Open Source und Transparent
 
-Code ist öffentlich [auf GitHub](https://github.com/benediktpoller/superheld-app) einsehbar.
+Der Code ist öffentlich [auf GitHub](https://github.com/benediktpoller/superheld-app) einsehbar.
 
-```
-Du kannst sehen:
-✅ Wie deine Daten verschlüsselt werden
-✅ Was der Server speichert
-✅ Welche Berechtigungen nötig sind
-✅ Wo die Schwachstellen sind (ja, ehrlich!)
-```
+- **Verschlüsselung** – Du kannst nachvollziehen, wie deine Daten verschlüsselt werden
+- **Serverspeicherung** – Einsicht in alles, was der Server speichert
+- **Berechtigungen** – Transparenz über alle benötigten Berechtigungen
+- **Schwachstellen** – Offener Umgang mit bekannten Schwachstellen
 
-**Sicherheit durch Transparenz:** 10.000+ Security-Profis können Code reviewen. Wenn ein Bug existiert, wissen wir schnell davon.
+**Sicherheit durch Transparenz:** Tausende Security-Fachleute können den Code reviewen. Wenn ein Bug existiert, erfahren wir schnell davon.
 
-### 6️⃣ **DSGVO-konform von Tag 1**
+### 6. DSGVO-konform von Tag 1
 
-Wir halten sich an die strengsten Datenschutzgesetze der Welt (DSGVO, CCPA, LGPD, etc.):
+Wir halten uns an die strengsten Datenschutzgesetze der Welt (DSGVO, CCPA, LGPD u. a.):
 
-- ✅ **Datenminimierung** – Wir speichern nur das Nötigste
-- ✅ **Dein Recht auf Vergessenheit** – Löschen auf Knopfdruck
-- ✅ **Datenportabilität** – Exportiere deine Daten jederzeit
-- ✅ **Transparenz** – Datenschutzerklärung in Mensch-Sprache
-- ✅ **Sichere Löschung** – Daten sind nach Löschung **wirklich weg**, nicht nur "versteckt"
+- **Datenminimierung** – Wir speichern nur das Nötigste
+- **Recht auf Vergessenheit** – Löschung auf Knopfdruck
+- **Datenportabilität** – Exportiere deine Daten jederzeit
+- **Transparenz** – Datenschutzerklärung in verständlicher Sprache
+- **Sichere Löschung** – Daten sind nach Löschung **wirklich weg**, nicht nur ausgeblendet
 
 ---
 
-## 🚀 So funktioniert superheld.app im Detail
+## So funktioniert superheld.app im Detail
 
-### Workflow: "Sichere Nachricht verschicken"
+### Workflow: Sichere Nachricht verschicken
 
-```
-SCHRITT 1: Nachricht tippen
-┌─────────────────────────────┐
-│ Meine Nachricht:            │
-│ "Hey, Treffpunkt morgen?"  │
-└─────────────────────────────┘
-                ↓
-        [Auf DEINEM Gerät]
-SCHRITT 2: Verschlüsseln
-        
-        Message + DEIN_GEHEIMSCHLÜSSEL
-            ↓ (AES-256)
-        
-        🔐 xK9mL2qPvR4sT5Y6uI7oP8aS9dF0gH
-                ↓
-SCHRITT 3: Senden über TLS 1.3 (sichere Leitung)
-        (Netzwerk kann nicht abhört werden)
-                ↓
-SCHRITT 4: Server speichert (VERSCHLÜSSELT!)
-        
-    Datenbank Entry:
-    ┌─────────────────────────────────┐
-    │ user_id: 🔐 (verschlüsselt)    │
-    │ message: 🔐 xK9mL2qPvR4sT5Y... │
-    │ timestamp: 🔐 (verschlüsselt)  │
-    │ recipient: 🔐 (verschlüsselt)  │
-    └─────────────────────────────────┘
-    
-    SuperHeld-Server: "🤷 Keine Ahnung was drin ist"
-                ↓
-SCHRITT 5: Empfänger will lesen
-        
-        Bekommt: 🔐 xK9mL2qP...
-             + SEIN_GEHEIMSCHLÜSSEL
-            ↓ (Entschlüsselung)
-        
-        Sieht: "Hey, Treffpunkt morgen?"
-                ↓
-SCHRITT 6: Nachricht lesen & antworten
-        (Gleicher Prozess umgekehrt)
-```
+{{% steps %}}
 
-**Fazit:** Niemand – auch nicht superheld.app – kann deine Nachricht lesen. Nur du und der Empfänger!
+#### Nachricht tippen
+
+Du verfasst deine Nachricht, z. B. „Hey, Treffpunkt morgen?"
+
+#### Verschlüsseln
+
+Auf deinem Gerät wird die Nachricht mit deinem geheimen Schlüssel per AES-256 verschlüsselt.
+
+#### Senden über TLS 1.3
+
+Die verschlüsselte Nachricht wird über eine sichere TLS-1.3-Verbindung übertragen. Das Netzwerk kann nicht abgehört werden.
+
+#### Server speichert verschlüsselt
+
+Der Server speichert alle Felder ausschließlich verschlüsselt: User-ID, Nachricht, Zeitstempel und Empfänger. Der Server hat keine Möglichkeit, die Inhalte zu lesen.
+
+#### Empfänger entschlüsselt
+
+Der Empfänger erhält die verschlüsselte Nachricht und entschlüsselt sie mit seinem eigenen Schlüssel.
+
+#### Nachricht lesen und antworten
+
+Der Empfänger sieht die Nachricht im Klartext und kann über denselben sicheren Prozess antworten.
+
+{{% /steps %}}
+
+**Fazit:** Niemand – auch nicht superheld.app – kann deine Nachricht lesen. Nur du und der Empfänger.
 
 ---
 
-{{< details title="Klick für Details: Risiken & Schutzmaßnahmen" >}}
+{{< details title="Klick für Details: Risiken und Schutzmaßnahmen" >}}
 
-|  Szenario | Risiko | superheld.app Lösung |
+| Szenario | Risiko | superheld.app Lösung |
 |---|---|---|
-| 🚗 Im Auto mit öffentlichem WLAN | WLAN kann abgehört werden | TLS 1.3 verschlüsselt alles |
-| ☕ Im Café, Hacker im gleichen Netz | Man-in-the-Middle Attacke möglich | E2E Encryption schützt |
-| 🏪 Bahn mit schlechtem Signal | Daten könnten unterwegs abgefangen werden | Lokal verschlüsselt, dann gesendet |
-| 📱 Handy gestohlen | Dieb könnte Apps öffnen | Biometrische Locks & Passcode |
-| 🏨 Hotel mit Spionage-WLAN | Intentionaler Daten-Dieben | E2E: Hacker sieht nur Kauderwelsch |
+| Im Auto mit öffentlichem WLAN | WLAN kann abgehört werden | TLS 1.3 verschlüsselt alles |
+| Im Café, Hacker im gleichen Netz | Man-in-the-Middle Attacke möglich | E2E Encryption schützt |
+| Bahn mit schlechtem Signal | Daten könnten unterwegs abgefangen werden | Lokal verschlüsselt, dann gesendet |
+| Handy gestohlen | Dieb könnte Apps öffnen | Biometrische Locks und Passcode |
+| Hotel mit Spionage-WLAN | Intentionaler Datendiebstahl | E2E: Angreifer sieht nur Kauderwelsch |
 
 {{< /details >}}
-| ☕ Im Café, Hacker im gleichen Netz | Man-in-the-Middle Attacke möglich | E2E Encryption schützt |
-| 🏪 Bahn mit schlechtem Signal | Daten könnten unterwegs abgefangen werden | Lokal verschlüsselt, dann gesendet |
-| 📱 Handy gestohlen | Dieb könnte Apps öffnen | Biometrische Locks & Passcode |
-| 🏨 Hotel mit Spionage-WLAN | Intentionaler Daten-Dieben | E2E: Hacker sieht nur Kauderwelsch |
 
-### 🛡️ 5 Regeln für sichere unterwegs Arbeit
+### 5 Regeln für sicheres Arbeiten unterwegs
 
-#### 1️⃣ **Verwende SuperHeld's Offline-Mode**
+#### 1. Verwende den Offline-Modus von superheld.app
 
-```
-Szenario: Du bist in einem Tunnel, Internet weg
+Im Offline-Modus (z. B. in einem Tunnel ohne Internet) kannst du weiterhin produktiv arbeiten:
 
-Deine Arbeit:
-✅ Nachrichten schreiben (lokal verschlüsselt)
-✅ Dokumente bearbeiten (lokal gespeichert)
-✅ Adressen aktualisieren (lokal verschlüsselt)
+- **Nachrichten schreiben** – lokal verschlüsselt gespeichert
+- **Dokumente bearbeiten** – lokal gespeichert
+- **Adressen aktualisieren** – lokal verschlüsselt
 
-Das passiert im Hintergrund:
-💤 Nichts wird gesendet
-🔐 Alles bleibt lokal verschlüsselt
+Sobald du wieder online bist, erfolgt automatisch eine verschlüsselte Synchronisation per E2E.
 
-Wenn du wieder Online bist:
-🔄 Automatische Sync
-🔒 Mit E2E Verschlüsselung
-✅ Alles ist sicher!
-```
+#### 2. Aktiviere biometrische Locks
 
-#### 2️⃣ **Aktiviere Biometrische Locks**
+superheld.app bietet mehrere Sicherheitsstufen für den Gerätezugriff:
 
-```
-┌──────────────────────────────────────┐
-│  superheld.app Lock-Optionen:        │
-├──────────────────────────────────────┤
-│                                      │
-│ Sicherheitsstufe: Hoch ⭐⭐⭐⭐⭐ │
-│                                      │
-│ Methoden (aktiviert):                │
-│ ☑️ Face ID / TouchID               │
-│ ☑️ Fingerabdruck                   │
-│ ☑️ Passcode (6-stellig)            │
-│ ☑️ Auto-Lock nach 2 Minuten        │
-│ ☑️ Benachrichtigung bei Eindringen  │
-│                                      │
-│ Wenn jemand dein Handy stiehlt:     │
-│                                      │
-│ 1. App sperrt sich auto              │
-│ 2. Remote-Block möglich (Website)   │
-│ 3. Daten können komplett gelöscht   │
-│    werden (Wipe-on-Unlock)          │
-│                                      │
-└──────────────────────────────────────┘
-```
+- **Face ID / Touch ID** – Biometrische Entsperrung
+- **Fingerabdruck** – Alternative biometrische Methode
+- **Passcode (6-stellig)** – Numerischer Zugangscode
+- **Auto-Lock nach 2 Minuten** – Automatische Sperrung bei Inaktivität
+- **Benachrichtigung bei Eindringversuch** – Alarmierung bei unberechtigten Zugriffen
 
-#### 3️⃣ **Nutze VPN nur, wenn du ihm traust**
+{{< callout type="warning" >}}
+**Bei Diebstahl:** Die App sperrt sich automatisch. Über die Website kannst du eine Remote-Sperrung auslösen und bei Bedarf eine vollständige Datenlöschung (Wipe-on-Unlock) durchführen.
+{{< /callout >}}
 
-❌ **Problem mit Standard-VPNs:**
-```
-Dein Standard-Fluss:
-Dein Daten → VPN-Server → Internet
+#### 3. Nutze VPN nur, wenn du ihm vertraust
 
-Der VPN-Betreiber sieht:
-- Wohin du gehst (Websites)
-- Was du sendest (could be decrypted)
-- Dein echte IP-Adresse (oft)
-```
+**Problem mit Standard-VPNs:** Der VPN-Betreiber kann potenziell sehen, welche Websites du aufrufst, welche Daten du sendest und deine echte IP-Adresse.
 
-✅ **superheld.app mit VPN:**
-```
-Dein Fluss:
-Dein Daten → [E2E VERSCHLÜSSELT] 
-    → VPN → Internet
+**superheld.app mit VPN:** Dank E2E-Verschlüsselung sieht der VPN-Betreiber lediglich, dass du Datenpakete sendest – nicht, was darin enthalten ist.
 
-Was VPN-Betreiber sieht:
-- NICHTS verständliches (E2E!)
-- Nur: Du sendest Datenpakete
-- Nicht: Was drin ist
-```
+**Empfehlung:** Verwende nur vertrauenswürdige VPN-Services (z. B. ProtonVPN, Mullvad). Da die E2E-Verschlüsselung bereits den Großteil schützt, ist ein VPN nicht zwingend erforderlich.
 
-**Empfehlung:** Verwende nur vertrauenswürdige VPN-Services (z.B. ProtonVPN, Mullvad). Besser noch: OG ohne VPN, da E2E das meiste schützt!
+#### 4. Aktiviere Zwei-Faktor-Authentifizierung (2FA)
 
-#### 4️⃣ **Aktiviere Zwei-Faktor-Authentifizierung (2FA)**
+{{% steps %}}
 
-```
-Login ohne 2FA (unsicher):
-Passwort eingeben → Zack, du bist rein ❌
+#### Passwort eingeben
 
-Login mit 2FA (sicher):
-1. Passwort eingeben
-   ↓
-2. SuperHeld sendet Code an dein Handy
-   (SMS, Authenticator-App, oder Hardware-Key)
-   ↓
-3. Du gibst Code ein
-   ↓
-4. ERST DANN: Du bist rein ✅
+Gib dein Passwort wie gewohnt ein.
 
-Warum sicherer?
-Selbst wenn Passwort gehackt:
-Hacker braucht AUCH dein Handy/Code
-(Wahrscheinlichkeit sinkt drastisch)
-```
+#### Code empfangen
 
-**Optionen in superheld.app:**
-- 📱 Authenticator App (bewährt)
-- 🔑 Hardware Security Key (Pentagon-Level!)
-- 📧 E-Mail Codes (schnell, okay)
-- ❌ SMS (Letzte Option, nicht ideal)
+superheld.app sendet einen Code an dein Handy (per Authenticator-App, SMS oder Hardware-Key).
 
-#### 5️⃣ **Regelmäßig Aktivitäten protokollieren**
+#### Code eingeben
 
-```
-In SuperHeld go to:
-Settings → Security → Activity Log
-        ↓
+Gib den empfangenen Code ein.
 
-Du siehst:
-┌──────────────────────────────────────┐
-│ 📋 Aktivitäts-Protokoll             │
-├──────────────────────────────────────┤
-│                                      │
-│ Wann | Was | Von wo | Gerät         │
-│─────────────────────────────────────│
-│ 14:23│Login|Berlin|iPhone 14       │
-│ 14:22│Downloaded|Berlin|Chrome     │
-│ 13:15│Login|Tokyo(?) |Android      │  ⚠️
-│ 13:14│File edited|Tokyo|iPad       │  ⚠️
-│                                      │
-│ ⚠️ = Ungewöhnlich!                  │
-│                                      │
-│ [Aktivität blockieren]              │
-│ [Passwort jetzt ändern]             │
-│ [Support kontaktieren]              │
-│                                      │
-└──────────────────────────────────────┘
-```
+#### Zugang erhalten
 
-**Checkliste wöchentlich:**
-- ✅ Unbekannte Logins? Nein = Gut!
-- ✅ Unerwartete Änderungen? Nein = Gut!
-- ✅ Neue Geräte? Nein = Gut!
+Erst nach erfolgreicher Verifizierung beider Faktoren erhältst du Zugang.
 
-Falls JA → Sofort Passwort ändern + Support kontaktieren!
+{{% /steps %}}
+
+{{< callout type="info" >}}
+Selbst wenn dein Passwort kompromittiert wird, benötigt ein Angreifer zusätzlich Zugriff auf deinen zweiten Faktor. Das reduziert das Risiko drastisch.
+{{< /callout >}}
+
+**Verfügbare 2FA-Methoden in superheld.app:**
+- **Authenticator App** – Empfohlen (z. B. Google Authenticator, Authy)
+- **Hardware Security Key** – Höchste Sicherheitsstufe (z. B. YubiKey)
+- **E-Mail Codes** – Schnell eingerichtet, akzeptable Sicherheit
+- **SMS** – Letzte Option, nicht ideal
+
+#### 5. Regelmäßig Aktivitäten prüfen
+
+Unter **Settings > Security > Activity Log** findest du eine Übersicht aller Zugriffe auf deinen Account, inklusive Zeitpunkt, Aktion, Standort und Gerät.
+
+{{< callout type="warning" >}}
+Achte auf ungewöhnliche Einträge, z. B. Logins von unbekannten Standorten oder Geräten. Bei verdächtigen Aktivitäten solltest du sofort dein Passwort ändern und den Support kontaktieren.
+{{< /callout >}}
+
+**Wöchentliche Checkliste:**
+- **Unbekannte Logins?** – Falls nein: alles in Ordnung
+- **Unerwartete Änderungen?** – Falls nein: alles in Ordnung
+- **Neue Geräte?** – Falls nein: alles in Ordnung
+
+Falls ja: Sofort Passwort ändern und Support kontaktieren.
 
 ---
 
-## 🔐 Technische Sicherheitsmaßnahmen
+## Technische Sicherheitsmaßnahmen
 
 ### Verschlüsselungs-Standards
 
 | Standard | Was schützt | Stärke |
 |----------|-----------|--------|
-| **AES-256** | Ruhende Daten | 🟢 Militär-Klasse |
-| **TLS 1.3** | Übertragung | 🟢 Bank-Standard |
-| **RSA-4096** | Schlüsselaustausch | 🟢 Quantum-resistent |
-| **HMAC-SHA256** | Integrität | 🟢 Kann nicht gefälscht werden |
+| **AES-256** | Ruhende Daten | Militär-Klasse |
+| **TLS 1.3** | Übertragung | Bank-Standard |
+| **RSA-4096** | Schlüsselaustausch | Quantum-resistent |
+| **HMAC-SHA256** | Integrität | Fälschungssicher |
 
 ### Infrastruktur-Sicherheit
 
-####🏗️ Server-Isolation
-```
-Deine Daten sind komplett isoliert:
+#### Server-Isolation
 
-[Server-Cluster]
-  ├─ [Isolation Zone 1] → Nur Daten User#1
-  ├─ [Isolation Zone 2] → Nur Daten User#2
-  ├─ [Isolation Zone 3] → Nur Daten User#3
-  └─ [Isolation Zone N] → Nur Daten UserN
+Deine Daten sind vollständig isoliert. Jeder Benutzer erhält eine eigene Isolation Zone innerhalb des Server-Clusters. Selbst wenn ein Angreifer Zugriff auf eine Zone erlangt, bleiben alle anderen Zonen unberührt.
 
-Selbst wenn Hacker Zone 2 angreift:
-Zone 1, 3, N sind nicht betroffen!
-```
+#### Firewall und DDoS-Schutz
 
-#### 🔥 Firewall & DDoS-Schutz
-- 🟢 Enterprise Firewall (Cloudflare Enterprise)
-- 🟢 DDoS-Schutz (99,99% Verfügbarkeit)
-- 🟢 Intrusion Detection (AI-basiert)
-- 🟢 24/7 Monitoring
+- **Enterprise Firewall** – Cloudflare Enterprise
+- **DDoS-Schutz** – 99,99 % Verfügbarkeit
+- **Intrusion Detection** – KI-basierte Erkennung
+- **24/7 Monitoring** – Rund-um-die-Uhr-Überwachung
 
-#### 🔍 Regelmäßige Sicherheits-Audits
-```
-Zeitplan:
-- Wöchentlich: Automatische Scans
-- Monatlich: Penetration Tests (ethische Hacker)
-- Quarterly: Externe Security-Audits
-- Jährlich: Full SOC 2 Type II Zertifizierung
-```
+#### Regelmäßige Sicherheits-Audits
+
+- **Wöchentlich:** Automatische Sicherheitsscans
+- **Monatlich:** Penetration Tests durch ethische Hacker
+- **Quartalsweise:** Externe Security-Audits
+- **Jährlich:** Vollständige SOC 2 Type II Zertifizierung
 
 ---
 
-## 📚 Deine Rechte & Kontrolle
+## Deine Rechte und Kontrolle
 
-### 1️⃣ **Recht auf Vergessenheit (DSGVO Art. 17)**
+### 1. Recht auf Vergessenheit (DSGVO Art. 17)
 
-```
-Du möchtest deine Daten löschen?
+Du möchtest deine Daten löschen? Gehe zu **Settings > Privacy > Delete Account**.
 
-Gehe zu: Settings → Privacy → Delete Account
+Folgende Daten werden permanent gelöscht:
+- Profil und Einstellungen
+- Nachrichten und Dateien
+- Aktivitäts-Logs
+- Backups (nach 30 Tagen)
+- Alle verschlüsselten Daten
 
-┌─────────────────────────────────────┐
-│ Permanente Löschung                 │
-├─────────────────────────────────────┤
-│                                     │
-│ Folgende Daten werden gelöscht:     │
-│ ☑️ Profil & Einstellungen          │
-│ ☑️ Nachrichten & Dateien           │
-│ ☑️ Aktivitäts-Logs                 │
-│ ☑️ Backups (nach 30 Tagen)        │
-│ ☑️ Alle verschlüsselten Daten      │
-│                                     │
-│ Zeitrahmen: Innerhalb 24 Stunden   │
-│                                     │
-│ [Löschen bestätigen]               │
-│ (Eingabe: "Ich verstehe, das ist   │
-│  permanent und kann nicht rückgängig│
-│  gemacht werden")                  │
-│                                     │
-└─────────────────────────────────────┘
-```
+{{< callout type="warning" >}}
+Die Löschung erfolgt innerhalb von 24 Stunden und ist **nicht rückgängig zu machen**. Du musst die Löschung durch Eingabe einer Bestätigung autorisieren.
+{{< /callout >}}
 
-**Was passiert nach Löschung:**
-- ✅ Diche Accout ist weg
-- ✅ Nachrichten an andere sind noch lesbar (sie gehören ihnen!)
-- ✅ Server-Backups werden nach 30 Tagen überschrieben
-- ✅ Keine Wiederherstellung möglich
+**Was passiert nach der Löschung:**
+- **Dein Account ist gelöscht** – Vollständig und unwiderruflich
+- **Nachrichten an andere bleiben erhalten** – Sie gehören den jeweiligen Empfängern
+- **Server-Backups werden nach 30 Tagen überschrieben**
+- **Keine Wiederherstellung möglich**
 
-### 2️⃣ **Datenexport (DSGVO Art. 20)**
+### 2. Datenexport (DSGVO Art. 20)
 
-```
-Du willst deine Daten in einer anderen App nutzen?
+Du willst deine Daten in einer anderen App nutzen? Gehe zu **Settings > Privacy > Export Data**.
 
-Gehe zu: Settings → Privacy → Export Data
+superheld.app stellt dir deine Daten in Standard-Formaten bereit:
+- **JSON** – Für Apps und APIs
+- **CSV** – Für Tabellenkalkulationen
+- **PDF** – Zum Drucken und Archivieren
 
-superheld.app gibt dir alles in Standard-Formaten:
-✅ JSON (für Apps & APIs)
-✅ CSV (für Spreadsheets)
-✅ PDF (zum Drucken/Archivieren)
+Deine Daten gehören dir.
 
-Deine Daten gehören DIR!
-```
+### 3. Transparenz-Reports
 
-### 3️⃣ **Transparenz-Reports**
-
-Wir veröffentlichen transparent:
-- 📊 Wie viele Daten-Anfragen Regierungen stellen
-- 🚨 Wie viele wir ablehnen
-- 💾 Wie viel Speicherplatz du nutzt
-- 🔓 Wie viele Benutzer 2FA nutzen
+Wir veröffentlichen regelmäßig Berichte zu folgenden Themen:
+- **Behördenanfragen** – Anzahl der Datenanfragen von Regierungen
+- **Ablehnungen** – Anzahl der abgelehnten Anfragen
+- **Speichernutzung** – Dein genutzter Speicherplatz
+- **2FA-Nutzung** – Anteil der Benutzer mit aktivierter Zwei-Faktor-Authentifizierung
 
 [Aktuelle Reports](https://superheld.app/transparency)
 
 ---
 
-## ⚡ Checkliste: Du bist sicher, wenn...
+## Checkliste: Du bist sicher, wenn...
 
-- ✅ Face ID / Fingerabdruck aktiviert (Handy-Lock)
-- ✅ Passcode 6-stellig oder länger
-- ✅ 2FA aktiviert (Authenticator App, nicht SMS)
-- ✅ Activity Log wöchentlich gecheckt
-- ✅ App immer auf neuster Version
-- ✅ Handy-Betriebssystem aktuell
-- ✅ Du NIEMALS dein Passwort teilst (nicht mal Support!)
-- ✅ Du weißt: superheld.app kann nicht in deine Daten schauen
+- Face ID / Fingerabdruck aktiviert (Handy-Lock)
+- Passcode 6-stellig oder länger
+- 2FA aktiviert (Authenticator App, nicht SMS)
+- Activity Log wöchentlich geprüft
+- App immer auf neuester Version
+- Handy-Betriebssystem aktuell
+- Du NIEMALS dein Passwort teilst (nicht einmal mit dem Support)
+- Du weißt: superheld.app kann nicht in deine Daten schauen
 
-**Wenn alle Häkchen grün sind: Du bist maximalist geschützt!** 🎉
+{{< callout type="info" >}}
+Wenn alle Punkte erfüllt sind, bist du bestmöglich geschützt.
+{{< /callout >}}
 
 ---
 
-## 🆘 Was tun, wenn etwas verdächtig ist?
+## Was tun, wenn etwas verdächtig ist?
 
 ### Notfall-Prozess
 
 **Schritt 1: Sofort handeln (unter 5 Minuten)**
 
-```
-Verdacht auf Hack? (Z.B. unbekannter Login im Activity Log)
+{{% steps %}}
 
-1. Passwort ändern
-   → Settings → Security → Change Password
-   
-2. Alle Sessions beenden
-   → Settings → Security → Logout All Devices
-   
-3. 2FA überprüfen
-   → Ist deine Nummer noch korrekt?
-   → Ist Authenticator App noch da?
-```
+#### Passwort ändern
+
+Gehe zu **Settings > Security > Change Password** und setze ein neues, starkes Passwort.
+
+#### Alle Sessions beenden
+
+Gehe zu **Settings > Security > Logout All Devices**, um alle aktiven Sitzungen zu beenden.
+
+#### 2FA überprüfen
+
+Stelle sicher, dass deine hinterlegte Telefonnummer korrekt ist und deine Authenticator App noch funktioniert.
+
+{{% /steps %}}
 
 **Schritt 2: Uns informieren (nächste 30 Minuten)**
 
-```
-Support → "Sicherheits-Incident"
+Kontaktiere den Support unter der Kategorie „Sicherheits-Incident" und beschreibe:
+- Wann du die verdächtige Aktivität bemerkt hast
+- Was genau verdächtig ist
+- Wo du zuletzt online warst
+- Welche Geräte du nutzt
 
-Beschreibe:
-- Wann hast du es gemerkt?
-- Was ist verdächtig?
-- Wo warst du online?
-- Welche Geräte nutzt du?
+Unser Team wird umgehend alle deine Sessions pausieren, die Logs überprüfen und dich über verdächtige Aktivitäten benachrichtigen.
 
-Unser Team:
-🔴 Pauses alle deine Sessions
-🔴 Überprüft Logs
-🔴 Benachrichtigt dich von verdächtigen Aktivitäten
-```
+**Schritt 3: Absicherung (nächste 24 Stunden)**
 
-**Schritt 3: Verhärtung (nächste 24 Stunden)**
-
-```
-- 🔑 Alle Passwörter ändern (auch andere Apps!)
-- 🔑 2FA auf anderen Servies überprüfen
-- 💾 Virenscan auf deinem Gerät
-- 📱 Handy-Sicherheit updaten
-- 🚩 Kreditkarten überwachen (falls Zahlungsdaten betroffen)
-```
+- **Passwörter ändern** – Auch bei anderen Apps und Diensten
+- **2FA prüfen** – Zwei-Faktor-Authentifizierung bei allen relevanten Services überprüfen
+- **Virenscan durchführen** – Gerät auf Schadsoftware untersuchen
+- **System aktualisieren** – Handy-Sicherheitsupdates installieren
+- **Zahlungsmittel überwachen** – Kreditkarten prüfen, falls Zahlungsdaten betroffen sein könnten
 
 ---
 
-## 📞 Kontakt & Weitere Hilfe
+## Kontakt und weitere Hilfe
 
-**Sicherheits-Fragen:** support@superheld.app  
-**Notfall / Bug Report:** security@superheld.app  
+**Sicherheits-Fragen:** support@superheld.app
+**Notfall / Bug Report:** security@superheld.app
 **Transparenz Reports:** https://superheld.app/transparency
 
 ---
 
-## 🎓 Weitere Ressourcen
+## Weitere Ressourcen
 
-- [Installation & Grundlagen](/docs/einführung/installation)
+- [Installation und Grundlagen](/docs/einführung/installation)
 - [Sichere Nutzung unterwegs](/docs/nutzung)
 - [Erweiterte Sicherheits-Konfiguration](/docs/konfiguration)
 - [FAQ: Häufige Sicherheits-Fragen](/docs/faq)
 
 ---
 
-**Deine Privatsphäre ist nicht verhandelbar.**  
-**SuperHeld schützt sie, damit du dich auf das konzentrieren kannst, das dir wichtig ist.**
-
-🛡️ Stay safe! 🛡️
+**Deine Privatsphäre ist nicht verhandelbar.**
+**superheld.app schützt sie, damit du dich auf das konzentrieren kannst, was dir wichtig ist.**

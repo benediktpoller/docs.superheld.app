@@ -64,10 +64,10 @@ A: Ja, über Proxy-Einstellungen
 ## Fehlerbehandlung
 
 **F: App startet nicht!**
-- 1️⃣ App neu installieren
-- 2️⃣ Cache leeren (Einstellungen → Speicher)
-- 3️⃣ Device neu starten
-- 4️⃣ [Support kontaktieren](https://superheld.app/support)
+- 1. App neu installieren
+- 2. Cache leeren (Einstellungen → Speicher)
+- 3. Device neu starten
+- 4. [Support kontaktieren](https://superheld.app/support)
 
 **F: Keine Ergebnisse?**
 - Prüfe Internet-Verbindung
@@ -84,10 +84,10 @@ A: Ja, über Proxy-Einstellungen
 ## Support & Community
 
 **Wo bekomme ich Hilfe?**
-- 📖 Diese Dokumentation
-- 💬 [Discord Community](https://discord.superheld.app)
-- 🐛 [GitHub Issues](https://github.com/benediktpoller/superheld.app/issues)
-- 📧 [support@superheld.app](mailto:support@superheld.app)
+- Diese Dokumentation
+- [Discord Community](https://discord.superheld.app)
+- [GitHub Issues](https://github.com/benediktpoller/superheld.app/issues)
+- [support@superheld.app](mailto:support@superheld.app)
 
 **Bug melden?**
 → [GitHub Issues](https://github.com/benediktpoller/superheld.app/issues/new)

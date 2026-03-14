@@ -3,7 +3,7 @@ title: "Apps & Plattformen"
 weight: 25
 ---
 
-## 📱 App-Übersicht
+## App-Übersicht
 
 superheld.app ist eine **plattformspezifische Schutz-App**, die auf jedem Gerät eine konsistente Schutzschicht bereitstellt. Alle Apps teilen dieselbe Kernlogik (Proxy, VPN, Kindersicherung, Sicherheitsstatus, KI-Analyse) – die Oberfläche passt sich an das Gerät und die Nutzungsrolle an.
 
@@ -11,7 +11,7 @@ superheld.app ist eine **plattformspezifische Schutz-App**, die auf jedem Gerät
 
 ---
 
-## 🧩 App-Architektur (Shared Core)
+## App-Architektur (Shared Core)
 
 Die App besteht aus drei Kernbereichen:
 
@@ -37,7 +37,7 @@ Zusätzlich sind integriert:
 
 ---
 
-## 📲 Android (App Store / Play Store)
+## Android (App Store / Play Store)
 
 ![Android App](/images/screenshot-android.svg)
 
@@ -59,7 +59,7 @@ Zusätzlich sind integriert:
 
 ---
 
-## 🍏 iOS (App Store)
+## iOS (App Store)
 
 ![iOS App](/images/screenshot-ios.svg)
 
@@ -80,7 +80,7 @@ Zusätzlich sind integriert:
 
 ---
 
-## 🖥️ Windows (Desktop)
+## Windows (Desktop)
 
 ![Windows App](/images/screenshot-windows.svg)
 
@@ -101,7 +101,7 @@ Zusätzlich sind integriert:
 
 ---
 
-## 🍎 macOS
+## macOS
 
 ![macOS App](/images/screenshot-macos.svg)
 
@@ -120,7 +120,7 @@ Zusätzlich sind integriert:
 
 ---
 
-## 🐧 Linux (Debian/Ubuntu, Fedora, Arch)
+## Linux (Debian/Ubuntu, Fedora, Arch)
 
 ![Linux App](/images/screenshot-linux.svg)
 
@@ -142,32 +142,32 @@ Zusätzlich sind integriert:
 
 ---
 
-## 🧭 Rollen & typische Workflows
+## Rollen & typische Workflows
 
-### 🐣 1. Einsteiger / DAU (Easy Mode)
+### 1. Einsteiger / DAU (Easy Mode)
 - Einfache Setup‑Abfolge
 - Ein großer **Ein‑/Aus‑Button** (Schutz aktivieren)
 - Visuelle Warnungen (rot/gelb/grün)
 - Automatische Empfehlungen („Aktiviere Kindersicherung“, „Aktualisiere Firmware“)
 
-### 🧠 2. Versierte Nutzer
+### 2. Versierte Nutzer
 - Feine Einstellungen (Proxy-Filter, Ausnahme‑Regeln, Zeitlimits)
 - **Raw‑Log‑View** + Filter
 - **Export / Import** von Regeln und Sicherungspaketen
 
-### 👪 3. Eltern
+### 3. Eltern
 - Kindersicherung mit Profilen (Schule, Freizeit, Schlaf)
 - Genehmigungs‑Workflow für blockierte Seiten
 - Übersicht über Aktivität: **Was wurde geblockt?**
 
-### 🛠️ 4. Administratoren
+### 4. Administratoren
 - Geräteliste + Status (online/offline)
 - Remote‑Lock, Remote‑Wipe (optional)
 - Richtlinien‑Vorlagen (z.B. „Eltern“, „Schule“, „Home‑Office“)
 
 ---
 
-## 🧩 Woher kommen die Inhalte?
+## Woher kommen die Inhalte?
 Die Funktionen basieren auf dem **superheld.app‑Design**:
 - Proxy + VPN + Filterregeln (Jugendschutz, Malware, Hochrisiko)
 - Lokaler AI‑Layer (LLM‑Traffic überwachen)
@@ -176,11 +176,10 @@ Die Funktionen basieren auf dem **superheld.app‑Design**:
 
 ---
 
-## 🧪 Nächste Schritte (Ausblick)
+## Nächste Schritte (Ausblick)
 - **Passkeys & biometrische Anmeldung** (iOS & Android) sind im Beta‑Modus.
 - **VPN‑Device‑Liste**: Alle verbundenen Geräte sichtbar, ähnlich Tailscale.
 - **Trusted Apps / Untrusted Apps**: App‑Rating & Blocklisten.
 
 ---
 
-> ✨ Dieser Bereich wächst mit jeder neuen Version. Die nächste Version wird den **AI‑Safety‑Layer** (erkanntes Social‑Engineering) auch für Browser‑Extensions anbieten.

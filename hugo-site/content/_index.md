@@ -23,7 +23,7 @@ layout: hextra-home
 </div>
 
 <div class="hx-mb-6">
-{{< hextra/hero-button text="Jetzt starten" link="/docs/einführung/installation" >}}
+{{< hextra/hero-button text="Jetzt starten" link="/docs/einführung/installation-v2" >}}
 {{< hextra/hero-button text="Plattformen ansehen" link="/docs/apps" style="background: transparent; border: 1px solid #e5e7eb; color: inherit;" >}}
 </div>
 
@@ -153,7 +153,7 @@ layout: hextra-home
     title="Installation"
     subtitle="Lade die App herunter und starte sofort."
     icon="download"
-    link="/docs/einführung/installation"
+    link="/docs/einführung/installation-v2"
   >}}
   {{< hextra/feature-card
     title="Erstes Setup"

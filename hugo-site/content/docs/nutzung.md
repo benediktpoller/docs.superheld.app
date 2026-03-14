@@ -3,7 +3,7 @@ title: "Nutzung"
 weight: 50
 ---
 
-## 🎤 Sprachgesteuerte Eingabe
+## Sprachgesteuerte Eingabe
 
 **Auf Mobile:**
 1. Öffne superheld.app
@@ -16,7 +16,7 @@ Beispiele:
 - "Übersetze diesen Text ins Englische"
 - "Erkläre mir Quantencomputer"
 
-## ⌨️ Text-Eingabe
+## Text-Eingabe
 
 **Auf allen Geräten:**
 1. Öffne superheld.app
@@ -24,14 +24,14 @@ Beispiele:
 3. Gib deine Frage ein
 4. Drücke **Enter** oder **Senden**
 
-## 🔗 Verknüpfte Apps nutzen
+## Verknüpfte Apps nutzen
 
 **Browser-Erweiterung:**
 1. Klicke superheld-icon
 2. Schreibe deine Anfrage
 3. Anonymisierung erfolgt automatisch
 
-## 📊 Aktivität überprüfen
+## Aktivität überprüfen
 
 1. Gehe zu **Einstellungen** → **Aktivität**
 2. Sehe eine Liste aller Anfragen
@@ -42,11 +42,11 @@ Beispiele:
 
 ## Tipps
 
-💡 **Sei spezifisch** – Bessere Anfragen = bessere Antworten
+**Sei spezifisch** -- Bessere Anfragen = bessere Antworten
 
-⚡ **Browser-Shortcut** – Cmd/Ctrl + Shift + S
+**Browser-Shortcut** -- Cmd/Ctrl + Shift + S
 
-🎯 **Format wählen** – Rohtext, strukturiert, kompakt oder detailliert
+**Format wählen** -- Rohtext, strukturiert, kompakt oder detailliert
 
 ---
 

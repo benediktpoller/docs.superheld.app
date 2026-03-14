@@ -47,7 +47,7 @@ Wähle deine Notification-Einstellungen:
 - ☐ Tägliche Zusammenfassung
 - ☐ Alle Anfragen
 
-## Fertig! 🎉
+## Fertig!
 
 Herzlichen Glückwunsch! Jetzt kannst du superheld.app nutzen.
 

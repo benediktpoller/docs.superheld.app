@@ -3,7 +3,7 @@ title: "Screenshots & Use Cases"
 weight: 50
 ---
 
-## 📸 Visuelle Übersicht
+## Visuelle Übersicht
 
 Entdecke die Hauptfunktionen von superheld.app an realen Beispielen.
 
@@ -11,363 +11,125 @@ Entdecke die Hauptfunktionen von superheld.app an realen Beispielen.
 
 ## Use Case 1: Erste Inbetriebnahme
 
-### 🎯 Szenario
-Du öffnest superheld.app zum ersten Mal und möchtest die App in wenigen Minuten einrichten.
+Du öffnest superheld.app zum ersten Mal und möchtest die App in wenigen Minuten einrichten. Der integrierte Setup-Wizard führt dich durch den gesamten Prozess.
 
-### 📱 Willkommens-Screen
-```
-┌─────────────────────────────────────────┐
-│                                         │
-│        🦸 superheld.app                │
-│                                         │
-│    Willkommen zurück!                  │
-│                                         │
-│  ┌──────────────────────────┐          │
-│  │ 🔧 Konfigurieren        │          │
-│  │    (5 Minuten)          │          │
-│  └──────────────────────────┘          │
-│                                         │
-│  ┌──────────────────────────┐          │
-│  │ 📚 Anleitung anzeigen   │          │
-│  │    (optional)           │          │
-│  └──────────────────────────┘          │
-│                                         │
-│  ┌──────────────────────────┐          │
-│  │ ⚙️ Einstellungen          │          │
-│  │    (Advanced)           │          │
-│  └──────────────────────────┘          │
-│                                         │
-└─────────────────────────────────────────┘
-```
+**Ablauf:**
 
-### 💡 Ablauf
-1. **Setup Wizard** führt dich durch 5 Schritte
-2. **Visuelle Feedback** zeigt Fortschritt (50%, 100%)
-3. **Bestätigung** wenn fertig → Ready to use!
+1. **Setup-Wizard** führt dich durch 5 klar strukturierte Schritte
+2. **Visuelles Feedback** zeigt den Fortschritt in Echtzeit an
+3. **Bestätigung** nach Abschluss -- die App ist einsatzbereit
 
-**Ergebnis:** Nach 5 Minuten ist deine erste Konfiguration done ✅
+{{< callout type="info" >}}
+Nach nur 5 Minuten ist deine erste Konfiguration abgeschlossen und die App einsatzbereit.
+{{< /callout >}}
 
 ---
 
 ## Use Case 2: Tägliche Nutzung
 
-### 🎯 Szenario  
-Du nutzt superheld.app jeden Tag für deine Workflow-Automation.
+Das Dashboard bietet dir eine zentrale Anlaufstelle für die tägliche Workflow-Automation. Alle relevanten Informationen sind auf einen Blick verfügbar:
 
-### 📊 Dashboard
-```
-┌──────────────────────────────────────────────────┐
-│ superheld.app Dashboard                 🌙 ⚙️    │
-├──────────────────────────────────────────────────┤
-│                                                  │
-│  📈 Heute                                        │
-│  ┌──────────────────────────────────────────┐   │
-│  │ 42 Automatisierungen ausgelöst            │   │
-│  │ 2.3 MB Daten verarbeitet                  │   │
-│  │ 📊 ▂▄▆██▆▄▂ (Performance gut)            │   │
-│  └──────────────────────────────────────────┘   │
-│                                                  │
-│  🔔 Aktive Aufgaben                             │
-│  ┌──────────────────────────────────────────┐   │
-│  │ [✓] Backup erstellt      14:23           │   │
-│  │ [⏳] Sync läuft...        5 Minuten       │   │
-│  │ [⏸] Warte auf Trigger    Pause          │   │
-│  └──────────────────────────────────────────┘   │
-│                                                  │
-│  🚨 Benachrichtigungen                          │
-│  ┌──────────────────────────────────────────┐   │
-│  │ Status: ✅ Alles normal                   │   │
-│  │ Letzte Fehler: Keine                     │   │
-│  └──────────────────────────────────────────┘   │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
+- **Tagesübersicht** -- Anzahl ausgelöster Automatisierungen und verarbeiteter Daten
+- **Aktive Aufgaben** -- Laufende, pausierte und abgeschlossene Tasks mit Live-Status
+- **Benachrichtigungen** -- Sofortige Anzeige von Fehlern oder Warnungen
+- **Quick Actions** -- Starten, Pausieren und Fortsetzen von Tasks per Klick
 
-### ⚡ Quick Actions
-- **Schnelle Buttons** zum Starten/Pausieren von Tasks
-- **Live Updates** zeigen aktuelle Status
-- **Ein-Klick Pause/Resume** ohne zu verlassen
-
-**Ergebnis:** Volle Kontrolle mit minimalem Aufwand ⚡
+**Ergebnis:** Volle Kontrolle über alle Prozesse mit minimalem Aufwand.
 
 ---
 
 ## Use Case 3: Erweiterte Konfiguration
 
-### 🎯 Szenario
-Du möchtest komplexe Workflows mit bedingten Regeln aufbauen.
+Der visuelle Workflow-Editor ermöglicht es, komplexe Automatisierungen mit bedingter Logik aufzubauen -- ganz ohne Programmierkenntnisse.
 
-### 🛠 Configuration Mode
-```
-┌───────────────────────────────────────────────────┐
-│ Workflow-Editor - Erweiterte Konfiguration       │
-├───────────────────────────────────────────────────┤
-│                                                   │
-│ Workflow: "Tägliche Datensicherung"             │
-│                                                   │
-│ 📋 Schritte:                                     │
-│                                                   │
-│  1. [Trigger] IF Uhrzeit = 02:00 THEN           │
-│  2. [Action]  Backup starten                     │
-│  3. [Wait]    Warte bis Backup fertig           │
-│  4. [If]      IF Status = "success" THEN        │
-│  5. [Action]  E-Mail Bestätigung senden         │
-│  6. [Else]    IF Status = "error" THEN          │
-│  7. [Action]  Admin benachrichtigen             │
-│  8. [Log]     Ergebnis protokollieren            │
-│                                                   │
-│  ✅ ✏️ 🔄 🗑                                      │
-│                                                   │
-│ [Test] [Speichern] [Veröffentlichen]           │
-│                                                   │
-└───────────────────────────────────────────────────┘
-```
+**Funktionen des Workflow-Editors:**
 
-### 🧠 Workflow Features
-- **Visuelle Workflow-Builder** - Keine Code-Syntax nötig
-- **Bedingte Logik** - IF/THEN/ELSE Regeln
-- **Fehlerbehandlung** - Was wenn etwas schiefgeht?
-- **Test-Mode** - Vor dem Veröffentlichen testen
+- **Visueller Builder** -- Workflows per Drag-and-Drop zusammenstellen
+- **Bedingte Logik** -- IF/THEN/ELSE-Regeln für verzweigte Abläufe
+- **Fehlerbehandlung** -- Automatische Reaktion bei Fehlschlägen definieren
+- **Test-Modus** -- Workflows vor der Veröffentlichung validieren
 
-**Ergebnis:** Komplexe Automatisierungen ohne Code-Kenntnisse 🎯
+{{< callout type="info" >}}
+Komplexe Automatisierungen lassen sich ohne Code-Kenntnisse erstellen, testen und veröffentlichen.
+{{< /callout >}}
 
 ---
 
-## Use Case 4: Monitoring & Fehlerbehandlung
+## Use Case 4: Monitoring und Fehlerbehandlung
 
-### 🎯 Szenario
-Eine wichtige Automatisierung ist fehlgeschlagen. Wie finde ich das Problem?
+Eine wichtige Automatisierung ist fehlgeschlagen -- superheld.app hilft dir, das Problem schnell zu identifizieren und zu beheben.
 
-### 📊 Activity Log / Historien
-```
-┌──────────────────────────────────────────────────┐
-│ Aktivitäts-Log & Fehlersuche                    │
-├──────────────────────────────────────────────────┤
-│                                                  │
-│ Filter: [Alles] [Erfolg] [Fehler] [Warnung]    │
-│                                                  │
-│ 🔍 Suche: ________________ [🔎]                │
-│                                                  │
-│ Datum | Status | Task | Details      | Aktion   │
-│────────────────────────────────────────────────│
-│ 14:23 │  ✅   │ Sync │ 2.3 MB ✓      │ 📋      │
-│ 14:15 │  ❌   │ Mail │ SMTP Error... │ 🔍 Mehr │
-│ 14:10 │  ⚠️   │ Data │ Timeout 60s   │ 🔄      │
-│ 14:05 │  ⏹   │ Wait │ Abgebrochen   │ 🗑      │
-│ 13:50 │  ✅   │ Back │ OK            │ 📋      │
-│                                                  │
-│ [Mehr laden]                                    │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
+**Aktivitäts-Log:**
 
-### 🔍 Fehlerdetails
-```
-┌──────────────────────────────────────────────────┐
-│ Fehler-Details                                  │
-├──────────────────────────────────────────────────┤
-│                                                  │
-│ Task: "E-Mail-Versand"                          │
-│ Zeit: 14:15 Uhr                                 │
-│ Status: ❌ FEHLER                                │
-│                                                  │
-│ Error Message:                                  │
-│ "SMTP Authentication failed (Code: 535)"       │
-│                                                  │
-│ Mögliche Ursachen:                              │
-│ → Passwort abgelaufen?                          │
-│ → SMTP-Server nicht erreichbar?                │
-│ → Firewall blockiert Port 587?                 │
-│                                                  │
-│ 💡 Schnelle Lösungen:                           │
-│ [🔧 Einstellungen] [🔄 Erneut versuchen]      │
-│                                                  │
-│ 📚 [Fehler-Dokumentation anzeigen]             │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
+- Filtere nach Status (Erfolg, Fehler, Warnung)
+- Durchsuche die vollständige Historie
+- Greife direkt auf Fehlerdetails zu
 
-### 📋 Debugging Tools
-- **Detaillierte Error Messages** - Was ist passiert?
-- **Intelligente Vorschläge** - Mögliche Ursachen anzeigen
-- **Quick-Fix Links** - Direkt zur Lösung
-- **Automatische Logs** - Vollständige Historie
+**Debugging-Werkzeuge:**
 
-**Ergebnis:** Fehler in Minuten identifiziert & behoben 🔧
+- **Detaillierte Fehlermeldungen** -- Klare Darstellung, was schiefgelaufen ist
+- **Intelligente Vorschläge** -- Mögliche Ursachen werden automatisch angezeigt
+- **Quick-Fix-Links** -- Direkter Zugang zur Lösung
+- **Automatische Protokollierung** -- Vollständige Nachvollziehbarkeit aller Vorgänge
+
+**Ergebnis:** Fehler werden in Minuten identifiziert und behoben.
 
 ---
 
 ## Use Case 5: Team Collaboration
 
-### 🎯 Szenario
-Mehrere Team-Mitglieder nutzen superheld.app und müssen Workflows teilen.
+Mehrere Team-Mitglieder nutzen superheld.app und müssen Workflows gemeinsam verwalten und teilen.
 
-### 👥 Sharing & Permissions
-```
-┌──────────────────────────────────────────────────┐
-│ Workflow freigeben                              │
-├──────────────────────────────────────────────────┤
-│                                                  │
-│ Workflow: "Tägliche Datensicherung"             │
-│                                                  │
-│ 👥 Zugriffsrechte:                              │
-│                                                  │
-│ ┌─ Benutzer ─────── Rolle ────── Aktion ──┐   │
-│ │ du@example.com    👑 Admin     ⛔        │   │
-│ │ anna@example.com  ✏️  Editor    🔄       │   │
-│ │ bob@example.com   👁️  Viewer    🔄       │   │
-│ │ team@..           👥 Gruppe    ➕       │   │
-│ └──────────────────────────────────────────┘   │
-│                                                  │
-│ 🔗 Link: https://superheld.app/s/abc123       │
-│    [📋 Kopieren] [🚫 Deaktivieren]            │
-│                                                  │
-│ 🔐 Berechtigungen:                              │
-│ ☑️ Ausführung erlaubt                          │
-│ ☑️ History anschauen                           │
-│ ☐ Bearbeitung erlaubt                         │
-│                                                  │
-│ [Speichern]                                    │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
+**Zugriffssteuerung:**
 
-### 📝 Audit Trail
-```
-┌──────────────────────────────────────────────────┐
-│ Änderungsverlauf (Wer hat was geändert?)       │
-├──────────────────────────────────────────────────┤
-│                                                  │
-│ 13:45 | anna@example.com | ✏️ Modified Step 5  │
-│       | "Retry-Count erhöht von 3 auf 5"       │
-│                                                  │
-│ 12:30 | bob@example.com   | 🏃 Executed        │
-│       | "Workflow erfolgreich ausgelöst"       │
-│                                                  │
-│ 11:15 | du@example.com    | ✏️ Created Workflow│
-│       | "Neue Automation erstellt"             │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
+- **Rollenbasierte Berechtigungen** -- Admin, Editor und Viewer mit klar definierten Rechten
+- **Freigabe-Links** -- Workflows einfach per Link teilen
+- **Granulare Berechtigungen** -- Ausführung, Ansicht und Bearbeitung separat steuerbar
 
-### 🎯 Collaboration Benefits
-- **Role-based Access Control** - Admin, Editor, Viewer
-- **Shareable Links** - Einfach zum Teilen
-- **Audit Trail** - Wer hat was geändert?
-- **Notifications** - Team bleibt informiert
+**Änderungsverlauf (Audit Trail):**
 
-**Ergebnis:** Nahtlose Team-Zusammenarbeit 👥
+Jede Änderung wird protokolliert -- wer hat wann welche Anpassung vorgenommen? So bleibt die Zusammenarbeit transparent und nachvollziehbar.
+
+{{< callout type="info" >}}
+Durch rollenbasierte Zugriffskontrolle und lückenlose Protokollierung ist nahtlose Team-Zusammenarbeit gewährleistet.
+{{< /callout >}}
 
 ---
 
 ## Use Case 6: Mobile App
 
-### 🎯 Szenario
-Du bist unterwegs und möchtest deine Workflows schnell kontrollieren.
+Du bist unterwegs und möchtest deine Workflows schnell kontrollieren. Die mobile Ansicht bietet alle wesentlichen Funktionen in einem kompakten Format.
 
-### 📱 Mobile Dashboard
-```
-┌──────────────────────┐
-│  superheld.app       │ 
-│  12:34 📶 ▔▔▔ 🔋    │
-├──────────────────────┤
-│                      │
-│  📊 Status           │
-│  ──────────────────  │
-│  ✅ 5 aktiv          │
-│  ⏳ 2 läuft          │
-│  ❌ 1 Fehler         │
-│                      │
-│  🔔 Aktuelle Aufgabe │
-│  ──────────────────  │
-│  Backup Sync         │
-│  ████████░░ 80%      │
-│  Fertig in ~2min     │
-│                      │
-│  ⚡ Quick Actions    │
-│  [▶] [⏸] [🔄]       │
-│                      │
-│  🚨 Alerts           │
-│  ──────────────────  │
-│  Mail-Error 14:15    │
-│  Tap für Details     │
-│                      │
-├──────────────────────┤
-│ [Dashboard] [Log] ⚙️ │
-└──────────────────────┘
-```
+**Mobile Features:**
 
-### ✨ Mobile Features
-- **Minimales Design** - Schnell erfassen, was los ist
-- **Touch-optimiert** - Große Buttons, einfach zu tappen
-- **Push Notifications** - Bleib benachrichtigt
-- **Offline-Ready** - Funktioniert auch ohne Internet
+- **Statusübersicht** -- Aktive, laufende und fehlerhafte Workflows auf einen Blick
+- **Touch-optimierte Steuerung** -- Start, Pause und Neustart per Fingertipp
+- **Push-Benachrichtigungen** -- Sofortige Alerts bei Fehlern oder wichtigen Ereignissen
+- **Offline-Unterstützung** -- Grundlegende Funktionen auch ohne Internetverbindung
 
-**Ergebnis:** Kontrolle von überall 📱
+**Ergebnis:** Volle Kontrolle von jedem Standort aus.
 
 ---
 
-## Use Case 7: Integration & API
+## Use Case 7: Integration und API
 
-### 🎯 Szenario
-Du möchtest superheld.app mit anderen Tools verbinden (Slack, GitHub, etc.).
+superheld.app lässt sich nahtlos mit bestehenden Tools und Diensten verbinden -- von Slack über GitHub bis hin zu individuellen Webhooks.
 
-### 🔌 Integrationen
-```
-┌──────────────────────────────────────────────────┐
-│ Verfügbare Integrationen                        │
-├──────────────────────────────────────────────────┤
-│                                                  │
-│ 💬 Slack              [✅ Verbunden]            │
-│    Sende Alerts zu Slack-Channels               │
-│    [⚙️ Einstellungen] [🔄 Neu verbinden]      │
-│                                                  │
-│ 🐙 GitHub             [➕ Verbinden]            │
-│    Triggere Workflows bei GitHub Events         │
-│    [Verbinden mit OAuth]                        │
-│                                                  │
-│ 📧 Gmail              [❌ Nicht verbunden]      │
-│    Sende / Empfange E-Mails                     │
-│    [Aktivieren]                                 │
-│                                                  │
-│ ☁️ Dropbox            [✅ Verbunden]            │
-│    Automatische Backups zu Dropbox              │
-│    [⚙️ Einstellungen]                           │
-│                                                  │
-│ 🔗 Webhook Support                              │
-│    [+ Neuen Webhook hinzufügen]                │
-│                                                  │
-├──────────────────────────────────────────────────┤
-│ 📚 [API Dokumentation lesen]                    │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
+**Verfügbare Integrationen:**
 
-### 🔗 Beispiel-Workflow mit Integrations
-```
-Event eintritt (GitHub Push)
-    ↓
-superheld.app erkennt Event
-    ↓
-Webhook triggert Workflow
-    ↓
-Führe Aktionen durch
-    ├→ Build starten
-    ├→ Tests ausführen
-    └→ Slack benachrichtigen
-    ↓
-Status zu GitHub zurück
-    ↓
-✅ Pipeline vollständig automatisiert
-```
+- **Kommunikation** -- Slack, E-Mail (Gmail, SMTP)
+- **Entwicklung** -- GitHub, Webhooks
+- **Cloud-Speicher** -- Dropbox und weitere Anbieter
+- **Custom** -- Eigene Webhooks für beliebige Anbindungen
 
-### 🌐 Integration Benefits
-- **30+ vordefinierte Integrationen**
-- **Custom Webhooks** - Verbinde mit allem
-- **OAuth 2.0** - Sichere Authentifizierung
-- **Real-time Sync** - Daten immer aktuell
+**Vorteile:**
 
-**Ergebnis:** Alles ist verbunden, alles ist automatisiert 🔗
+- **30+ vordefinierte Integrationen** für gängige Dienste
+- **Custom Webhooks** -- Verbindung mit beliebigen Systemen
+- **OAuth 2.0** -- Sichere Authentifizierung nach Industriestandard
+- **Echtzeit-Synchronisation** -- Daten sind immer aktuell
+
+**Ergebnis:** Alle relevanten Systeme sind verbunden und automatisiert.
 
 ---
 
@@ -386,13 +148,13 @@ Status zu GitHub zurück
 
 ---
 
-## 🎓 Welche Seite passt zu mir?
+## Welche Seite passt zu mir?
 
-- **Anfänger?** → [Installation](/docs/einführung/installation) & [Setup](/docs/einführung/setup)
+- **Anfänger?** → [Installation](/docs/einführung/installation-v2) & [Setup](/docs/einführung/setup)
 - **Täglich nutzen?** → [Nutzung](/docs/nutzung)
 - **Profi-Workflows?** → [Konfiguration](/docs/konfiguration)
 - **Fragen?** → [FAQ](/docs/faq)
 
 ---
 
-**Bereit zu starten?** [Jetzt Installation durchgehen →](/docs/einführung/installation)
+**Bereit zu starten?** [Jetzt Installation durchgehen →](/docs/einführung/installation-v2)

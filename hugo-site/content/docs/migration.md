@@ -3,24 +3,22 @@ title: "Migration Guide"
 weight: 40
 ---
 
-## 🔄 Von anderen Tools zu superheld.app
+## Von anderen Tools zu superheld.app
 
 Du nutzt bereits Slack, Google Drive, LastPass oder ähnliches? Hier zeigen wir dir, wie du einfach umsteigst – ohne Daten zu verlieren.
 
 ---
 
-## 📱 Von Slack zu superheld.app
+## Von Slack zu superheld.app
 
 ### Warum wechseln?
 
-```
-Slack                          superheld.app
------------                    ---------------
-Google-Konzern sammelt Daten   Du besitzt deine Daten
-Alle Nachrichten durchsuchbar  Nur du kannst lesen
-Teuer ($12.50/User/Monat)      Günstiger ($9)
-Keine Offline-Funktion        Offline-Zugriff
-```
+| Slack | superheld.app |
+|-------|---------------|
+| Google-Konzern sammelt Daten | Du besitzt deine Daten |
+| Alle Nachrichten durchsuchbar | Nur du kannst lesen |
+| Teuer ($12.50/User/Monat) | Günstiger ($9) |
+| Keine Offline-Funktion | Offline-Zugriff |
 
 ### Migration in 3 Schritten
 
@@ -130,7 +128,7 @@ Ersparnisse: $420/Jahr
 
 ---
 
-## 💾 Von Google Drive zu superheld.app
+## Von Google Drive zu superheld.app
 
 ### Was mitnehmen?
 
@@ -188,7 +186,7 @@ Zusammenarbeit (auch E2E verschlüsselt)
 
 ---
 
-## 🔐 Von LastPass zu superheld.app
+## Von LastPass zu superheld.app
 
 ### Passwörter mitnehmen
 
@@ -247,7 +245,7 @@ superheld.app:
 
 ---
 
-## 🔗 Von Zapier zu superheld.app
+## Von Zapier zu superheld.app
 
 ### Workflows migrieren
 
@@ -298,7 +296,7 @@ dass du Zapier nutzst!
 
 ---
 
-## 📊 Migration Checkliste
+## Migration Checkliste
 
 {{< callout type="info" >}}
 
@@ -333,7 +331,7 @@ dass du Zapier nutzst!
 
 ---
 
-## 💬 Support bei Migration
+## Support bei Migration
 
 Brauchst du Hilfe beim Umstieg?
 
