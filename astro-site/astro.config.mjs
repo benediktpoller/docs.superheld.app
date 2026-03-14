@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightClientMermaid from '@pasqal-io/starlight-client-mermaid';
 
 export default defineConfig({
 	site: 'https://docs.superheld.app',
@@ -15,7 +16,8 @@ export default defineConfig({
 				light: './src/assets/logo.svg',
 				dark: './src/assets/logo-dark.svg',
 			},
-				lastUpdated: true,
+			lastUpdated: true,
+			plugins: [starlightClientMermaid()],
 			sidebar: [
 				{
 					label: 'Erste Schritte',
