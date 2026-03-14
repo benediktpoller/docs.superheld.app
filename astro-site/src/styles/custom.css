@@ -1,0 +1,298 @@
+/* ============================================
+   superheld.app — Custom Design System
+   Enterprise-ready, Apple-inspired styling
+   Adapted for Astro + Starlight
+   ============================================ */
+
+/* --- Brand Colors & CSS Variables --- */
+:root {
+  --sh-primary: #2563eb;
+  --sh-primary-light: #3b82f6;
+  --sh-primary-dark: #1d4ed8;
+  --sh-accent: #10b981;
+  --sh-surface: #f8fafc;
+  --sh-text: #0f172a;
+  --sh-text-secondary: #64748b;
+  --sh-border: rgba(0, 0, 0, 0.06);
+  --sh-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --sh-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --sh-radius: 0.75rem;
+  --sh-radius-lg: 1rem;
+
+  /* Starlight layout overrides */
+  --sl-content-width: 75rem;
+}
+
+[data-theme='dark'] {
+  --sh-surface: #0a0a0a;
+  --sh-text: #f1f5f9;
+  --sh-text-secondary: #94a3b8;
+  --sh-border: rgba(255, 255, 255, 0.06);
+  --sh-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  --sh-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Typography --- */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+}
+
+/* --- Screenshot Containers --- */
+.sh-screenshot {
+  border-radius: var(--sh-radius-lg);
+  box-shadow: var(--sh-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.sh-screenshot:hover {
+  transform: scale(1.02);
+  box-shadow: var(--sh-shadow-hover);
+}
+
+[data-theme='dark'] .sh-screenshot {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .sh-screenshot:hover {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.sh-screenshot img {
+  width: 100%;
+  display: block;
+}
+
+/* --- Homepage Sections Spacing --- */
+.sh-section {
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+}
+
+.sh-section h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--sh-text);
+  margin-bottom: 0.5rem;
+}
+
+[data-theme='dark'] .sh-section h2 {
+  color: var(--sh-text);
+}
+
+.sh-section-subtitle {
+  color: var(--sh-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+}
+
+/* --- Screenshot Gallery (responsive) --- */
+.sh-gallery {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 3rem;
+  max-width: 100%;
+}
+
+.sh-gallery-phone {
+  width: 160px;
+  max-width: 28%;
+}
+
+.sh-gallery-desktop {
+  width: 420px;
+  max-width: 55%;
+}
+
+.sh-gallery-wide {
+  width: 480px;
+  max-width: 100%;
+}
+
+/* --- Feature Grid --- */
+.sh-feature-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.sh-feature-grid[data-cols="2"] {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.sh-feature-grid[data-cols="3"],
+.sh-feature-grid:not([data-cols]) {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+  .sh-feature-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --- Feature Card --- */
+.sh-feature-card {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--sh-radius-lg);
+  border: 1px solid var(--sh-border);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.sh-feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-shadow-hover);
+  text-decoration: none;
+}
+
+.sh-feature-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+  color: var(--sh-text);
+}
+
+.sh-feature-card-subtitle {
+  font-size: 0.875rem;
+  color: var(--sh-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- Audience Router (docs landing page) --- */
+.sh-audience-router {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sh-audience-router h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+/* --- Hero Section (landing page) --- */
+.sh-hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.sh-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid var(--sh-border);
+  font-size: 0.875rem;
+  color: var(--sh-text-secondary);
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.sh-hero-badge:hover {
+  transform: translateY(-1px);
+  border-color: var(--sh-primary);
+  text-decoration: none;
+  color: var(--sh-primary);
+}
+
+.sh-hero-headline {
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin: 1.5rem 0;
+  color: var(--sh-text);
+}
+
+.sh-hero-subtitle {
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--sh-text-secondary);
+}
+
+.sh-hero-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.sh-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sh-hero-btn:hover {
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.sh-hero-btn-primary {
+  background: var(--sh-primary);
+  color: #fff;
+}
+
+.sh-hero-btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+  color: #fff;
+}
+
+.sh-hero-btn-secondary {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: var(--sh-text);
+}
+
+[data-theme='dark'] .sh-hero-btn-secondary {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--sh-text);
+}
+
+/* --- Smooth Scroll --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Selection Color --- */
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+[data-theme='dark'] ::selection {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+/* --- Print improvements --- */
+@media print {
+  header,
+  nav,
+  .sidebar,
+  footer {
+    display: none !important;
+  }
+}

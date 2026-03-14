@@ -1,0 +1,89 @@
+---
+title: "Konfiguration (Expert Mode)"
+sidebar:
+  order: 1
+---
+
+## Erweiterte Konfiguration
+
+Der Expert Mode bietet volle Kontrolle. **Warnung:** Änderungen hier können die Funktionalität beeinflussen!
+
+### API-Keys konfigurieren
+
+```
+Einstellungen → KI-Provider → [Provider] → API-Key hinzufügen
+```
+
+Unterstützte Provider:
+- OpenAI (`sk-...`)
+- Anthropic (`sk-ant-...`)
+- Google (`...`)
+- Microsoft (`...`)
+
+### Anonymisierungsregeln
+
+```
+Einstellungen → Datenschutz → Regeln anpassen
+```
+
+Erstelle benutzerdefinierte Filter für:
+- E-Mail Adressen
+- Telefonnummern
+- Sozialversicherungsnummern
+- URLs
+- Custom-Patterns
+
+### Proxy-Einstellungen
+
+```
+Einstellungen → Netzwerk → Proxy
+```
+
+Einstellungen:
+- Proxy-Host
+- Proxy-Port
+- Authentifizierung (optional)
+
+### Logging & Debug
+
+```
+Einstellungen → Erweitert →Debug-Modus
+```
+
+**Optionen:**
+- Debug-Level: `debug`, `info`, `warn`, `error`
+- Logausgabe: `Datei`, `Console`, `Beides`
+- Maximale Dateigröße
+
+### Caching
+
+```
+Einstellungen → Speicher → Cache
+```
+
+- Caching aktivieren/deaktivieren
+- Ähnliche Anfragen cachen
+- Cache-Größe einstellen
+- Cache-Zeit (TTL) anpassen
+
+---
+
+## Fehlerbehandlung
+
+**Config lädt nicht?**
+> Öffne Einstellungen → System → Config prüfen
+
+**Provider funktioniert nicht?**
+> Einstellungen → KI-Provider → [Provider] → Test
+
+**Performance-Probleme?**
+> Einstellungen → Speicher → Cache leeren
+
+---
+
+## Sicherheitswarnung
+
+- **Speichere API-Keys niemals im Web**
+- **Verwende sichere Passwörter** für Premium
+- **Regelmäßig Logs reviewen**
+- **Backups machen** vor Änderungen

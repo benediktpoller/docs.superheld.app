@@ -1,0 +1,79 @@
+[build]
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Old Hugo /docs/ URLs → new root paths
+[[redirects]]
+  from = "/docs/einfuehrung/*"
+  to = "/einfuehrung/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/docs/experten/*"
+  to = "/experten/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/docs"
+  to = "/"
+  status = 301
+
+# Old Umlaut URLs
+[[redirects]]
+  from = "/docs/einführung/*"
+  to = "/einfuehrung/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/docs/einf%C3%BChrung/*"
+  to = "/einfuehrung/:splat"
+  status = 301
+
+# Old flat Hugo aliases
+[[redirects]]
+  from = "/docs/apps"
+  to = "/experten/apps/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/faq"
+  to = "/einfuehrung/faq/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/intro"
+  to = "/einfuehrung/intro/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/konfiguration"
+  to = "/experten/konfiguration/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/privacy-sicherheit"
+  to = "/experten/privacy-sicherheit/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/migration"
+  to = "/experten/migration/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/use-cases"
+  to = "/experten/use-cases/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/nutzung"
+  to = "/einfuehrung/nutzung/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/screenshots"
+  to = "/experten/screenshots/"
+  status = 301

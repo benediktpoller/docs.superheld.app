@@ -1,0 +1,338 @@
+---
+title: "Installation"
+sidebar:
+  order: 2
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Installation in 5 Minuten
+
+:::note
+**Unterstützte Systeme:** iOS 14+, Android 10+, macOS 11+, Windows 10+, Web (alle modernen Browser)
+:::
+
+---
+
+## Schnellstart
+
+<Tabs>
+
+<TabItem label="iOS">
+
+### App aus dem App Store herunterladen
+
+<Steps>
+
+1. **App Store öffnen**
+
+   Suche nach "superheld.app"
+
+2. **"Get" / "Laden" tippen**
+
+   Authentifiziere mit Face ID / Touch ID
+
+3. **Installation abwarten**
+
+   Die App wird automatisch installiert.
+
+</Steps>
+
+[Im App Store öffnen](https://apps.apple.com/de/app/superheld-app/id123456789)
+
+</TabItem>
+
+<TabItem label="Android">
+
+### Im Google Play Store verfügbar
+
+<Steps>
+
+1. **Google Play Store öffnen**
+
+   Suche nach "superheld.app"
+
+2. **"Install" tippen**
+
+   Bestätige die Berechtigungen
+
+3. **Download & Installation abwarten**
+
+   Die App ist einsatzbereit.
+
+</Steps>
+
+[Im Play Store öffnen](https://play.google.com/store/apps/details?id=app.superheld)
+
+</TabItem>
+
+<TabItem label="macOS/Windows">
+
+### Desktop-App herunterladen
+
+**macOS:**
+
+<Steps>
+
+1. **DMG herunterladen**
+
+   Von der Download-Seite
+
+2. **DMG-Datei öffnen**
+
+   Und superheld-app ins Applications Folder ziehen
+
+3. **Aus Applications starten**
+
+   Die App ist einsatzbereit.
+
+</Steps>
+
+**Windows:**
+
+<Steps>
+
+1. **EXE-Installer herunterladen**
+
+   Von der Download-Seite
+
+2. **Installer starten**
+
+   Folge den Anweisungen
+
+3. **Automatische Installation**
+
+   Die App wird installiert und ist sofort nutzbar.
+
+</Steps>
+
+[Desktop-Downloads](https://downloads.superheld.app)
+
+</TabItem>
+
+<TabItem label="Web-Browser">
+
+### Keine Installation nötig!
+
+<Steps>
+
+1. **Browser öffnen**
+
+   Gehe zu https://app.superheld.app
+
+2. **Konto erstellen**
+
+   Klick "Get Started" und erstelle ein Konto
+
+3. **Sofort loslegen**
+
+   Die Web-Version ist sofort einsatzbereit.
+
+</Steps>
+
+:::note
+Die Web-Version synchronisiert automatisch mit allen anderen Geräten!
+:::
+
+</TabItem>
+
+</Tabs>
+
+---
+
+## Erste Konfiguration
+
+<details>
+<summary>Setup-Wizard starten (empfohlen)</summary>
+
+Nach der Installation:
+
+<Steps>
+
+1. **superheld.app starten**
+
+   Öffne die App auf deinem Gerät
+
+2. **"Konfigurieren" tippen**
+
+   Der 5-Schritte Setup beginnt
+
+3. **Setup durchlaufen**
+
+   - Sprache wählen
+   - Passwort setzen
+   - Biometric Lock einrichten
+   - Notification-Einstellungen
+   - Fertig!
+
+</Steps>
+
+Zeitaufwand: **~5 Minuten**
+
+</details>
+
+---
+
+## Sicherheit beim Setup
+
+:::caution
+**Sicheres Passwort ist essentiell!**
+
+Verwende:
+- Mindestens 12 Zeichen
+- Groß- & Kleinbuchstaben
+- Zahlen & Sonderzeichen
+- Nicht dein Geburtsdatum/Name
+
+Beispiel: `K7@mP9$wQ2#vR8!tL`
+:::
+
+### Face ID / Touch ID aktivieren
+
+<details>
+<summary>Biometric Lock Setup</summary>
+
+Diese Funktion sperrt deine App automatisch:
+
+<Steps>
+
+1. **Settings → Security**
+
+   Öffne die Sicherheitseinstellungen
+
+2. **"Biometric Authentication" aktivieren**
+
+   Wähle deine Methode: Face ID, Touch ID, Fingerprint oder PIN
+
+3. **Auto-Lock konfigurieren**
+
+   2 Minuten empfohlen
+
+</Steps>
+
+:::note
+Mit Biometric Lock + 2 Minuten Auto-Lock:
+- Hacker können nicht eindringen
+- Du musst nicht ständig entsperren
+- Daten sind geschützt wenn Handy gestohlen wird
+:::
+
+</details>
+
+---
+
+## Mehrere Geräte sync
+
+### Geräte koppeln
+
+<Tabs>
+
+<TabItem label="iPhone + iPad">
+
+<Steps>
+
+1. **Auf iPhone: Settings → iCloud**
+
+   "Sync enabled" aktivieren und Apple ID eingeben
+
+2. **Auf iPad: Same Apple ID**
+
+   Sync startet automatisch. Alle Daten sofort da.
+
+</Steps>
+
+</TabItem>
+
+<TabItem label="iPhone + Android">
+
+<Steps>
+
+1. **Auf iPhone: Settings → Backup**
+
+   "Manual Cloud Backup" → "Backup Now" tippen
+
+2. **Auf Android: Settings → Accounts**
+
+   Gleichen Account hinzufügen → "Sync files from backup"
+
+3. **Restore startet automatisch**
+
+   Alle Daten werden synchronisiert.
+
+</Steps>
+
+</TabItem>
+
+<TabItem label="Alle Geräte">
+
+<Steps>
+
+1. **Settings → Account → Device Management**
+
+   Neue Geräte erscheinen unter "Pending Devices"
+
+2. **Auf neuem Gerät bestätigen**
+
+   Sync startet automatisch.
+
+</Steps>
+
+</TabItem>
+
+</Tabs>
+
+---
+
+## Troubleshooting
+
+<details>
+<summary>Installation fehlgeschlagen?</summary>
+
+**Problem:** App bricht gleich ab
+
+:::note
+1. Gerät neustarten
+2. App-Cache löschen:
+   - iOS: Settings → superheld.app → Delete Offscreen Files
+   - Android: Settings → Apps → superheld → Storage → Clear Cache
+3. App neu installieren
+:::
+
+---
+
+**Problem:** Sync funktioniert nicht
+
+:::note
+1. Check Internet-Verbindung (Wi-Fi oder Cellular)
+2. App neustarten
+3. Settings → Accounts → Re-sync
+4. Falls immer noch nicht: Abmelden/Anmelden
+:::
+
+---
+
+**Problem:** Passwort vergessen
+
+:::caution
+1. Tippe "Forgot Password?"
+2. Verifiziere deine Identität (Email Verification Code oder Backup Recovery Code)
+3. Neues Passwort setzen
+
+**Backup Recovery Code speichern:** Settings → Security → Save Recovery Code
+:::
+
+</details>
+
+---
+
+## Hilfe & Support
+
+:::note
+- [Setup Guide](/einfuehrung/setup)
+- [Sicherheit & Privacy](/experten/privacy-sicherheit)
+- [Kontaktiere Support](https://support.superheld.app)
+:::
+
+---
+
+**Bereit?** → [Nächster Schritt: Setup durchführen](/einfuehrung/setup)

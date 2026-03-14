@@ -1,0 +1,271 @@
+---
+title: "Migration Guide"
+sidebar:
+  order: 3
+---
+
+## Von anderen Tools zu superheld.app
+
+Du nutzt bereits Slack, Google Drive, LastPass oder ähnliches? Hier zeigen wir dir, wie du einfach umsteigst -- ohne Daten zu verlieren.
+
+---
+
+## Von Slack zu superheld.app
+
+### Warum wechseln?
+
+| Slack | superheld.app |
+|-------|---------------|
+| Google-Konzern sammelt Daten | Du besitzt deine Daten |
+| Alle Nachrichten durchsuchbar | Nur du kannst lesen |
+| Teuer ($12.50/User/Monat) | Günstiger ($9) |
+| Keine Offline-Funktion | Offline-Zugriff |
+
+### Migration in 3 Schritten
+
+<details>
+<summary>Schritt 1: Export aus Slack</summary>
+
+1. Gehe zu **Slack** → **Admin Panel**
+2. Wähle **Imports** → **Export**
+3. Wähle den Zeitraum (z.B. letzte 90 Tage)
+4. Warte auf die ZIP-Datei mit allen Nachrichten, Dateien und Kanälen
+5. ZIP herunterladen
+
+:::note
+Slack Free hat begrenzte Exports (max. 10.000 Nachrichten).
+:::
+
+</details>
+
+<details>
+<summary>Schritt 2: Import zu superheld.app</summary>
+
+1. Öffne superheld.app
+2. Gehe zu **Settings** → **Workspace** → **Import**
+3. Wähle **From Slack**
+4. ZIP hochladen
+
+superheld.app konvertiert automatisch:
+
+| Slack-Daten | superheld.app |
+|---|---|
+| Kanäle | Gruppen |
+| Nachrichten | Verschlüsselt gespeichert |
+| Dateien | Verschlüsselt gespeichert |
+| Benutzer | Einladungen werden gesendet |
+
+Der Import dauert ca. 5 Minuten.
+
+:::note
+- Import verschlüsselt alles automatisch
+- Alte Slack-Metadaten werden nicht übertragen (absichtlich)
+- Alle Benutzer müssen neue Passwörter setzen
+:::
+
+</details>
+
+<details>
+<summary>Schritt 3: Team einladen & migrieren</summary>
+
+1. superheld.app erstellt automatisch Einladungs-Emails
+2. Team-Mitglieder klicken den Link und erstellen ein Passwort
+3. Zwei-Faktor-Authentifizierung aktivieren
+4. Profile und Notification-Einstellungen anpassen
+
+**Typische Timeline:**
+
+| Tag | Aktion |
+|---|---|
+| Tag 1 | Import + Einladungen versenden |
+| Tag 2-3 | Team richtet sich ein |
+| Tag 4 | Erste Gespräche in superheld.app |
+| Tag 7 | Slack abschalten |
+
+</details>
+
+### Häufige Fragen beim Slack-Wechsel
+
+<details>
+<summary>Was passiert mit meinen Slack-Archives?</summary>
+
+Du hast drei Optionen:
+
+| Option | Vorteil |
+|---|---|
+| **Alles mitnehmen** | Komplette History wird verschlüsselt importiert |
+| **Nur neue Nachrichten** | Starte frisch, weniger Migrationsaufwand |
+| **Hybrid** | Exportiere nur wichtige Kanäle, Rest bleibt auf Slack |
+
+</details>
+
+<details>
+<summary>Kosten beim Wechsel?</summary>
+
+| | Slack | superheld.app |
+|---|---|---|
+| Preis pro User/Monat | $12.50 | $9.00 |
+| 10-er Team pro Jahr | $1.500 | $1.080 |
+| **Ersparnis pro Jahr** | | **$420** |
+
+Dazu kommen die Vorteile: keine Konzern-Überwachung, DSGVO-konform, Open Source.
+
+</details>
+
+---
+
+## Von Google Drive zu superheld.app
+
+### Unterstützte Dateiformate
+
+| Google Drive | superheld.app |
+|---|---|
+| Dokumente (.docs) | PDF, Office Open XML (.docx, .xlsx) |
+| Tabellen (.sheets) | Office Open XML (.xlsx) |
+| Fotos & Videos | Alle Formate |
+| Archive | ZIP, RAR und weitere |
+
+### Migration
+
+<details>
+<summary>Einfache Migration</summary>
+
+1. Google Drive öffnen
+2. Alle Ordner/Dateien selektieren
+3. Als ZIP herunterladen
+4. In superheld.app **Upload Folder** wählen
+5. ZIP hochladen -- superheld.app verschlüsselt automatisch
+
+Dauer: 5-30 Minuten je nach Dateigröße.
+
+</details>
+
+<details>
+<summary>Dokumente konvertieren</summary>
+
+Für Google Docs-Dateien:
+
+1. In Google Docs: **Download** → **PDF/DOCX** wählen
+2. Alle Dokumente lokal speichern
+3. In superheld.app hochladen
+
+Alternativ kannst du den nativen Web-Editor von superheld.app nutzen -- ähnlich wie Google Docs, aber Ende-zu-Ende verschlüsselt.
+
+</details>
+
+---
+
+## Von LastPass zu superheld.app
+
+### Passwörter mitnehmen
+
+<details>
+<summary>Export aus LastPass</summary>
+
+1. **LastPass** → **Account Settings**
+2. **Show Advanced** → **Export** → **Database to CSV**
+3. CSV-Datei lokal speichern
+
+:::caution
+Die LastPass CSV-Datei ist unverschlüsselt. Sofort nach dem Import in superheld.app löschen und nicht per E-Mail versenden.
+:::
+
+</details>
+
+<details>
+<summary>Import zu superheld.app</summary>
+
+1. Öffne superheld.app → **Settings** → **Password Manager**
+2. Wähle **Import** → **From CSV**
+3. LastPass CSV hochladen
+
+superheld.app importiert automatisch alle Passwörter, Zugriffsdetails, Notizen und die Ordnerstruktur -- und verschlüsselt alles mit AES-256.
+
+</details>
+
+### Vergleich: LastPass vs. superheld.app
+
+| | LastPass | superheld.app |
+|---|---|---|
+| **Zugriff** | Zentral (LastPass hat Zugriff) | Dezentral (nur du) |
+| **Sicherheits-History** | Bekannt für Datenlecks | Zero-Knowledge |
+| **API-Key Support** | Nein | Ja, verschlüsselt |
+| **Offline-Zugriff** | Ja | Ja |
+| **Team-Sharing** | Basic | Mit Zugriffskontrolle |
+
+---
+
+## Von Zapier zu superheld.app
+
+### Workflows migrieren
+
+<details>
+<summary>Schritt-für-Schritt Anleitung</summary>
+
+**Beispiel:** GitHub Push → Slack Notification
+
+| Schritt | Zapier | superheld.app |
+|---|---|---|
+| 1 | GitHub Trigger: "Push created" | GitHub Webhook empfangen |
+| 2 | Action: Slack "Send message" | Condition: `branch == main`? |
+| 3 | Mapping von GitHub-Daten | Action: Slack message senden |
+
+**Entscheidender Unterschied:** Bei Zapier liegt dein GitHub-Token auf Zapier-Servern. Bei superheld.app bleibt er auf deinem Server.
+
+</details>
+
+<details>
+<summary>API-Keys sicherer lagern</summary>
+
+superheld.app hat eine sichere Vault für API-Keys:
+
+1. **Settings** → **API Management** → **Add New Key**
+2. Token eingeben -- wird sofort mit AES-256 verschlüsselt
+3. Key ist nur in Workflows nutzbar, nie wieder im Klartext sichtbar
+4. Alles bleibt auf deinem Server
+
+</details>
+
+---
+
+## Migration Checkliste
+
+### Vorbereitung
+
+- [ ] Backup von aktuellen Tools (sicher lokal speichern)
+- [ ] Alle wichtigen Daten exportieren
+- [ ] Team informieren und Termin festlegen
+- [ ] Downtime planen (meist 1-2 Tage)
+- [ ] Test-Umgebung vorbereiten
+
+### Durchführung
+
+- [ ] Daten zu superheld.app hochladen
+- [ ] Verschlüsselung verifizieren
+- [ ] Team-Zugriffe einrichten
+- [ ] Notifications und Integrationen testen
+
+### Nachbereitung
+
+- [ ] Alle Benutzer haben Zugriff
+- [ ] Stichprobenartig Daten prüfen
+- [ ] 2FA für alle aktiviert
+- [ ] Alte Accounts löschen (nach 30 Tagen)
+
+---
+
+## Support bei Migration
+
+Brauchst du Hilfe beim Umstieg?
+
+[Migration-Support kontaktieren](mailto:migration@superheld.app)
+
+Wir bieten:
+- Kostenlose Migrations-Beratung
+- Technischer Support während des Umstiegs
+- Team-Training
+- Daten-Validierung
+
+---
+
+**Bereit?** [Installation starten →](/einfuehrung/installation-v2)

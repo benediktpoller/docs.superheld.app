@@ -1,15 +1,10 @@
 # Netlify configuration for superheld.app documentation
-# Build root is the Hugo site in `hugo-site/`.
+# Build root is the Astro + Starlight site in `astro-site/`.
 
 [build]
-  base = "hugo-site"
-  command = "npm ci && npm run build:production"
-  publish = "public"
+  base = "astro-site"
+  command = "npm ci && npm run build"
+  publish = "dist"
 
 [build.environment]
-  # Pin a stable Hugo version if needed (npm uses hugo-extended)
-  # HUGO_VERSION = "0.157.0"
-
-[context.production.environment]
-  # Optional: force HTTPS in redirects, etc.
-  # HUGO_BASEURL = "https://docs.superheld.app/"
+  NODE_VERSION = "22"
