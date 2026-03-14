@@ -1,203 +1,234 @@
 ---
 title: "Apps & Plattformen"
 sidebar:
-  order: 2
+  order: 5
 ---
 
-## App-Übersicht
+## Plattformuebergreifender Schutz
 
-superheld.app ist eine **plattformspezifische Schutz-App**, die auf jedem Gerät eine konsistente Schutzschicht bereitstellt. Alle Apps teilen dieselbe Kernlogik (Proxy, VPN, Kindersicherung, Sicherheitsstatus, KI-Analyse) – die Oberfläche passt sich an das Gerät und die Nutzungsrolle an.
+Superheld bietet auf jedem Geraet eine konsistente Schutzschicht. Alle Apps teilen dieselbe Kern-Schutzlogik — die Umsetzung passt sich an die Moeglichkeiten und Einschraenkungen jeder Plattform an.
 
-> Diese Seite beschreibt: **Android, iOS, Windows, macOS, Linux** sowie typische Nutzungsszenarien für **Einsteiger (DAU), versierte Nutzer, Eltern und Administratoren**.
+> Diese Seite beschreibt die plattformspezifischen Schutzfunktionen fuer **Android, iOS, Windows, macOS und Linux** sowie die Unterschiede im Funktionsumfang.
 
 <div class="sh-gallery" style="margin-top: 2rem;">
   <div class="sh-gallery-phone">
     <div class="sh-screenshot">
-      <img src="/images/screenshot-android.svg" alt="Android Dashboard" loading="lazy" />
+      <img src="/images/screenshot-android.svg" alt="Android Schutz-Dashboard" loading="lazy" />
     </div>
   </div>
   <div class="sh-gallery-desktop">
     <div class="sh-screenshot">
-      <img src="/images/screenshot-geraete.svg" alt="Geräteübersicht auf Desktop" loading="lazy" />
+      <img src="/images/screenshot-geraete.svg" alt="Geraetefamilie im Ueberblick" loading="lazy" />
     </div>
   </div>
   <div class="sh-gallery-phone">
     <div class="sh-screenshot">
-      <img src="/images/screenshot-ios.svg" alt="iOS Einstellungen" loading="lazy" />
+      <img src="/images/screenshot-ios.svg" alt="iOS Schutzeinstellungen" loading="lazy" />
     </div>
   </div>
 </div>
 
 ---
 
-## App-Architektur (Shared Core)
+## Schutzfunktionen nach Plattform
 
-Die App besteht aus drei Kernbereichen:
-
-1. **Device Guardian (MDM-Light)**
-   - Geräte-Registrierung & Inventarisierung
-   - Root/Jailbreak-Detektion
-   - Sicherheitsstatus & Patchlevel
-
-2. **Secure Web Proxy + VPN**
-   - Filterregeln (Jugendschutz, Malware, Scam, illegale Inhalte)
-   - Ausnahmen (einmalig / zeitlich / dauerhaft)
-   - Optionaler VPN-Tunnel für verschlüsselten Verkehr
-
-3. **AI Safety Layer**
-   - LLM-/Chat-Traffic überwachen (Local-first)
-   - Erkennen von Social Engineering (z.B. Fake-Support, Phishing)
-   - Warnungen und automatische Blockierung
-
-Zusätzlich sind integriert:
-- **Passkey / Biometric Lock** (Touch/Face ID, Fingerabdruck)
-- **Eltern-Dashboard** mit Nutzer-/Geräte-Profilen
-- **Trusted Apps / Untrusted Apps** (Whitelist/Paket-Kontrolle)
+| Funktion | Android | iOS | Windows | macOS | Linux |
+|---|---|---|---|---|---|
+| **Anrufschutz** | Voll | Voll | — | — | — |
+| **App-Scanner** | Voll | Eingeschraenkt | Voll | Voll | CLI |
+| **Fernsteuerungsschutz** | Voll | Teilweise | Voll | Voll | CLI |
+| **KI-Erkennung** | Voll | Voll | Voll | Voll | CLI |
+| **Familienprofile** | Voll | Voll | Voll | Voll | Verwaltung |
+| **Biometrische Sperre** | Ja | Ja | Windows Hello | Touch ID | — |
+| **Hintergrundschutz** | Ja | Eingeschraenkt | Ja | Ja | Ja |
 
 ---
 
-## Android (App Store / Play Store)
+## Android
 
-![Android App](/images/screenshot-android.svg)
+### Schutzfunktionen
 
-### Was du siehst
-- Startbildschirm: **VPN**, **Webschutz**, **Geräte-Status**, **Kindersicherung**
-- Schnellzugriff: **Ein-/Aus-Schalter für den Proxy**, **Sicherheitsstatus (grün/gelb/rot)**
-- Geführtes Setup für **Eltern-Modus** & **Kind-Profil**
+Android bietet den umfassendsten Schutz, da das Betriebssystem tiefgehende Integrationsmoeglichkeiten erlaubt:
 
-### Kurzanleitung (DAU)
-1. App aus dem Google Play Store installieren
-2. Öffne superheld.app → **Konto erstellen** oder **anmelden**
-3. Folge dem Setup: **Einrichtung des VPN/Proxy**
-4. Tippe auf **VPN starten** → grüne Anzeige bedeutet: Schutz aktiv
-
-### Für versierte Nutzer
-- **Regelsets konfigurieren** (Malware / Adult Content / Zeitlimits)
-- **Ausnahmen hinzufügen** (z.B. Bildungsdomain für Schule)
-- **Logs prüfen**: Filter → Aktivität → blockierte Anfragen
-
----
-
-## iOS (App Store)
-
-![iOS App](/images/screenshot-ios.svg)
+- **Anrufschutz** — Echtzeit-Analyse eingehender Anrufe mit Warnungs-Overlay waehrend des Gespraeachs
+- **Zugangsdienst-Integration** — Erkennung von Fernsteuerungssoftware, betruegerischen Overlays und schaedlichen Bildschirmaktionen
+- **App-Scanner** — Ueberpruefung aller installierten Apps und Echtzeitanalyse neuer Installationen
+- **Berechtigungsueberwachung** — Warnung bei Apps, die uebermmaessige Berechtigungen anfordern
+- **Hintergrundschutz** — laeuft als dauerhafter Dienst im Hintergrund
 
 ### Besonderheiten
-- iOS erlaubt keinen System-weiten Proxy, daher verwendet superheld.app eine Kombination aus **VPN + DNS-Filter**.
-- **Passkey & Face ID** werden nativ unterstützt.
 
-### Kurzanleitung (DAU)
-1. App Store öffnen, nach „superheld.app" suchen
-2. App installieren & öffnen
-3. Erstelle ein Konto und aktiviere **Biometric Lock**
-4. Starte den Schutz: **VPN & Webschutz aktivieren**
+- Der Zugangsdienst (Accessibility Service) ist erforderlich fuer den Fernsteuerungsschutz
+- Battery-Optimierung sollte fuer Superheld deaktiviert werden
+- Unterstuetzt Android 11 und neuer
 
-### Eltern-Modus (Eltern)
-- **Kinderprofile anlegen** (Telefon, iPad)
-- Automatische **Regelsätze** (Jugendschutz, Schulzeiten)
-- **Anfragen genehmigen**: Kind will eine blockierte Seite öffnen → Eltern erhalten Benachrichtigung
+### Kurzanleitung
+
+1. App aus dem Google Play Store installieren
+2. Konto erstellen oder anmelden
+3. Berechtigungen erteilen: Anruferkennung, Benachrichtigungen, Zugangsdienst
+4. Schutzmodus waehlen und Schutzschichten aktivieren
 
 ---
 
-## Windows (Desktop)
+## iOS
 
-![Windows App](/images/screenshot-windows.svg)
+### Schutzfunktionen
 
-### Desktop-Funktionen
-- Vollständiger **Proxy-Filter** für Browser und Apps
-- **VPN-Tunnel** (+Split-Tunneling)
-- **Geräte-Dashboard** (installierte Apps, Risiken, Updates)
+iOS bietet starken Schutz innerhalb der von Apple vorgegebenen Systemgrenzen:
 
-### Kurzanleitung (DAU)
-1. Installiere die App über den Installer (EXE)
-2. Starte superheld.app und melde dich an
-3. Klicke auf **Webfilter aktivieren** und **VPN starten**
+- **Anrufschutz** — Nutzung der CallKit-API fuer Anruferkennung und Spam-Blockierung
+- **KI-Erkennung** — Analyse verdaechtiger Nachrichten und Kommunikationsmuster
+- **Familien-Schutz** — Profile und Genehmigungsworkflows fuer Familiengeraete
+- **Biometrische Sperre** — Face ID und Touch ID fuer den Zugang zu Schutzeinstellungen
 
-### Für Administratoren
-- **Policy-Vorlagen** (z.B. Schulnetz, Familien-PC)
-- **Gruppenverwaltung** (mehrere PCs verwalten)
-- **Remote Insights**: Zeigt an, welche Geräte aktuell offline sind
+### Einschraenkungen
+
+- **Kein Zugangsdienst** — iOS erlaubt keinen Accessibility Service, daher ist der Fernsteuerungsschutz eingeschraenkt (Erkennung erfolgt ueber Netzwerkanalyse statt Bildschirmueberwachung)
+- **Hintergrundlaufzeit** — iOS begrenzt Hintergrundaktivitaeten, der Schutz wird bei App-Nutzung und per Push-Notification aktualisiert
+- **App-Scanner** — Kann nur installierte Apps analysieren, keine Echtzeit-Installationsueberwachung (Apple erlaubt keinen Zugriff auf den Installationsprozess)
+
+### Besonderheiten
+
+- Passkey und Face ID werden nativ unterstuetzt
+- Anrufschutz erfordert Aktivierung unter iOS-Einstellungen → Telefon → Anrufblockierung
+- Unterstuetzt iOS 15 und neuer
+
+### Kurzanleitung
+
+1. App Store oeffnen, nach "Superheld" suchen
+2. App installieren und oeffnen
+3. Konto erstellen und biometrische Sperre aktivieren
+4. Schutzprofil aktivieren und Anrufschutz in den iOS-Einstellungen freigeben
+
+---
+
+## Windows
+
+### Schutzfunktionen
+
+Die Windows-App bietet Desktop-optimierten Schutz:
+
+- **App-Scanner** — Ueberpruefung installierter Programme auf schaedliches Verhalten und bekannte Bedrohungen
+- **Fernsteuerungsschutz** — Erkennung und Blockierung nicht autorisierter Remote-Desktop-Verbindungen (RDP, AnyDesk, TeamViewer)
+- **KI-Erkennung** — Analyse verdaechtiger E-Mails und Nachrichten in Browsern
+- **Geraete-Dashboard** — Uebersicht ueber Sicherheitsstatus, installierte Apps und erkannte Risiken
+
+### Besonderheiten
+
+- Unterstuetzt Windows Hello fuer biometrische Sperre
+- Split-Tunnel-Modus fuer selektive Ueberwachung verfuegbar
+- Integration mit Windows Security Center
+- Unterstuetzt Windows 10 und neuer
+
+### Kurzanleitung
+
+1. Installer von downloads.superheld.app herunterladen
+2. Installer ausfuehren und Anweisungen folgen
+3. Anmelden und Schutz aktivieren
+4. Windows-Firewall-Integration bestaetigen
+
+### Fuer Administratoren
+
+- **Gruppenrichtlinien** — Schutzeinstellungen koennen ueber GPO verteilt werden
+- **Remote-Verwaltung** — Mehrere Windows-Geraete zentral verwalten
+- **Audit-Logs** — Exportierbare Ereignisprotokolle fuer Compliance
 
 ---
 
 ## macOS
 
-![macOS App](/images/screenshot-macos.svg)
+### Schutzfunktionen
+
+Die macOS-App nutzt System-APIs fuer effektiven Schutz:
+
+- **App-Scanner** — Analyse installierter Programme und neuer Downloads
+- **Fernsteuerungsschutz** — Erkennung nicht autorisierter Bildschirmfreigaben und Remote-Zugriffe
+- **KI-Erkennung** — Analyse verdaechtiger Inhalte in Browsern und E-Mail-Clients
+- **Netzwerk-Ueberwachung** — Erkennung verdaechtiger ausgehender Verbindungen
 
 ### Besonderheiten
-- Nutzt macOS-Systemproxies + System-VPN (NEPacketTunnel)
-- **Audit-Logs** für Netzwerk-Ereignisse (Datenschutzkonform)
 
-### Kurzanleitung (DAU)
-1. DMG herunterladen, App in den Applications-Ordner ziehen
-2. Starte superheld.app und melde dich an
-3. Aktiviere **Proxy-Regeln** und **VPN**
+- Nutzt die Network Extension API (NEPacketTunnel) fuer Netzwerkanalyse
+- Touch ID wird nativ unterstuetzt
+- Datenschutzkonforme Audit-Logs fuer Netzwerkereignisse
+- Unterstuetzt macOS 12 und neuer
 
-### Versierter Modus
-- Erstelle **spezielle Regeln** für bestimmte Apps (z.B. Dev-Tools, Terminal)
-- Nutze **Script-Hooks** (CLI) für Automatisierung
+### Kurzanleitung
+
+1. DMG herunterladen und App in den Applications-Ordner ziehen
+2. Starten und Systemerweiterung erlauben
+3. Anmelden und Schutz aktivieren
+4. Netzwerk- und Benachrichtigungsberechtigungen erteilen
+
+### Fuer versierte Nutzer
+
+- CLI-Befehle fuer Automatisierung verfuegbar
+- Regelkonfiguration ueber Konfigurationsdateien moeglich
+- Script-Hooks fuer Integration in bestehende Workflows
 
 ---
 
 ## Linux (Debian/Ubuntu, Fedora, Arch)
 
-![Linux App](/images/screenshot-linux.svg)
+### Schutzfunktionen
 
-### Funktionen
-- CLI-Tool + optionales GUI
-- **System-Proxy** + **WireGuard-VPN**
-- Paketverwaltung für Updates
+Die Linux-Version bietet CLI-basierten Schutz:
 
-### Kurzanleitung (DAU)
-1. Lade das passende Paket (DEB/RPM/AppImage) herunter
-2. Installiere (z.B. `sudo dpkg -i superheld-app.deb`)
-3. Starte `superheld-app` oder `superheld-app --gui`
-4. Aktiviere Schutz und richte Profile ein
+- **App-Scanner** — Ueberpruefung installierter Pakete und laufender Prozesse
+- **Fernsteuerungsschutz** — Erkennung nicht autorisierter SSH-Verbindungen und Remote-Desktop-Sitzungen
+- **KI-Erkennung** — Analyse verdaechtiger Netzwerkaktivitaeten
+- **Netzwerk-Ueberwachung** — Firewall-Integration und Verbindungsanalyse
 
-### Admins / Power User
-- Automatisiere mit `superheld-app config set ...`
-- Nutze **Agent-Modus** im Headless-Server
-- Exportiere Logs für Audit / Compliance
+### Besonderheiten
 
----
+- CLI-Tool mit optionalem GTK-GUI
+- Paketmanager-Integration (DEB, RPM, AUR)
+- Headless-Modus fuer Server
+- Exportierbare Logs fuer Audit und Compliance
 
-## Rollen & typische Workflows
+### Kurzanleitung
 
-### 1. Einsteiger / DAU (Easy Mode)
-- Einfache Setup-Abfolge
-- Ein großer **Ein-/Aus-Button** (Schutz aktivieren)
-- Visuelle Warnungen (rot/gelb/grün)
-- Automatische Empfehlungen („Aktiviere Kindersicherung", „Aktualisiere Firmware")
+1. Passendes Paket herunterladen (DEB/RPM/AppImage)
+2. Installieren: z.B. `sudo dpkg -i superheld-app.deb`
+3. Starten: `superheld-app` oder `superheld-app --gui`
+4. Schutz aktivieren und konfigurieren
 
-### 2. Versierte Nutzer
-- Feine Einstellungen (Proxy-Filter, Ausnahme-Regeln, Zeitlimits)
-- **Raw-Log-View** + Filter
-- **Export / Import** von Regeln und Sicherungspaketen
+### Fuer Administratoren und Power User
 
-### 3. Eltern
-- Kindersicherung mit Profilen (Schule, Freizeit, Schlaf)
-- Genehmigungs-Workflow für blockierte Seiten
-- Übersicht über Aktivität: **Was wurde geblockt?**
-
-### 4. Administratoren
-- Geräteliste + Status (online/offline)
-- Remote-Lock, Remote-Wipe (optional)
-- Richtlinien-Vorlagen (z.B. „Eltern", „Schule", „Home-Office")
+- Konfiguration ueber `superheld-app config set ...`
+- Headless-Modus fuer Server: `superheld-app --daemon`
+- Integration mit systemd fuer automatischen Start
+- Log-Export fuer SIEM-Systeme
 
 ---
 
-## Woher kommen die Inhalte?
-Die Funktionen basieren auf dem **superheld.app-Design**:
-- Proxy + VPN + Filterregeln (Jugendschutz, Malware, Hochrisiko)
-- Lokaler AI-Layer (LLM-Traffic überwachen)
-- Eltern-Workflow mit Genehmigungen
-- Geräte-Management wie bei Intune/Jamf – aber für Privatnutzer
+## Rollen und Nutzungsszenarien
 
----
+### Einzelperson
 
-## Nächste Schritte (Ausblick)
-- **Passkeys & biometrische Anmeldung** (iOS & Android) sind im Beta-Modus.
-- **VPN-Device-Liste**: Alle verbundenen Geräte sichtbar, ähnlich Tailscale.
-- **Trusted Apps / Untrusted Apps**: App-Rating & Blocklisten.
+- Ein-Klick-Schutz ueber das Dashboard
+- Automatische Bedrohungserkennung im Hintergrund
+- Visuelle Warnungen bei erkannten Gefahren
+- Woechentlicher Sicherheitsbericht
 
----
+### Eltern
+
+- Familienprofile mit altersgerechten Schutzeinstellungen
+- Genehmigungsworkflow fuer App-Installationen
+- Benachrichtigungen bei Bedrohungen auf Kindergeraeten
+- Uebersicht ueber alle Familiengeraete
+
+### Senioren
+
+- Verstaerkter Anrufschutz gegen Enkeltrick und Tech-Support-Betrug
+- Vereinfachte Oberflaeche mit grossen Warnhinweisen
+- Automatische Blockierung bekannter Betrugsmaschen
+- Optionale Familien-Benachrichtigung an Angehoerige
+
+### Administratoren
+
+- Zentrale Verwaltung mehrerer Geraete
+- Richtlinienvorlagen (Familie, Buero, Schule)
+- API-Integration fuer Monitoring
+- Audit-Logs und Compliance-Berichte

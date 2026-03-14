@@ -56,18 +56,23 @@ BROWSERS = ["chromium", "firefox", "webkit"]
 PAGES = [
     ("/", "Landing Page"),
     ("/getting-started/", "Erste Schritte"),
-    ("/getting-started/intro/", "Was ist superheld.app?"),
+    ("/getting-started/intro/", "Was ist Superheld?"),
+    ("/getting-started/features/", "Funktionsübersicht"),
     ("/getting-started/installation/", "Installation"),
     ("/getting-started/setup/", "Erstkonfiguration"),
     ("/getting-started/usage/", "Tägliche Nutzung"),
     ("/getting-started/faq/", "FAQ"),
     ("/experts/", "Für Experten"),
-    ("/experts/configuration/", "Konfiguration"),
-    ("/experts/privacy-security/", "Privatsphäre & Sicherheit"),
+    ("/experts/architecture/", "Systemarchitektur"),
+    ("/experts/threat-model/", "Bedrohungsmodell"),
+    ("/experts/configuration/", "Schutzrichtlinien"),
+    ("/experts/privacy-security/", "Datenschutz & Sicherheit"),
     ("/experts/apps/", "Apps & Plattformen"),
+    ("/experts/use-cases/", "Anwendungsfälle"),
     ("/experts/migration/", "Migration"),
-    ("/experts/use-cases/", "Use Cases"),
-    ("/experts/screenshots/", "Screenshots"),
+    ("/experts/api/", "API-Referenz"),
+    ("/experts/roadmap/", "Roadmap"),
+    ("/experts/attack-simulations/", "Angriffssimulationen"),
 ]
 
 

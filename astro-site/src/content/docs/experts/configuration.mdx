@@ -1,89 +1,179 @@
 ---
-title: "Konfiguration (Expert Mode)"
+title: "Schutzrichtlinien"
 sidebar:
-  order: 1
+  order: 3
 ---
 
-## Erweiterte Konfiguration
+## Erweiterte Schutzrichtlinien
 
-Der Expert Mode bietet volle Kontrolle. **Warnung:** Änderungen hier können die Funktionalität beeinflussen!
+Der Experten-Modus bietet volle Kontrolle ueber alle Schutzregeln, Benachrichtigungen und Familienprofile.
 
-### API-Keys konfigurieren
-
-```
-Einstellungen → KI-Provider → [Provider] → API-Key hinzufügen
-```
-
-Unterstützte Provider:
-- OpenAI (`sk-...`)
-- Anthropic (`sk-ant-...`)
-- Google (`...`)
-- Microsoft (`...`)
-
-### Anonymisierungsregeln
-
-```
-Einstellungen → Datenschutz → Regeln anpassen
-```
-
-Erstelle benutzerdefinierte Filter für:
-- E-Mail Adressen
-- Telefonnummern
-- Sozialversicherungsnummern
-- URLs
-- Custom-Patterns
-
-### Proxy-Einstellungen
-
-```
-Einstellungen → Netzwerk → Proxy
-```
-
-Einstellungen:
-- Proxy-Host
-- Proxy-Port
-- Authentifizierung (optional)
-
-### Logging & Debug
-
-```
-Einstellungen → Erweitert →Debug-Modus
-```
-
-**Optionen:**
-- Debug-Level: `debug`, `info`, `warn`, `error`
-- Logausgabe: `Datei`, `Console`, `Beides`
-- Maximale Dateigröße
-
-### Caching
-
-```
-Einstellungen → Speicher → Cache
-```
-
-- Caching aktivieren/deaktivieren
-- Ähnliche Anfragen cachen
-- Cache-Größe einstellen
-- Cache-Zeit (TTL) anpassen
+:::caution
+Aenderungen an den Schutzrichtlinien koennen die Wirksamkeit des Schutzes beeinflussen. Teste Aenderungen nach Moeglichkeit zuerst mit der integrierten Angriffssimulation.
+:::
 
 ---
 
-## Fehlerbehandlung
+### Schutzregeln konfigurieren
 
-**Config lädt nicht?**
-> Öffne Einstellungen → System → Config prüfen
+```
+Einstellungen → Schutzrichtlinien → Regeln
+```
 
-**Provider funktioniert nicht?**
-> Einstellungen → KI-Provider → [Provider] → Test
+#### Anrufschutz-Regeln
 
-**Performance-Probleme?**
-> Einstellungen → Speicher → Cache leeren
+| Regel | Beschreibung | Standard |
+|---|---|---|
+| **Bekannte Betrugsnummern** | Automatische Blockierung anhand der Superheld-Datenbank | Aktiviert |
+| **Unbekannte Nummern** | Warnung oder Blockierung bei Anrufen von unbekannten Nummern | Warnung |
+| **Auslaendische Nummern** | Konfigurierbar: erlauben, warnen oder blockieren | Warnung |
+| **Mustererkennung** | Erkennung typischer Betrugsmuster (z.B. Anrufhaeufigkeit, Gespraechsdauer) | Aktiviert |
+| **KI-Stimmanalyse** | Erkennung synthetischer Stimmen und Deepfakes | Aktiviert (Premium) |
+
+#### App-Scanner-Regeln
+
+| Regel | Beschreibung | Standard |
+|---|---|---|
+| **Automatischer Scan** | Neue Apps werden bei Installation automatisch geprueft | Aktiviert |
+| **Fernsteuerungs-Apps** | Apps mit Remote-Control-Funktionen werden markiert | Warnung |
+| **Berechtigungspruefung** | Warnung bei uebermmaessigen Berechtigungen | Aktiviert |
+| **Verhaltensueberwachung** | Laufende Apps werden auf verdaechtiges Verhalten geprueft | Aktiviert |
+| **Unbekannte Quellen** | Apps aus unbekannten Quellen werden besonders streng geprueft | Aktiviert |
+
+#### Fernsteuerungsschutz-Regeln
+
+| Regel | Beschreibung | Standard |
+|---|---|---|
+| **Fernsteuerungs-Blockierung** | Automatische Blockierung nicht autorisierter Fernzugriffe | Aktiviert |
+| **Autorisierte Tools** | Liste erlaubter Fernsteuerungs-Apps (z.B. fuer IT-Support) | Leer |
+| **Overlay-Erkennung** | Erkennung betruegerischer Bildschirm-Overlays | Aktiviert |
 
 ---
 
-## Sicherheitswarnung
+### Benachrichtigungen
 
-- **Speichere API-Keys niemals im Web**
-- **Verwende sichere Passwörter** für Premium
-- **Regelmäßig Logs reviewen**
-- **Backups machen** vor Änderungen
+```
+Einstellungen → Schutzrichtlinien → Benachrichtigungen
+```
+
+Konfiguriere, wann und wie du benachrichtigt wirst:
+
+| Einstellung | Optionen |
+|---|---|
+| **Bedrohungsstufe** | Alle / Nur Warnungen und Gefahren / Nur Gefahren |
+| **Benachrichtigungskanal** | Push / E-Mail / Beides |
+| **Stille Stunden** | Zeitraum, in dem nur kritische Warnungen erscheinen |
+| **Familien-Benachrichtigungen** | Eltern werden immer bei Bedrohungen auf Kindergeraeten informiert |
+| **Woechentlicher Bericht** | Zusammenfassung aller Ereignisse per E-Mail |
+
+---
+
+### Familienprofile verwalten
+
+```
+Einstellungen → Familie → Profile
+```
+
+Jedes Familienprofil hat eigene Schutzrichtlinien:
+
+| Profil-Option | Beschreibung |
+|---|---|
+| **Schutzlevel** | Basis / Erhoeht / Maximal |
+| **App-Genehmigungen** | Ob App-Installationen genehmigt werden muessen |
+| **Anrufregeln** | Welche Anrufe blockiert/erlaubt werden |
+| **Aenderungssperre** | Ob das Profil vom Nutzer selbst geaendert werden kann |
+| **Standort-Benachrichtigung** | Benachrichtigung bei Verlassen definierter Bereiche (optional) |
+
+#### Profil erstellen
+
+1. Oeffne **Einstellungen → Familie → "Profil hinzufuegen"**
+2. Waehle eine Vorlage (Kind, Jugendlich, Erwachsener, Senior) oder erstelle ein benutzerdefiniertes Profil
+3. Passe die Schutzregeln an
+4. Weise das Profil einem Geraet zu
+
+---
+
+### Whitelist / Blacklist
+
+```
+Einstellungen → Schutzrichtlinien → Listen
+```
+
+#### Whitelist (Erlaubte Kontakte und Apps)
+
+- **Telefonnummern** — Nummern, die nie blockiert werden
+- **Kontaktgruppen** — Komplette Adressbuch-Gruppen freigeben
+- **Apps** — Apps, die vom Scanner ausgenommen werden
+- **Fernsteuerungs-Tools** — Autorisierte Remote-Support-Apps
+
+#### Blacklist (Dauerhaft blockiert)
+
+- **Telefonnummern** — Nummern, die immer blockiert werden
+- **Nummernbereiche** — z.B. alle Nummern mit bestimmter Vorwahl
+- **Apps** — Apps, die nicht installiert werden duerfen (Familienprofile)
+
+---
+
+### API-Integration
+
+```
+Einstellungen → Erweitert → API
+```
+
+Superheld bietet eine REST-API fuer Integration mit bestehenden Systemen:
+
+| Endpunkt | Beschreibung |
+|---|---|
+| `GET /api/v1/status` | Schutzstatus aller Geraete |
+| `GET /api/v1/threats` | Liste erkannter Bedrohungen |
+| `POST /api/v1/rules` | Schutzregel hinzufuegen oder aendern |
+| `GET /api/v1/family` | Familienprofile und Geraete abrufen |
+| `POST /api/v1/whitelist` | Eintrag zur Whitelist hinzufuegen |
+| `POST /api/v1/report` | Bedrohungsbericht generieren |
+
+API-Keys werden unter **Einstellungen → Erweitert → API → Key generieren** erstellt. Jeder Key kann mit spezifischen Berechtigungen versehen werden.
+
+:::note
+Die vollstaendige API-Dokumentation mit Beispielen findest du unter [API-Referenz](/experts/api).
+:::
+
+---
+
+## Logging und Diagnose
+
+```
+Einstellungen → Erweitert → Diagnose
+```
+
+| Option | Beschreibung |
+|---|---|
+| **Log-Level** | `info`, `warn`, `error`, `debug` |
+| **Log-Ausgabe** | Datei / Console / Beides |
+| **Maximale Dateigroesse** | Standard: 50 MB |
+| **Automatischer Export** | Logs koennen automatisch an das Support-Team gesendet werden |
+
+:::caution
+Im Debug-Modus werden ausfuehrliche Diagnosedaten geschrieben. Aktiviere diesen Modus nur zur Fehlerbehebung und deaktiviere ihn danach.
+:::
+
+---
+
+## Fehlerbehebung
+
+**Schutzregeln greifen nicht?**
+> Pruefe unter Einstellungen → Schutzrichtlinien → Regeln, ob die betreffende Regel aktiviert ist. Teste mit der integrierten Angriffssimulation.
+
+**Zu viele Fehlalarme?**
+> Passe die Empfindlichkeit der betreffenden Schutzschicht an oder fuege betroffene Nummern/Apps zur Whitelist hinzu.
+
+**API-Verbindung fehlgeschlagen?**
+> Pruefe den API-Key, die Netzwerkverbindung und die API-Berechtigungen. Teste mit `GET /api/v1/status`.
+
+---
+
+## Sicherheitshinweise
+
+- **API-Keys niemals teilen** — jeder Key hat vollen Zugriff auf die konfigurierten Berechtigungen
+- **Whitelist sparsam nutzen** — jeder Whitelist-Eintrag reduziert den Schutz
+- **Aenderungen dokumentieren** — besonders bei Familienprofile
+- **Regelmaessig Schutzprotokoll pruefen** — ungewoehnliche Muster koennen auf neue Bedrohungen hinweisen

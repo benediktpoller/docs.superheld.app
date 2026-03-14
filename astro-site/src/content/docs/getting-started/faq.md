@@ -1,84 +1,116 @@
 ---
 title: "Häufig gestellte Fragen"
 sidebar:
-  order: 7
+  order: 6
 ---
 
-## Installation & Setup
+## Allgemein
 
-**F: Auf welchen Geräten funktioniert superheld.app?**
-A: iOS, Android, macOS, Windows, Linux
+**F: Was ist Superheld?**
+A: Superheld ist eine digitale Schutzplattform, die dich und deine Familie vor Telefonbetrug, Social Engineering, schaedlichen Apps, KI-Manipulation, Fernsteuerungsbetrug und gefaehrlichen Nutzeraktionen schuetzt.
 
-**F: Kostet superheld.app etwas?**
-A: Kostenlos mit optionalen Premium-Features
+**F: Fuer wen ist Superheld gedacht?**
+A: Fuer alle, die sich und ihre Familie vor digitalen Bedrohungen schuetzen moechten — insbesondere fuer Eltern, Senioren und alle, die regelmaessig Anrufe von unbekannten Nummern erhalten.
 
-**F: Kann ich mehrere Geräte nutzen?**
-A: Ja, Account synchronisiert sich automatisch
+**F: Auf welchen Geraeten funktioniert Superheld?**
+A: iOS (ab Version 15), Android (ab Version 11), macOS (ab Version 12), Windows (ab Version 10) und ueber das Web-Dashboard.
 
----
+**F: Kostet Superheld etwas?**
+A: Superheld bietet einen kostenlosen Basis-Schutz. Erweiterte Funktionen wie Familien-Schutz, KI-Erkennung und priorisierter Support sind im Premium-Abo verfuegbar.
 
-## Datenschutz & Sicherheit
-
-**F: Speichert superheld.app meine Daten?**
-A: Nur lokal auf deinem Gerät. Nichts auf unseren Servern.
-
-**F: Sind meine Daten wirklich anonymisiert?**
-A: Ja, mit mehreren Anonymisierungs-Techniken
-
-**F: Wer kann meine anonymisierten Daten sehen?**
-A: Nur der KI-Provider, aber ohne Kontext wer du bist
-
-**F: Was ist mit meinen API-Keys?**
-A: Verschlüsselt lokal, nicht zu superheld server übertragen
-
-**F: Ist superheld.app Open Source?**
-A: Ja! [GitHub](https://github.com/benediktpoller/superheld.app)
+**F: Kann ich Superheld auf mehreren Geraeten nutzen?**
+A: Ja. Mit einem Konto kannst du alle deine Geraete schuetzen. Familienprofile erlauben zusaetzlich die Verwaltung von Geraeten anderer Familienmitglieder.
 
 ---
 
-## Technische Fragen
+## Schutzfunktionen
 
-**F: Wie schnell ist superheld.app?**
-A: 0-3 Sekunden schneller durch Caching
+**F: Welche Bedrohungen erkennt Superheld?**
+A: Superheld erkennt betruegerische Anrufe (Enkeltrick, Tech-Support-Betrug, Gewinnversprechen), schaedliche Apps, Fernsteuerungsversuche (z.B. ueber AnyDesk/TeamViewer), Social Engineering in Nachrichten sowie KI-gesteuerte Manipulationsversuche.
 
-**F: Funktioniert offline?**
-A: Ja, mit lokalen Modellen. KI-Provider benötigen Internet.
+**F: Wie funktioniert der Anrufschutz?**
+A: Superheld analysiert eingehende Anrufe anhand bekannter Betrugsnummern, Anrufmuster und Echtzeitanalyse. Verdaechtige Anrufe werden markiert oder automatisch blockiert — je nach Einstellung.
 
-**F: Kann ich Provider kombinieren?**
-A: Ja, verschiedene für verschiedene Aufgaben
+**F: Was macht der App-Scanner?**
+A: Der App-Scanner prueft installierte und neue Apps auf schaedliches Verhalten, uebermmaessige Berechtigungen, Fernsteuerungsfunktionen und Datenmissbrauch. Du erhaeltst eine Sicherheitsbewertung fuer jede App.
 
----
+**F: Wie erkennt Superheld KI-Manipulation?**
+A: Superheld analysiert Kommunikationsmuster und erkennt typische Merkmale von KI-generierten Betrugsversuchen — etwa synthetische Stimmen bei Anrufen oder automatisierte Manipulationsnachrichten.
 
-## Integrationen
+**F: Kann ich einzelne Schutzschichten deaktivieren?**
+A: Ja. Jede Schutzschicht (Anrufschutz, App-Scanner, KI-Erkennung, Fernsteuerungsschutz) kann einzeln ein- oder ausgeschaltet werden.
 
-**F: Welche Browser werden unterstützt?**
-A: Chrome, Firefox, Safari, Edge (modern versions)
-
-**F: Funktioniert mit meiner Lieblings-App?**
-A: Schau [App-Liste](https://superheld.app/apps)
-
-**F: CLI-Tools nutzen?**
-A: Ja, über Proxy-Einstellungen
+**F: Was ist der Familien-Schutz?**
+A: Der Familien-Schutz erlaubt dir, Profile fuer Familienmitglieder zu erstellen (Kind, Jugendlich, Erwachsener, Senior) mit jeweils angepassten Schutzeinstellungen. Eltern erhalten Benachrichtigungen und koennen App-Installationen genehmigen.
 
 ---
 
-## Fehlerbehandlung
+## Datenschutz
 
-**F: App startet nicht!**
-- 1. App neu installieren
-- 2. Cache leeren (Einstellungen → Speicher)
-- 3. Device neu starten
-- 4. [Support kontaktieren](https://superheld.app/support)
+**F: Welche Daten sammelt Superheld?**
+A: Superheld arbeitet nach dem Prinzip der Datensparsamkeit. Anrufanalysen erfolgen lokal auf deinem Geraet. Es werden keine Gespraechsinhalte aufgezeichnet oder an Server uebertragen.
 
-**F: Keine Ergebnisse?**
-- Prüfe Internet-Verbindung
-- API-Keys korrekt?
-- Rate-Limits nicht überschritten
+**F: Werden meine Anrufe mitgehoert?**
+A: Nein. Superheld analysiert Anrufmetadaten (Nummer, Muster, Dauer) — nicht den Gespraechsinhalt. Die KI-basierte Stimmerkennung arbeitet lokal auf dem Geraet.
 
-**F: "API Key Invalid"**
-- Key ist falsch oder abgelaufen
-- Regeneriere in deinem Account
-- Speichere neu in superheld.app
+**F: Ist Superheld DSGVO-konform?**
+A: Ja. Superheld wurde von Grund auf DSGVO-konform entwickelt. Alle personenbezogenen Daten bleiben auf deinem Geraet oder werden verschluesselt verarbeitet.
+
+**F: Kann ich meine Daten loeschen?**
+A: Ja. Unter Einstellungen → Datenschutz → "Alle Daten loeschen" kannst du saemtliche lokalen Daten und dein Konto vollstaendig entfernen.
+
+**F: Teilt Superheld Daten mit Dritten?**
+A: Nein. Superheld verkauft oder teilt keine Nutzerdaten. Die Bedrohungserkennung basiert auf anonymisierten, aggregierten Daten.
+
+---
+
+## Technik
+
+**F: Verbraucht Superheld viel Akku?**
+A: Nein. Superheld ist auf minimalen Akkuverbrauch optimiert. Im Normalbetrieb betraegt der zusaetzliche Verbrauch weniger als 3%.
+
+**F: Funktioniert Superheld auch offline?**
+A: Teilweise. Der App-Scanner und der Fernsteuerungsschutz funktionieren offline. Fuer Anrufschutz gegen neue Betrugsnummern und KI-Erkennung ist eine Internetverbindung erforderlich.
+
+**F: Beeinflusst Superheld die Geraeteleistung?**
+A: Nein. Superheld arbeitet ressourcenschonend im Hintergrund. Die Analyse erfolgt ereignisgesteuert — nur bei relevanten Aktionen, nicht permanent.
+
+**F: Kann ich Superheld mit anderen Sicherheits-Apps kombinieren?**
+A: Ja. Superheld ergaenzt bestehende Virenscanner und Firewalls. Es gibt keine bekannten Konflikte mit gaengiger Sicherheitssoftware.
+
+**F: Wie bekomme ich Updates?**
+A: Updates werden automatisch ueber den App Store (iOS), Play Store (Android) oder den integrierten Updater (Desktop) bereitgestellt. Du kannst auch manuell nach Updates suchen.
+
+---
+
+## Fehlerbehebung
+
+**F: Der Schutz ist nicht aktiv (graues Symbol)**
+A: Pruefe, ob alle erforderlichen Berechtigungen erteilt sind:
+- iOS: Einstellungen → Telefon → Anrufblockierung → Superheld aktivieren
+- Android: Einstellungen → Bedienungshilfen → Superheld aktivieren
+- Starte die App neu
+
+**F: Ich erhalte keine Benachrichtigungen**
+A: Pruefe die Benachrichtigungseinstellungen:
+1. Betriebssystem: Benachrichtigungen fuer Superheld erlauben
+2. Android: Akku-Optimierung fuer Superheld deaktivieren
+3. In der App: Einstellungen → Benachrichtigungen pruefen
+
+**F: Legitime Anrufe werden blockiert**
+A: Du kannst Nummern zur Whitelist hinzufuegen:
+1. Oeffne das Schutzprotokoll
+2. Tippe auf den falsch blockierten Anruf
+3. Waehle "Nummer freigeben"
+Die Nummer wird kuenftig nicht mehr blockiert.
+
+**F: App stuerzt ab oder reagiert nicht**
+A: Versuche folgende Schritte:
+1. App beenden und neu starten
+2. Geraet neu starten
+3. App-Cache loeschen (Android: Einstellungen → Apps → Superheld → Speicher)
+4. App deinstallieren und neu installieren (Einstellungen bleiben durch dein Konto erhalten)
+5. [Support kontaktieren](https://support.superheld.app)
 
 ---
 
@@ -86,12 +118,8 @@ A: Ja, über Proxy-Einstellungen
 
 **Wo bekomme ich Hilfe?**
 - Diese Dokumentation
-- [Discord Community](https://discord.superheld.app)
-- [GitHub Issues](https://github.com/benediktpoller/superheld.app/issues)
-- [support@superheld.app](mailto:support@superheld.app)
+- [Support-Portal](https://support.superheld.app)
+- [E-Mail: support@superheld.app](mailto:support@superheld.app)
 
-**Bug melden?**
-> [GitHub Issues](https://github.com/benediktpoller/superheld.app/issues/new)
-
-**Feature-Request?**
-> [GitHub Discussions](https://github.com/benediktpoller/superheld.app/discussions)
+**Problem melden?**
+Oeffne die App → Einstellungen → "Problem melden". Dabei werden automatisch relevante Diagnosedaten (keine persoenlichen Daten) angehaengt.

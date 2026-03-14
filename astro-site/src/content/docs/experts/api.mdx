@@ -1,0 +1,201 @@
+---
+title: "API-Referenz"
+sidebar:
+  order: 8
+---
+
+:::note
+Die Superheld API befindet sich derzeit in der **Beta-Phase**. Endpunkte, Request-/Response-Formate und Ratenlimits können sich ohne Vorankündigung ändern. Produktiver Einsatz erfolgt auf eigene Verantwortung.
+:::
+
+## Authentifizierung
+
+Alle API-Anfragen erfordern einen gültigen API-Schlüssel im `Authorization`-Header. Sie erhalten Ihren Schlüssel im Superheld-Dashboard unter **Einstellungen → API-Zugang**.
+
+```
+Authorization: Bearer sh_live_abc123xyz456
+```
+
+Übermitteln Sie Ihren API-Schlüssel niemals im Query-String oder im Request-Body. Alle Anfragen müssen über HTTPS erfolgen — unverschlüsselte Verbindungen werden abgelehnt.
+
+## Rate Limiting
+
+Die API erlaubt **120 Anfragen pro Minute** pro API-Schlüssel. Bei Überschreitung erhalten Sie eine `429 Too Many Requests`-Antwort. Die folgenden Header informieren über den aktuellen Status:
+
+| Header                  | Beschreibung                          |
+|-------------------------|---------------------------------------|
+| `X-RateLimit-Limit`     | Maximale Anfragen pro Minute          |
+| `X-RateLimit-Remaining` | Verbleibende Anfragen im Zeitfenster  |
+| `X-RateLimit-Reset`     | Unix-Timestamp für das nächste Reset  |
+
+---
+
+## Endpunkte
+
+### GET /api/v1/threats
+
+Gibt eine paginierte Liste aller erkannten Bedrohungen für Ihr Konto zurück.
+
+```bash
+curl -X GET https://api.superheld.app/api/v1/threats \
+  -H "Authorization: Bearer sh_live_abc123xyz456"
+```
+
+```json
+{
+  "data": [
+    {
+      "id": "thr_8f3a2b",
+      "type": "phishing",
+      "severity": "high",
+      "source": "email",
+      "detected_at": "2026-03-14T09:22:17Z",
+      "description": "Gefälschte Login-Seite erkannt"
+    }
+  ],
+  "has_more": true,
+  "total_count": 42
+}
+```
+
+| Feld           | Typ      | Beschreibung                                          |
+|----------------|----------|-------------------------------------------------------|
+| `id`           | string   | Eindeutige Kennung der Bedrohung                      |
+| `type`         | string   | Kategorie (`phishing`, `malware`, `social_engineering`)|
+| `severity`     | string   | Schweregrad: `low`, `medium`, `high`, `critical`      |
+| `source`       | string   | Herkunftskanal der Bedrohung                          |
+| `detected_at`  | string   | ISO-8601-Zeitstempel der Erkennung                    |
+| `description`  | string   | Kurzbeschreibung der erkannten Bedrohung              |
+| `has_more`     | boolean  | Weitere Ergebnisse verfügbar                          |
+| `total_count`  | integer  | Gesamtanzahl der Bedrohungen                          |
+
+---
+
+### POST /api/v1/scan
+
+Übergibt einen Inhalt (URL, Text oder Datei-Hash) zur Bedrohungsanalyse. Die Analyse erfolgt synchron und gibt das Ergebnis direkt zurück.
+
+```bash
+curl -X POST https://api.superheld.app/api/v1/scan \
+  -H "Authorization: Bearer sh_live_abc123xyz456" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "https://beispiel-phishing.de/login", "type": "url"}'
+```
+
+```json
+{
+  "scan_id": "scn_4e7d1c",
+  "status": "completed",
+  "threat_detected": true,
+  "threat_type": "phishing",
+  "confidence": 0.97,
+  "details": "Domain imitiert bekannten Finanzdienstleister. SSL-Zertifikat seit 2 Tagen aktiv."
+}
+```
+
+| Feld              | Typ      | Beschreibung                                      |
+|--------------------|----------|--------------------------------------------------|
+| `scan_id`          | string   | Eindeutige Kennung des Scan-Vorgangs             |
+| `status`           | string   | `completed`, `pending` oder `failed`              |
+| `threat_detected`  | boolean  | Ob eine Bedrohung erkannt wurde                   |
+| `threat_type`      | string   | Kategorie der erkannten Bedrohung (falls vorhanden)|
+| `confidence`       | float    | Konfidenzwert zwischen `0.0` und `1.0`            |
+| `details`          | string   | Menschenlesbare Analyse des Ergebnisses           |
+
+---
+
+### POST /api/v1/alerts
+
+Erstellt oder aktualisiert eine Benachrichtigungsregel. Alerts können per Webhook, E-Mail oder Push-Notification ausgelöst werden.
+
+```bash
+curl -X POST https://api.superheld.app/api/v1/alerts \
+  -H "Authorization: Bearer sh_live_abc123xyz456" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Kritische Bedrohungen",
+    "severity_filter": ["high", "critical"],
+    "channel": "webhook",
+    "webhook_url": "https://mein-server.de/hooks/superheld"
+  }'
+```
+
+```json
+{
+  "alert_id": "alt_9b2f3e",
+  "name": "Kritische Bedrohungen",
+  "channel": "webhook",
+  "severity_filter": ["high", "critical"],
+  "active": true,
+  "created_at": "2026-03-14T10:05:33Z"
+}
+```
+
+| Feld              | Typ      | Beschreibung                                       |
+|--------------------|----------|----------------------------------------------------|
+| `alert_id`         | string   | Eindeutige Kennung der Benachrichtigungsregel      |
+| `name`             | string   | Bezeichnung der Regel                              |
+| `channel`          | string   | Zustellkanal: `webhook`, `email` oder `push`       |
+| `severity_filter`  | array    | Schweregrade, die diese Regel auslösen             |
+| `active`           | boolean  | Ob die Regel aktiv ist                             |
+| `created_at`       | string   | ISO-8601-Zeitstempel der Erstellung                |
+
+---
+
+### GET /api/v1/devices
+
+Gibt alle registrierten Geräte zurück, die mit Ihrem Konto verknüpft sind.
+
+```bash
+curl -X GET https://api.superheld.app/api/v1/devices \
+  -H "Authorization: Bearer sh_live_abc123xyz456"
+```
+
+```json
+{
+  "data": [
+    {
+      "device_id": "dev_3c8a1f",
+      "name": "MacBook Pro – Arbeit",
+      "platform": "macos",
+      "agent_version": "2.4.1",
+      "last_seen": "2026-03-14T08:47:02Z",
+      "status": "online"
+    }
+  ],
+  "total_count": 3
+}
+```
+
+| Feld            | Typ      | Beschreibung                                        |
+|-----------------|----------|-----------------------------------------------------|
+| `device_id`     | string   | Eindeutige Kennung des Geräts                       |
+| `name`          | string   | Vom Benutzer vergebener Gerätename                  |
+| `platform`      | string   | Betriebssystem: `macos`, `windows`, `ios`, `android`|
+| `agent_version` | string   | Installierte Version des Guardian Agent              |
+| `last_seen`     | string   | Letzter Kontakt des Geräts (ISO 8601)               |
+| `status`        | string   | `online`, `offline` oder `inactive`                 |
+
+---
+
+## Fehlerbehandlung
+
+Fehlerhafte Anfragen geben ein einheitliches JSON-Format zurück:
+
+```json
+{
+  "error": {
+    "code": "invalid_api_key",
+    "message": "Der angegebene API-Schlüssel ist ungültig oder abgelaufen.",
+    "status": 401
+  }
+}
+```
+
+| HTTP-Status | Bedeutung                                              |
+|-------------|--------------------------------------------------------|
+| `400`       | Ungültige Anfrage — fehlende oder fehlerhafte Parameter|
+| `401`       | Authentifizierung fehlgeschlagen                       |
+| `403`       | Zugriff verweigert — unzureichende Berechtigungen     |
+| `429`       | Rate Limit überschritten                               |
+| `500`       | Interner Serverfehler                                  |

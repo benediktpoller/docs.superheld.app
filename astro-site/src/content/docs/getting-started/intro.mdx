@@ -1,96 +1,131 @@
 ---
-title: "Was ist superheld.app?"
+title: "Was ist Superheld?"
 sidebar:
   order: 1
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 
-**superheld.app** schützt deine digitale Privatsphäre — auf allen Geräten, ohne technisches Wissen.
+Superheld ist eine digitale Schutzplattform. Sie erkennt und verhindert Betrug, Social Engineering, KI-Manipulation und gefährliche App-Installationen — bevor Schaden entsteht.
 
 :::note
-**Kurz gesagt:** superheld.app ist ein digitaler Schutzschild. Er verschlüsselt deine Daten, filtert gefährliche Inhalte und gibt dir die volle Kontrolle — nicht den Konzernen.
+**In einem Satz:** Superheld ist ein Echtzeit-Schutzschild gegen die häufigsten digitalen Bedrohungen, denen Privatpersonen und Unternehmen heute ausgesetzt sind.
 :::
 
-## Was macht superheld.app?
+---
+
+## Warum gibt es Superheld?
+
+Digitale Bedrohungen haben sich verändert. Die größten Risiken kommen nicht mehr von Viren auf der Festplatte — sie kommen von Menschen und Maschinen, die andere Menschen täuschen:
+
+- **Telefonbetrug** verursacht in Deutschland jährlich Schäden in Milliardenhöhe. Opfer verlieren Ersparnisse durch gefälschte Bankanrufe.
+- **Social Engineering** umgeht jede Firewall, weil es den Menschen angreift — nicht das System.
+- **KI-generierte Deepfakes** machen es möglich, die Stimme eines Familienmitglieds oder Vorgesetzten in Echtzeit zu imitieren.
+- **Fernsteuerungsbetrug** bringt Opfer dazu, Angreifern freiwillig Zugang zum eigenen Gerät zu geben.
+
+Klassische Virenscanner und Spam-Filter erkennen diese Angriffe nicht. Superheld wurde entwickelt, um genau diese Lücke zu schließen.
+
+---
+
+## Für wen ist Superheld?
+
+| Zielgruppe | Typisches Szenario |
+|---|---|
+| **Privatpersonen** | Schutz vor Phishing, Telefonbetrug und gefälschten Nachrichten |
+| **Familien** | Kinder und ältere Familienmitglieder vor Betrug und gefährlichen Apps schützen |
+| **Unternehmen** | Mitarbeiter gegen CEO-Fraud, Spear-Phishing und Social Engineering absichern |
+| **Freiberufler** | Kundendaten und Geschäftskonten vor gezielten Angriffen schützen |
+| **IT-Administratoren** | Schutzrichtlinien zentral verwalten und Bedrohungen über Geräteflotten hinweg erkennen |
+
+---
+
+## Kernfähigkeiten
 
 <div class="sh-feature-grid" data-cols="2">
   <a class="sh-feature-card">
-    <div class="sh-feature-card-title">Schutz beim Surfen</div>
-    <p class="sh-feature-card-subtitle">Blockiert automatisch Malware, Phishing und gefährliche Seiten. Du surfst sicher, ohne etwas tun zu müssen.</p>
+    <div class="sh-feature-card-title">Betrugsanruf-Erkennung</div>
+    <p class="sh-feature-card-subtitle">Analysiert eingehende Anrufe auf bekannte Betrugsmuster und warnt in Echtzeit.</p>
   </a>
   <a class="sh-feature-card">
-    <div class="sh-feature-card-title">Privatsphäre überall</div>
-    <p class="sh-feature-card-subtitle">Deine Daten werden verschlüsselt — niemand kann mitlesen. Nicht mal wir.</p>
+    <div class="sh-feature-card-title">Social-Engineering-Schutz</div>
+    <p class="sh-feature-card-subtitle">Erkennt Manipulationstechniken in E-Mails, Nachrichten und Gesprächen.</p>
   </a>
   <a class="sh-feature-card">
-    <div class="sh-feature-card-title">Kindersicherung</div>
-    <p class="sh-feature-card-subtitle">Regeln für Kinder festlegen, Inhalte freigeben oder sperren. Eltern behalten die Kontrolle.</p>
+    <div class="sh-feature-card-title">KI-Deepfake-Erkennung</div>
+    <p class="sh-feature-card-subtitle">Identifiziert synthetische Stimmen und KI-generierte Inhalte.</p>
   </a>
   <a class="sh-feature-card">
-    <div class="sh-feature-card-title">Alle Geräte, ein Konto</div>
-    <p class="sh-feature-card-subtitle">iPhone, Android, Mac, Windows, Linux — ein Account synchronisiert alles.</p>
+    <div class="sh-feature-card-title">App-Sicherheitsprüfung</div>
+    <p class="sh-feature-card-subtitle">Blockiert die Installation von Malware und warnt vor gefährlichen Apps.</p>
   </a>
-</div>
-
-<div class="sh-gallery" style="margin-top: 2rem;">
-  <div class="sh-gallery-phone">
-    <div class="sh-screenshot">
-      <img src="/images/screenshot-android.svg" alt="superheld.app Dashboard — Schutzstatus auf einen Blick" loading="lazy" />
-    </div>
-  </div>
-  <div class="sh-gallery-phone">
-    <div class="sh-screenshot">
-      <img src="/images/screenshot-vpn.svg" alt="superheld.app VPN — Verschlüsselte Verbindung" loading="lazy" />
-    </div>
-  </div>
-  <div class="sh-gallery-phone">
-    <div class="sh-screenshot">
-      <img src="/images/screenshot-kindersicherung.svg" alt="superheld.app Kindersicherung" loading="lazy" />
-    </div>
-  </div>
+  <a class="sh-feature-card">
+    <div class="sh-feature-card-title">Fernsteuerungsschutz</div>
+    <p class="sh-feature-card-subtitle">Erkennt und blockiert Remote-Access-Versuche durch Betrüger.</p>
+  </a>
+  <a class="sh-feature-card">
+    <div class="sh-feature-card-title">Gefährliche-Aktionen-Warnung</div>
+    <p class="sh-feature-card-subtitle">Warnt vor riskanten Überweisungen, Downloads und Berechtigungsänderungen.</p>
+  </a>
 </div>
 
 ---
 
-## Wie funktioniert der Schutz?
+## Wie schützt Superheld?
+
+Superheld kombiniert mehrere Schutzschichten, die zusammenarbeiten:
+
+```mermaid
+flowchart TB
+    subgraph Gerät["Auf deinem Gerät"]
+        A[Device Guardian Agent] --> B[Lokale KI-Analyse]
+        B --> C[Anrufschutz]
+        B --> D[App-Prüfung]
+        B --> E[Nachrichtenanalyse]
+    end
+    subgraph Cloud["Cloud Intelligence"]
+        F[Bedrohungsdatenbank]
+        G[Deepfake-Modelle]
+    end
+    B <-->|Nur anonymisierte Signaturen| F
+    B <-->|Nur bei Bedarf| G
+    C --> H[Warnung oder Block]
+    D --> H
+    E --> H
+```
 
 <Steps>
-1. **App installieren**
+1. **Device Guardian Agent**
 
-   Lade superheld.app auf dein Gerät herunter — kostenlos, in 2 Minuten erledigt.
+   Ein lokaler Schutzprozess auf deinem Gerät überwacht Anrufe, App-Installationen und Netzwerkaktivität.
 
-2. **Schutz aktivieren**
+2. **Lokale KI-Analyse**
 
-   Tippe auf **Schutz starten**. Die App richtet automatisch einen sicheren VPN-Tunnel ein.
+   Bedrohungen werden direkt auf dem Gerät analysiert — deine Daten verlassen das Gerät nicht. Die lokale KI erkennt Betrugsmuster, Manipulationstechniken und verdächtige App-Aktivität.
 
-3. **Fertig — du bist geschützt**
+3. **Cloud Intelligence (optional)**
 
-   Ab sofort werden gefährliche Inhalte blockiert und deine Daten verschlüsselt. Du siehst den Status jederzeit in der App (grün = sicher).
+   Für komplexe Bedrohungen wie neue Deepfake-Varianten fragt der Agent anonymisiert die Cloud-Datenbank ab. Es werden keine persönlichen Daten übertragen — nur kryptographische Signaturen.
+
+4. **Warnung oder Block**
+
+   Der Nutzer wird gewarnt und kann die Aktion bestätigen oder abbrechen. Bei eindeutigen Bedrohungen (bekannte Malware, aktive Fernsteuerung) wird automatisch blockiert.
 </Steps>
 
 ---
 
-## Wer nutzt superheld.app?
+## Was unterscheidet Superheld?
 
-- **Familien** — Kindersicherung und sicheres Surfen für alle Geräte
-- **Berufstätige** — Schutz für sensible Daten im Home-Office und unterwegs
-- **Unternehmen** — DSGVO-konforme Kommunikation und Geräteverwaltung
-- **Journalisten und Anwälte** — Quellenschutz und verschlüsselte Kommunikation
-
----
-
-## Was unterscheidet superheld.app?
-
-| | superheld.app | Andere Tools |
-|---|---|---|
-| **Deine Daten gehören** | Dir | Dem Konzern |
-| **Verschlüsselung** | Ende-zu-Ende, überall | Teilweise oder gar nicht |
-| **Open Source** | Ja — jeder kann den Code prüfen | Meist nicht |
-| **Offline nutzbar** | Ja | Meist nicht |
+| | Superheld | Virenscanner | Spam-Filter | Call-Blocker |
+|---|---|---|---|---|
+| **Telefonbetrug** | Erkennt Muster in Echtzeit | Kein Schutz | Kein Schutz | Nur Nummernlisten |
+| **Social Engineering** | Analysiert Manipulationstechniken | Kein Schutz | Teilweise | Kein Schutz |
+| **KI-Deepfakes** | Erkennt synthetische Stimmen | Kein Schutz | Kein Schutz | Kein Schutz |
+| **Malware** | Blockiert vor Installation | Nach Infektion | Kein Schutz | Kein Schutz |
+| **Fernsteuerung** | Blockiert Remote-Access | Teilweise | Kein Schutz | Kein Schutz |
+| **Datenschutz** | Lokale Analyse, kein Tracking | Cloud-basiert | Cloud-basiert | Daten an Dritte |
 
 :::note
-**Deine Daten sind kein Produkt.** Wir verdienen Geld durch Subscriptions — nicht durch Werbung oder Datenverkauf.
+**Kein Tracking, keine Werbung.** Superheld finanziert sich durch Subscriptions. Deine Daten werden weder verkauft noch für Werbung genutzt.
 :::
 
 ---
@@ -99,11 +134,11 @@ import { Steps } from '@astrojs/starlight/components';
 
 <div class="sh-feature-grid" data-cols="2">
   <a href="/getting-started/installation" class="sh-feature-card" style="background: radial-gradient(ellipse at 50% 80%, rgba(16,185,129,0.10), transparent);">
-    <div class="sh-feature-card-title">App installieren</div>
-    <p class="sh-feature-card-subtitle">In 5 Minuten auf deinem Gerät.</p>
+    <div class="sh-feature-card-title">Schutz aktivieren</div>
+    <p class="sh-feature-card-subtitle">In 5 Minuten auf deinem Gerät installiert.</p>
   </a>
-  <a href="/experts" class="sh-feature-card" style="background: radial-gradient(ellipse at 50% 80%, rgba(37,99,235,0.10), transparent);">
-    <div class="sh-feature-card-title">Mehr erfahren (Experten)</div>
-    <p class="sh-feature-card-subtitle">Technische Details, Architektur und Sicherheit.</p>
+  <a href="/experts/threat-model" class="sh-feature-card" style="background: radial-gradient(ellipse at 50% 80%, rgba(37,99,235,0.10), transparent);">
+    <div class="sh-feature-card-title">Bedrohungsmodell</div>
+    <p class="sh-feature-card-subtitle">Welche Angriffe Superheld erkennt und wie.</p>
   </a>
 </div>

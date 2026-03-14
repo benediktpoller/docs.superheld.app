@@ -1,270 +1,202 @@
 ---
-title: "Migration Guide"
+title: "Migration zu Superheld"
 sidebar:
-  order: 3
+  order: 7
 ---
 
-## Von anderen Tools zu superheld.app
+## Von anderen Sicherheitstools zu Superheld wechseln
 
-Du nutzt bereits Slack, Google Drive, LastPass oder ähnliches? Hier zeigen wir dir, wie du einfach umsteigst -- ohne Daten zu verlieren.
+Du nutzt bereits einen Virenscanner, Spam-Filter, Call-Blocker oder eine MDM-Loesung? Hier erfaehrst du, wie du zu Superheld wechselst und bestehende Schutzfunktionen durch eine einheitliche Plattform ersetzt.
 
 ---
 
-## Von Slack zu superheld.app
+## Warum wechseln?
 
-### Warum wechseln?
-
-| Slack | superheld.app |
-|-------|---------------|
-| Google-Konzern sammelt Daten | Du besitzt deine Daten |
-| Alle Nachrichten durchsuchbar | Nur du kannst lesen |
-| Teuer ($12.50/User/Monat) | Günstiger ($9) |
-| Keine Offline-Funktion | Offline-Zugriff |
-
-### Migration in 3 Schritten
-
-<details>
-<summary>Schritt 1: Export aus Slack</summary>
-
-1. Gehe zu **Slack** → **Admin Panel**
-2. Wähle **Imports** → **Export**
-3. Wähle den Zeitraum (z.B. letzte 90 Tage)
-4. Warte auf die ZIP-Datei mit allen Nachrichten, Dateien und Kanälen
-5. ZIP herunterladen
-
-:::note
-Slack Free hat begrenzte Exports (max. 10.000 Nachrichten).
-:::
-
-</details>
-
-<details>
-<summary>Schritt 2: Import zu superheld.app</summary>
-
-1. Öffne superheld.app
-2. Gehe zu **Settings** → **Workspace** → **Import**
-3. Wähle **From Slack**
-4. ZIP hochladen
-
-superheld.app konvertiert automatisch:
-
-| Slack-Daten | superheld.app |
-|---|---|
-| Kanäle | Gruppen |
-| Nachrichten | Verschlüsselt gespeichert |
-| Dateien | Verschlüsselt gespeichert |
-| Benutzer | Einladungen werden gesendet |
-
-Der Import dauert ca. 5 Minuten.
-
-:::note
-- Import verschlüsselt alles automatisch
-- Alte Slack-Metadaten werden nicht übertragen (absichtlich)
-- Alle Benutzer müssen neue Passwörter setzen
-:::
-
-</details>
-
-<details>
-<summary>Schritt 3: Team einladen & migrieren</summary>
-
-1. superheld.app erstellt automatisch Einladungs-Emails
-2. Team-Mitglieder klicken den Link und erstellen ein Passwort
-3. Zwei-Faktor-Authentifizierung aktivieren
-4. Profile und Notification-Einstellungen anpassen
-
-**Typische Timeline:**
-
-| Tag | Aktion |
-|---|---|
-| Tag 1 | Import + Einladungen versenden |
-| Tag 2-3 | Team richtet sich ein |
-| Tag 4 | Erste Gespräche in superheld.app |
-| Tag 7 | Slack abschalten |
-
-</details>
-
-### Häufige Fragen beim Slack-Wechsel
-
-<details>
-<summary>Was passiert mit meinen Slack-Archives?</summary>
-
-Du hast drei Optionen:
-
-| Option | Vorteil |
-|---|---|
-| **Alles mitnehmen** | Komplette History wird verschlüsselt importiert |
-| **Nur neue Nachrichten** | Starte frisch, weniger Migrationsaufwand |
-| **Hybrid** | Exportiere nur wichtige Kanäle, Rest bleibt auf Slack |
-
-</details>
-
-<details>
-<summary>Kosten beim Wechsel?</summary>
-
-| | Slack | superheld.app |
+| Bisherige Loesung | Problem | Superheld-Vorteil |
 |---|---|---|
-| Preis pro User/Monat | $12.50 | $9.00 |
-| 10-er Team pro Jahr | $1.500 | $1.080 |
-| **Ersparnis pro Jahr** | | **$420** |
-
-Dazu kommen die Vorteile: keine Konzern-Überwachung, DSGVO-konform, Open Source.
-
-</details>
+| **Virenscanner** | Schuetzt nur vor bekannter Malware | KI-basierte Echtzeiterkennung, Verhaltensanalyse, Fernsteuerungsschutz |
+| **Spam-Filter** | Blockiert nur E-Mail-Spam | Schutz vor Telefonbetrug, Social Engineering und KI-Manipulation |
+| **Call-Blocker** | Blockiert nur bekannte Nummern | Mustererkennung, KI-Stimmanalyse, Echtzeit-Warnungen waehrend des Gespraechs |
+| **MDM-Loesung** | Komplex, fuer Unternehmen designt | Einfach fuer Familien und Einzelpersonen, ohne IT-Kenntnisse nutzbar |
 
 ---
 
-## Von Google Drive zu superheld.app
+## Von einem Virenscanner wechseln
 
-### Unterstützte Dateiformate
+### Was Superheld anders macht
 
-| Google Drive | superheld.app |
-|---|---|
-| Dokumente (.docs) | PDF, Office Open XML (.docx, .xlsx) |
-| Tabellen (.sheets) | Office Open XML (.xlsx) |
-| Fotos & Videos | Alle Formate |
-| Archive | ZIP, RAR und weitere |
+Traditionelle Virenscanner arbeiten signaturbasiert — sie erkennen nur bekannte Bedrohungen. Superheld kombiniert:
+
+- **Verhaltensanalyse** — erkennt schaedliches Verhalten unabhaengig von Signaturen
+- **App-Risikobewertung** — jede App erhaelt einen Sicherheitsscore
+- **Fernsteuerungserkennung** — ein Bereich, den Virenscanner vollstaendig ignorieren
+- **Social-Engineering-Schutz** — Schutz vor Betrug, nicht nur vor Malware
 
 ### Migration
 
 <details>
-<summary>Einfache Migration</summary>
+<summary>Schritt fuer Schritt</summary>
 
-1. Google Drive öffnen
-2. Alle Ordner/Dateien selektieren
-3. Als ZIP herunterladen
-4. In superheld.app **Upload Folder** wählen
-5. ZIP hochladen -- superheld.app verschlüsselt automatisch
+1. **Superheld installieren und aktivieren**
+   - Installiere Superheld gemaess der [Installationsanleitung](/getting-started/installation)
+   - Aktiviere alle Schutzschichten
 
-Dauer: 5-30 Minuten je nach Dateigröße.
+2. **Parallelbetrieb (empfohlen: 1-2 Wochen)**
+   - Lass beide Loesungen parallel laufen
+   - Vergleiche erkannte Bedrohungen
+   - Stelle sicher, dass Superheld keine Konflikte verursacht
 
-</details>
+3. **Virenscanner deinstallieren**
+   - Wenn du zufrieden bist, deinstalliere den alten Virenscanner
+   - Superheld uebernimmt die vollstaendige Schutzfunktion
 
-<details>
-<summary>Dokumente konvertieren</summary>
-
-Für Google Docs-Dateien:
-
-1. In Google Docs: **Download** → **PDF/DOCX** wählen
-2. Alle Dokumente lokal speichern
-3. In superheld.app hochladen
-
-Alternativ kannst du den nativen Web-Editor von superheld.app nutzen -- ähnlich wie Google Docs, aber Ende-zu-Ende verschlüsselt.
-
-</details>
-
----
-
-## Von LastPass zu superheld.app
-
-### Passwörter mitnehmen
-
-<details>
-<summary>Export aus LastPass</summary>
-
-1. **LastPass** → **Account Settings**
-2. **Show Advanced** → **Export** → **Database to CSV**
-3. CSV-Datei lokal speichern
-
-:::caution
-Die LastPass CSV-Datei ist unverschlüsselt. Sofort nach dem Import in superheld.app löschen und nicht per E-Mail versenden.
+:::note
+Superheld ersetzt den Echtzeit-Dateiscan eines Virenscanners nicht vollstaendig. Fuer maximalen Schutz auf Desktop-Systemen kann ein leichtgewichtiger Virenscanner (z.B. Windows Defender) parallel betrieben werden.
 :::
 
 </details>
 
-<details>
-<summary>Import zu superheld.app</summary>
-
-1. Öffne superheld.app → **Settings** → **Password Manager**
-2. Wähle **Import** → **From CSV**
-3. LastPass CSV hochladen
-
-superheld.app importiert automatisch alle Passwörter, Zugriffsdetails, Notizen und die Ordnerstruktur -- und verschlüsselt alles mit AES-256.
-
-</details>
-
-### Vergleich: LastPass vs. superheld.app
-
-| | LastPass | superheld.app |
-|---|---|---|
-| **Zugriff** | Zentral (LastPass hat Zugriff) | Dezentral (nur du) |
-| **Sicherheits-History** | Bekannt für Datenlecks | Zero-Knowledge |
-| **API-Key Support** | Nein | Ja, verschlüsselt |
-| **Offline-Zugriff** | Ja | Ja |
-| **Team-Sharing** | Basic | Mit Zugriffskontrolle |
-
 ---
 
-## Von Zapier zu superheld.app
+## Von einem Call-Blocker wechseln
 
-### Workflows migrieren
+### Was Superheld anders macht
 
-<details>
-<summary>Schritt-für-Schritt Anleitung</summary>
+Einfache Call-Blocker arbeiten mit statischen Blacklists. Superheld bietet:
 
-**Beispiel:** GitHub Push → Slack Notification
+- **Dynamische Bedrohungserkennung** — neue Betrugsnummern werden in Echtzeit erkannt
+- **Mustererkennung** — erkennt Betrug anhand von Anrufmustern, nicht nur Nummern
+- **KI-Stimmanalyse** — erkennt synthetische Stimmen und Deepfake-Anrufe
+- **Echtzeit-Warnungen** — Warnung waehrend des Gespraechs, nicht erst danach
 
-| Schritt | Zapier | superheld.app |
-|---|---|---|
-| 1 | GitHub Trigger: "Push created" | GitHub Webhook empfangen |
-| 2 | Action: Slack "Send message" | Condition: `branch == main`? |
-| 3 | Mapping von GitHub-Daten | Action: Slack message senden |
-
-**Entscheidender Unterschied:** Bei Zapier liegt dein GitHub-Token auf Zapier-Servern. Bei superheld.app bleibt er auf deinem Server.
-
-</details>
+### Migration
 
 <details>
-<summary>API-Keys sicherer lagern</summary>
+<summary>Schritt fuer Schritt</summary>
 
-superheld.app hat eine sichere Vault für API-Keys:
+1. **Blacklist exportieren**
+   - Die meisten Call-Blocker erlauben den Export der Blacklist als CSV oder Textdatei
+   - Exportiere die Liste blockierter Nummern
 
-1. **Settings** → **API Management** → **Add New Key**
-2. Token eingeben -- wird sofort mit AES-256 verschlüsselt
-3. Key ist nur in Workflows nutzbar, nie wieder im Klartext sichtbar
-4. Alles bleibt auf deinem Server
+2. **In Superheld importieren**
+   - Oeffne Superheld → Einstellungen → Schutzrichtlinien → Listen → Blacklist
+   - Importiere die exportierte Nummernliste
+   - Alle bisherigen Blockierungen bleiben aktiv
+
+3. **Call-Blocker deinstallieren**
+   - Superheld uebernimmt die Anrufblockierung und bietet zusaetzlichen Schutz
+   - Auf iOS: Stelle sicher, dass Superheld unter Einstellungen → Telefon → Anrufblockierung aktiviert ist
 
 </details>
 
 ---
 
-## Migration Checkliste
+## Von einem Spam-Filter wechseln
+
+### Was Superheld anders macht
+
+Spam-Filter schuetzen nur vor unerwuenschten E-Mails. Superheld erweitert den Schutz auf:
+
+- **Telefonbetrug** — der haeufigste Angriffsvektor fuer Social Engineering
+- **Nachrichtenbetrug** — Erkennung betruegerischer SMS und Messenger-Nachrichten
+- **KI-Manipulation** — Erkennung KI-generierter Betrugsversuche ueber alle Kanaele
+
+### Migration
+
+<details>
+<summary>Schritt fuer Schritt</summary>
+
+1. **Superheld installieren und Schutz aktivieren**
+   - Der KI-Erkennungsschutz von Superheld deckt Betrugsversuche ueber Telefon, SMS und Messenger ab
+
+2. **Spam-Filter beibehalten (empfohlen)**
+   - Superheld ist kein E-Mail-Spam-Filter
+   - Behalte deinen bestehenden Spam-Filter fuer E-Mails
+   - Superheld ergaenzt den E-Mail-Schutz um Telefon- und Nachrichtenschutz
+
+:::note
+Superheld ersetzt keinen E-Mail-Spam-Filter. Die Staerke von Superheld liegt im Schutz vor Telefonbetrug, Social Engineering und Fernsteuerungsangriffen — Bereiche, die Spam-Filter nicht abdecken.
+:::
+
+</details>
+
+---
+
+## Von einer MDM-Loesung wechseln (privater Einsatz)
+
+### Was Superheld anders macht
+
+MDM-Loesungen (Intune, Jamf, etc.) sind fuer Unternehmen konzipiert. Superheld bietet:
+
+- **Einfache Einrichtung** — kein IT-Wissen erforderlich
+- **Familien-fokussiert** — Profile fuer Kinder, Jugendliche, Erwachsene und Senioren
+- **Datenschutz** — keine zentrale Datenspeicherung, DSGVO-konform
+- **Bedrohungserkennung** — aktiver Schutz statt nur Geraeteverwaltung
+
+### Migration
+
+<details>
+<summary>Schritt fuer Schritt</summary>
+
+1. **Schutzeinstellungen dokumentieren**
+   - Notiere die aktuellen MDM-Richtlinien (App-Einschraenkungen, Webfilter, Geraetesperren)
+   - Identifiziere, welche Richtlinien du in Superheld uebernehmen moechtest
+
+2. **Superheld installieren und konfigurieren**
+   - Erstelle Familienprofile entsprechend den bisherigen MDM-Profilen
+   - Konfiguriere Schutzregeln fuer jedes Profil
+   - Aktiviere App-Genehmigungsworkflows
+
+3. **MDM-Profil entfernen**
+   - Entferne das MDM-Profil von allen Geraeten
+   - Stelle sicher, dass der Superheld-Schutz auf allen Geraeten aktiv ist
+
+:::caution
+Wenn du MDM fuer berufliche Geraete nutzt, behalte die MDM-Loesung fuer diese Geraete. Superheld ist fuer private und familiaeree Geraete optimiert.
+:::
+
+</details>
+
+---
+
+## Migrations-Checkliste
 
 ### Vorbereitung
 
-- [ ] Backup von aktuellen Tools (sicher lokal speichern)
-- [ ] Alle wichtigen Daten exportieren
-- [ ] Team informieren und Termin festlegen
-- [ ] Downtime planen (meist 1-2 Tage)
-- [ ] Test-Umgebung vorbereiten
+- [ ] Bestehende Schutzeinstellungen dokumentieren
+- [ ] Blacklists und Whitelist exportieren
+- [ ] Familienmitglieder informieren
+- [ ] Superheld auf allen Geraeten installieren
 
-### Durchführung
+### Durchfuehrung
 
-- [ ] Daten zu superheld.app hochladen
-- [ ] Verschlüsselung verifizieren
-- [ ] Team-Zugriffe einrichten
-- [ ] Notifications und Integrationen testen
+- [ ] Schutzschichten auf allen Geraeten aktivieren
+- [ ] Blacklist/Whitelist importieren
+- [ ] Familienprofile einrichten
+- [ ] Benachrichtigungen konfigurieren
+- [ ] Schutztest durchfuehren
 
 ### Nachbereitung
 
-- [ ] Alle Benutzer haben Zugriff
-- [ ] Stichprobenartig Daten prüfen
-- [ ] 2FA für alle aktiviert
-- [ ] Alte Accounts löschen (nach 30 Tagen)
+- [ ] Parallelbetrieb fuer 1-2 Wochen
+- [ ] Schutzprotokoll pruefen — werden Bedrohungen erkannt?
+- [ ] Fehlalarme beheben (Whitelist anpassen)
+- [ ] Alte Sicherheits-Apps deinstallieren
+- [ ] Biometrische Sperre auf allen Geraeten aktivieren
 
 ---
 
-## Support bei Migration
+## Hilfe bei der Migration
 
-Brauchst du Hilfe beim Umstieg?
+Brauchst du Unterstuetzung beim Umstieg?
 
-[Migration-Support kontaktieren](mailto:migration@superheld.app)
+- [Support kontaktieren](https://support.superheld.app)
+- [E-Mail: support@superheld.app](mailto:support@superheld.app)
 
-Wir bieten:
-- Kostenlose Migrations-Beratung
-- Technischer Support während des Umstiegs
-- Team-Training
-- Daten-Validierung
+Wir helfen dir bei:
+- Uebernahme bestehender Blockierlisten
+- Konfiguration von Familienprofilen
+- Fehlerbehebung bei der Einrichtung
 
 ---
 
