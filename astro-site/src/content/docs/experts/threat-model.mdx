@@ -4,129 +4,260 @@ sidebar:
   order: 3
 ---
 
-Dieses Dokument beschreibt das Bedrohungsmodell von Superheld nach etablierter Sicherheitsarchitektur-Praxis. Es definiert Schutzobjekte, Angreifer, Angriffsoberflächen, Bedrohungskategorien, Gegenmaßnahmen sowie Annahmen und Grenzen des Systems.
+Dieses Dokument beschreibt das Bedrohungsmodell von Superheld nach etablierter Sicherheitsarchitektur-Praxis. Es definiert Schutzobjekte, Angreifer, Angriffsoberflächen, Bedrohungskategorien mit Erkennungssignalen und Mitigationen sowie die Annahmen und Grenzen des Systems.
 
 ---
 
 ## Assets — Was Superheld schützt
 
-Superheld schützt die folgenden Werte seiner Nutzer:
+| Asset | Beschreibung | Typische Angriffsvektoren |
+|---|---|---|
+| **Endgeräte** | Smartphones, Tablets, Desktops | Fernzugriff, Malware, Gerätemanipulation |
+| **Persönliche Daten** | Kontakte, Nachrichten, Fotos, Zugangsdaten | Datenexfiltration, Phishing |
+| **Finanzkonten** | Bankkonten, Kreditkarten, Zahlungsdienste | Telefonbetrug, Remote-Access-Betrug |
+| **Digitale Identität** | E-Mail, Social Media, behördliche Zugänge (z. B. eID) | Credential Theft, Account Takeover |
+| **Familienmitglieder** | Ältere oder weniger technikaffine Angehörige | Social Engineering, Enkeltrick, Autoritätsimitation |
 
-- **Endgeräte** — Smartphones und Tablets vor unbefugtem Fernzugriff und schädlicher Software
-- **Persönliche Daten** — Kontakte, Nachrichten, Fotos, Standortdaten und Zugangsdaten
-- **Finanzkonten** — Bankkonten, Kreditkarten und Zahlungsdienste vor betrügerischen Transaktionen
-- **Digitale Identität** — E-Mail-Konten, Social-Media-Profile und behördliche Zugänge (z. B. eID). TODO: Welche Aspekte der digitalen Identität werden konkret geschützt?
-- **Familienmitglieder** — insbesondere ältere oder weniger technikaffine Angehörige, die überproportional häufig Ziel von Betrug werden
+> TODO: Welche Aspekte der digitalen Identität werden konkret durch Superheld geschützt?
 
 ---
 
 ## Adversaries — Wer angreift
 
-TODO: Erkennungsraten je Angreifertyp mit Security-Team quantifizieren
+| Angreifertyp | Motivation | Fähigkeiten | Primäre Bedrohungskategorien |
+|---|---|---|---|
+| **Scam-Callcenter** | Finanzieller Gewinn | Massenanrufe, Rufnummernspoofing, einstudierte Skripte, KI-Stimmsynthese | `phone_scam`, `remote_control` |
+| **Social Engineers** | Gezielter Datendiebstahl | OSINT-Recherche, Personalisierung, psychologische Manipulation | `social_engineering`, `phishing` |
+| **Malware-Verbreiter** | Datenexfiltration, Erpressung | Tarnung als legitime Apps, Exploit-Kits, Sideloading | `malicious_app` |
+| **Staatlich unterstützte Akteure** | Überwachung, Spionage | Zero-Day-Exploits, langfristige Kampagnen | Out of scope (siehe Grenzen) |
+| **Opportunistische Angreifer** | Schneller Gewinn | Massen-Phishing, bekannte Schwachstellen | `phishing`, `malicious_app` |
+| **KI-gestützte Angreifer** | Skalierter Betrug | Deepfake-Stimmen, KI-generierte Texte, automatisierte Personalisierung | `deepfake`, `social_engineering` |
 
-| Angreifertyp | Motivation | Fähigkeiten |
-|---|---|---|
-| **Scam-Callcenter** | Finanzieller Gewinn | Massenanrufe, Rufnummernspoofing, einstudierte Skripte |
-| **Social Engineers** | Gezielter Datendiebstahl | OSINT-Recherche, Personalisierung, psychologische Manipulation |
-| **Malware-Verbreiter** | Datenexfiltration, Erpressung | Tarnung als legitime Apps, Exploit-Kits, Sideloading |
-| **Staatlich unterstützte Akteure** | Überwachung, Spionage | Fortgeschrittene Werkzeuge, Zero-Day-Exploits, langfristige Kampagnen |
-| **Opportunistische Angreifer** | Schneller Gewinn | Massen-Phishing, bekannte Schwachstellen, automatisierte Tools |
+> TODO: Erkennungsraten je Angreifertyp mit Security-Team quantifizieren
 
 ---
 
 ## Attack Surfaces — Wo Angriffe stattfinden
 
-Angriffe erreichen Nutzer über verschiedene Kanäle:
+| Angriffsoberfläche | Beispiele | Bedrohungskategorien | Erkennungsstufe |
+|---|---|---|---|
+| **Telefonanrufe** | Spoofed-Nummern, VoIP, KI-Stimmen | `phone_scam`, `deepfake` | Stufe 1 + 2 (lokal) + Stufe 3 (Cloud) |
+| **SMS und Messaging** | Smishing, Paketbetrug, WhatsApp-Scam | `social_engineering`, `phishing` | Stufe 1 + 2 (lokal) |
+| **E-Mail** | Phishing, CEO-Fraud, gefälschte Rechnungen | `phishing` | Stufe 2 (lokal) + Stufe 3 (Cloud) |
+| **App Stores** | Trojanisierte Apps, Fake-Apps | `malicious_app` | Stufe 1 + 2 (lokal) + Stufe 3 (Cloud) |
+| **Browser** | Drive-by-Downloads, gefälschte Login-Seiten | `phishing` | Stufe 2 (lokal) + Stufe 3 (Cloud) |
+| **Fernzugriffs-Tools** | TeamViewer, AnyDesk, QuickSupport | `remote_control` | Stufe 1 + 2 (lokal) |
+| **Systemeinstellungen** | Zertifikatsinstallation, Entwickleroptionen | Gerätemanipulation | Stufe 1 + 2 (lokal) |
 
-1. **Telefonanrufe** — Spoofed-Nummern, VoIP-Anrufe, KI-generierte Stimmen
-2. **SMS und Messaging** — Smishing-Nachrichten, gefälschte Paketbenachrichtigungen, WhatsApp-Betrug
-3. **E-Mail** — Phishing-Mails, gefälschte Rechnungen, CEO-Fraud
-4. **App Stores** — Gefälschte oder trojanisierte Apps in offiziellen und inoffiziellen Stores
-5. **Browser** — Drive-by-Downloads, gefälschte Anmeldeseiten, bösartige Werbung
-6. **Fernzugriffs-Tools** — TeamViewer, AnyDesk, QuickSupport als Einfallstor
-7. **Netzwerk** — Rogue-Hotspots, DNS-Manipulation, Man-in-the-Middle-Angriffe
+Die Erkennungsstufen referenzieren die [Erkennungspipeline](/experts/detection-pipeline).
 
-TODO: Vollständige Angriffsoberflächen-Analyse mit Security-Team durchführen
+> TODO: Vollständige Angriffsoberflächen-Analyse mit Security-Team durchführen
 
 ---
 
 ## Bedrohungskategorien
 
-### Fernzugriffsbetrug (Remote Access Scams)
+### `remote_control` — Fernzugriffsbetrug
 
-**Beschreibung:** Der Angreifer überzeugt das Opfer, eine Fernsteuerungssoftware zu installieren, und erlangt damit vollständige Kontrolle über das Device.
+| | |
+|---|---|
+| **Beschreibung** | Der Angreifer überzeugt das Opfer, eine Fernsteuerungssoftware zu installieren, und erlangt damit vollständige Kontrolle über das Device. |
+| **Typischer Ablauf** | Anruf mit vorgetäuschtem Support-Anliegen → Erzeugung von Dringlichkeit → Aufforderung zur Installation von Fernzugriffs-Software → Übernahme des Device → Zugriff auf Banking-Apps und Passwörter |
+| **Schweregrad** | Critical |
 
-**Typischer Ablauf:** Anruf mit vorgetäuschtem Support-Anliegen → Erzeugung von Dringlichkeit → Aufforderung zur Installation von Fernzugriffs-Software → Übernahme des Device → Zugriff auf Banking-Apps und Passwörter.
+**Erkennungssignale:**
 
-**Erkennung:** Der Device Agent überwacht App-Installationen und korreliert diese zeitlich mit aktiven Anrufen. TODO: Spezifische Signals dokumentieren, die der Device Agent bei der Erkennung von Fernzugriffs-Software erfasst. Die Detection Pipeline klassifiziert die Kombination aus aktivem Anruf und Fernzugriffs-Installation als Threat. TODO: Genaue Klassifikationsregeln und Schwellenwerte mit Security-Team dokumentieren.
+| Signal | Quelle | Gewicht |
+|---|---|---|
+| Installation einer bekannten Fernzugriffs-App | App-Monitor (Stufe 1) | Hoch |
+| Aktiver Telefonanruf während Installation | Call-Monitor (Stufe 1) | Multiplikator |
+| Fernzugriffs-Session wird aufgebaut | Prozess-Monitor (Stufe 1) | Hoch |
+| Banking-App geöffnet während Remote-Session | App-Monitor (Stufe 1) | Multiplikator |
+| Rufnummer in Scam-Datenbank bekannt | Cloud Enrichment (Stufe 3) | Bestätigung |
 
-**Mitigation:** Der Device Agent löst einen Alert aus und blockiert die Fernzugriffs-Session. Der Nutzer erhält eine Warnung mit Handlungsempfehlung. Das Event wird zur Beweissicherung dokumentiert. TODO: Unterscheidung zwischen automatischer Blockierung und Warnung je nach Konfiguration präzisieren.
+**Mitigationsstrategie:**
 
-### Social Engineering
+- **Block** — Fernzugriffs-Installation wird blockiert, wenn ein aktiver Anruf erkannt wird
+- **Alert** — Sofortige Warnung an den Benutzer mit Handlungsempfehlung ("Legen Sie auf")
+- **Guardian-Alert** — Automatische Benachrichtigung an verknüpfte Vertrauenspersonen
+- **Event** — Vorfall wird im Audit-Trail dokumentiert
 
-**Beschreibung:** Der Angreifer nutzt öffentlich verfügbare Informationen und psychologische Taktiken, um das Vertrauen des Opfers zu gewinnen und es zu schädlichen Handlungen zu bewegen.
+Details: [Fernzugriffsschutz](/experts/remote-access-protection)
 
-**Typischer Ablauf:** OSINT-Recherche über das Opfer → Kontaktaufnahme unter falschem Vorwand → Aufbau von Vertrauen durch korrekte persönliche Details → Aufforderung zur Herausgabe sensibler Daten oder Überweisung.
+---
 
-**Erkennung:** Der Device Agent erfasst Signals aus Kommunikationsmustern. TODO: Spezifische Signals für Social-Engineering-Erkennung dokumentieren (z. B. Analyse von Nachrichteninhalten, Absender-Reputation, Kontextwechsel). Die Detection Pipeline klassifiziert verdächtige Kommunikationsmuster als Threat. TODO: Detektionsmechanismen und deren Grenzen mit Security-Team verifizieren.
+### `social_engineering` — Social Engineering
 
-**Mitigation:** Der Nutzer erhält einen Alert mit einer Warnung bei verdächtigen Anfragen. Das System empfiehlt eine Verifizierung über einen alternativen Kanal. TODO: Klären, ob automatische Blockierung oder ausschließlich Warnungen erfolgen.
+| | |
+|---|---|
+| **Beschreibung** | Der Angreifer nutzt psychologische Manipulation, um das Opfer zu schädlichen Handlungen zu bewegen — Herausgabe von Daten, Überweisungen oder Installation von Software. |
+| **Typischer Ablauf** | OSINT-Recherche → Kontaktaufnahme unter falschem Vorwand → Aufbau von Vertrauen durch korrekte persönliche Details → Aufforderung zu sensiblen Aktionen |
+| **Schweregrad** | High |
 
-### Schädliche Anwendungen (Malicious Applications)
+**Erkennungssignale:**
 
-**Beschreibung:** Apps, die unter dem Deckmantel legitimer Funktionalität Berechtigungen missbrauchen, Daten exfiltrieren oder als Trojaner fungieren.
+| Signal | Quelle | Gewicht |
+|---|---|---|
+| Anruf von unbekannter Nummer mit langer Dauer | Call-Monitor (Stufe 1) | Mittel |
+| Kommunikationsmuster mit Dringlichkeitsmerkmalen | ML-Modell (Stufe 2) | Hoch |
+| Verdächtige Kombination: Anruf + sensible Aktion | Context Risk Engine (Stufe 2) | Multiplikator |
+| Absender-Reputation niedrig | Cloud Enrichment (Stufe 3) | Bestätigung |
 
-**Typischer Ablauf:** Nutzer installiert scheinbar harmlose App → App fordert übermäßige Berechtigungen → Hintergrundaktivität: Auslesen von Kontakten, SMS, Standort → Weiterleitung der Daten an Command-and-Control-Server.
+> TODO: Spezifische ML-Signale für Social-Engineering-Erkennung mit Engineering dokumentieren
 
-**Erkennung:** Der Device Agent führt ein Berechtigungs-Audit installierter Apps durch und überwacht Hintergrundaktivitäten als Signals (z. B. Kamera-/Mikrofon-Zugriff, unerwartete Datenübertragung). TODO: Spezifische Signals und Schwellenwerte für die Erkennung schädlicher App-Aktivitäten dokumentieren. Cloud Enrichment gleicht App-Signaturen mit bekannten Threat-Datenbanken ab. TODO: Abgleichmechanismus und Aktualisierungsfrequenz der Threat-Datenbank dokumentieren.
+**Mitigationsstrategie:**
 
-**Mitigation:** Das System gibt eine Deinstallationsempfehlung aus und warnt vor verdächtigen Aktivitäten. TODO: Klären, ob automatischer Berechtigungsentzug technisch möglich ist oder nur empfohlen wird.
+- **Warn** — Kontextbezogene Warnung ("Dieser Anruf zeigt Merkmale eines Betrugsversuchs")
+- **Empfehlung** — Verifizierung über alternativen Kanal vorschlagen
+- **Guardian-Alert** — Bei Familienprofilen Eskalation an Vertrauensperson
 
-### Phishing-Links
+Details: [Schutz vor Manipulation](/experts/manipulation-protection)
 
-**Beschreibung:** Gefälschte Webseiten, die legitime Dienste imitieren, um Zugangsdaten, Zahlungsinformationen oder persönliche Daten abzugreifen.
+---
 
-**Typischer Ablauf:** Empfang einer Nachricht mit dringendem Handlungsbedarf → Link führt zu täuschend echter Nachbildung einer Bank- oder Paketdienstseite → Nutzer gibt Zugangsdaten ein → Angreifer übernimmt das Konto.
+### `phone_scam` — Telefonbetrug
 
-**Erkennung:** Der Device Agent extrahiert URLs aus Nachrichten und E-Mails als Signals. Die Detection Pipeline prüft diese auf bekannte Phishing-Muster, Homoglyph-Angriffe und verdächtige Domain-Registrierungen. Cloud Enrichment gleicht URLs mit aktuellen Threat-Datenbanken ab. TODO: Spezifische URL-Analyse-Verfahren und False-Positive-Raten dokumentieren.
+| | |
+|---|---|
+| **Beschreibung** | Betrügerische Anrufe, bei denen sich der Angreifer als Behörde, Bank, Enkel oder technischer Support ausgibt, um Geld oder Daten zu erlangen. |
+| **Typischer Ablauf** | Anruf mit gespoofter oder unterdrückter Nummer → Vorwand (Polizei, Bank, Enkel in Not) → Erzeugung von Zeitdruck → Aufforderung zu Überweisung oder Bargeldübergabe |
+| **Schweregrad** | High–Critical (abhängig von Kontext) |
 
-**Mitigation:** Das System blockiert den Zugriff auf erkannte Phishing-Seiten und zeigt die tatsächliche Ziel-URL an. Der Nutzer erhält einen Alert mit einer Warnung vor dem Öffnen verdächtiger Links. TODO: Präzisieren, ob Blockierung auf DNS-Ebene, Browser-Ebene oder App-Ebene erfolgt.
+**Erkennungssignale:**
 
-### Gerätemanipulation (Device Manipulation)
+| Signal | Quelle | Gewicht |
+|---|---|---|
+| Rufnummernspoofing erkannt (STIR/SHAKEN) | Call-Monitor (Stufe 1) | Hoch |
+| Rufnummer in Scam-Datenbank | Cloud Enrichment (Stufe 3) | Hoch |
+| Anruf von unbekannter Nummer an Senior-Profil | Context Risk Engine (Stufe 2) | Mittel |
+| Anrufdauer > Schwellenwert bei unbekannter Nummer | Call-Monitor (Stufe 1) | Mittel |
+| Banking-App geöffnet während Anruf | App-Monitor (Stufe 1) | Multiplikator |
 
-**Beschreibung:** Direkte oder indirekte Manipulation des Device durch Änderung von Systemeinstellungen, Installation von Zertifikaten oder Aktivierung von Entwickleroptionen.
+**Mitigationsstrategie:**
 
-**Typischer Ablauf:** Angreifer instruiert Opfer telefonisch, Sicherheitseinstellungen zu deaktivieren → Installation von Profilen oder Zertifikaten → Umgehung der regulären Schutzmechanismen → Vollzugriff auf verschlüsselte Kommunikation.
+- **Warn** — Echtzeit-Warnung während des Anrufs
+- **Block** — Automatische Blockierung bei hoher Konfidenz (bekannte Scam-Nummern)
+- **Guardian-Alert** — Vertrauensperson wird benachrichtigt
+- **Kontext-Hilfe** — Anzeige: "Ihre Bank würde Sie niemals telefonisch nach Ihrer PIN fragen"
 
-**Erkennung:** Der Device Agent überwacht sicherheitskritische Systemeinstellungen als Signals (z. B. neue Zertifikate, Profile, deaktivierte Sicherheitsfunktionen). Die Detection Pipeline klassifiziert Änderungen an diesen Einstellungen als Threat, wenn sie mit einer Policy kollidieren. TODO: Vollständige Liste der überwachten Systemeinstellungen und zugehörigen Policies dokumentieren.
+---
 
-**Mitigation:** Der Nutzer erhält einen sofortigen Alert bei sicherheitskritischen Einstellungsänderungen mit Anleitung zur Wiederherstellung. Verknüpfte Familienmitglieder werden automatisch benachrichtigt. TODO: Klären, ob Einstellungsänderungen automatisch rückgängig gemacht werden können oder nur gewarnt wird.
+### `phishing` — Phishing
+
+| | |
+|---|---|
+| **Beschreibung** | Gefälschte Webseiten oder Nachrichten, die legitime Dienste imitieren, um Zugangsdaten, Zahlungsinformationen oder persönliche Daten abzugreifen. |
+| **Typischer Ablauf** | Nachricht mit dringendem Handlungsbedarf → Link zu täuschend echter Nachbildung → Nutzer gibt Daten ein → Account-Übernahme |
+| **Schweregrad** | High |
+
+**Erkennungssignale:**
+
+| Signal | Quelle | Gewicht |
+|---|---|---|
+| URL mit Homoglyph-Angriff erkannt | ML-Modell (Stufe 2) | Hoch |
+| Domain kürzlich registriert (< 30 Tage) | Cloud Enrichment (Stufe 3) | Mittel |
+| URL in Phishing-Datenbank bekannt | Cloud Enrichment (Stufe 3) | Hoch |
+| SSL-Zertifikat verdächtig (DV-only, kurze Laufzeit) | Netzwerk-Monitor (Stufe 1) | Mittel |
+| Nachricht mit Dringlichkeitsmerkmal + URL | ML-Modell (Stufe 2) | Multiplikator |
+
+> TODO: URL-Analyse-Verfahren und False-Positive-Rate dokumentieren
+
+**Mitigationsstrategie:**
+
+- **Block** — Zugriff auf erkannte Phishing-Seiten wird blockiert
+- **Anzeige** — Tatsächliche Ziel-URL wird dem Benutzer angezeigt
+- **Alert** — Warnung mit Erklärung, warum die Seite als Phishing eingestuft wurde
+
+> TODO: Präzisieren, ob Blockierung auf DNS-Ebene, Browser-Ebene oder App-Ebene erfolgt
+
+---
+
+### `malicious_app` — Schädliche Anwendungen
+
+| | |
+|---|---|
+| **Beschreibung** | Apps, die unter dem Deckmantel legitimer Funktionalität Berechtigungen missbrauchen, Daten exfiltrieren oder als Trojaner fungieren. |
+| **Typischer Ablauf** | Installation einer scheinbar harmlosen App → Übermäßige Berechtigungsanforderung → Hintergrundaktivität: Auslesen von Kontakten, SMS, Standort → Datenweiterleitung an C2-Server |
+| **Schweregrad** | High |
+
+**Erkennungssignale:**
+
+| Signal | Quelle | Gewicht |
+|---|---|---|
+| App fordert übermäßige Berechtigungen | App-Monitor (Stufe 1) | Mittel |
+| Unerwartete Hintergrundaktivität (Kamera, Mikrofon, Netzwerk) | System-Monitor (Stufe 1) | Hoch |
+| App-Signatur in Malware-Datenbank | Cloud Enrichment (Stufe 3) | Hoch |
+| Installation aus unbekannter Quelle (Sideload) | App-Monitor (Stufe 1) | Mittel |
+| App kommuniziert mit bekanntem C2-Server | Netzwerk-Monitor (Stufe 1) + Cloud (Stufe 3) | Hoch |
+
+> TODO: Aktualisierungsfrequenz der Threat-Datenbank dokumentieren
+
+**Mitigationsstrategie:**
+
+- **Warn** — Sicherheitsbewertung mit Risikoerklärung bei Installation
+- **Block** — Automatische Blockierung bei bekannter Malware-Signatur
+- **Empfehlung** — Deinstallationsempfehlung bei verdächtigem Verhalten
+- **Event** — Detaillierte Dokumentation der erkannten Indikatoren
+
+> TODO: Klären, ob automatischer Berechtigungsentzug technisch möglich ist
+
+---
+
+### `deepfake` — KI-generierte Täuschung
+
+| | |
+|---|---|
+| **Beschreibung** | Einsatz von KI-generierter Stimm- oder Videoimitation zur Identitätstäuschung — z. B. synthetische Stimme eines Familienmitglieds bei einem Betrugsanruf. |
+| **Typischer Ablauf** | Angreifer klont Stimme eines Angehörigen → Anruf mit geklonter Stimme → Vorwand (Notfall, Unfall, Verhaftung) → Aufforderung zu sofortiger Überweisung |
+| **Schweregrad** | Critical |
+
+**Erkennungssignale:**
+
+| Signal | Quelle | Gewicht |
+|---|---|---|
+| Stimmsynthese-Artefakte erkannt | ML-Modell (Stufe 2) | Hoch |
+| Rufnummer stimmt nicht mit Kontakt überein | Call-Monitor (Stufe 1) | Mittel |
+| Dringlichkeitsmuster in Kombination mit bekanntem Kontaktnamen | Context Risk Engine (Stufe 2) | Hoch |
+
+> TODO: Existiert ein Deepfake-Erkennungsmodell im Device Agent? Siehe [IMPLEMENTATION_FACTS §2](/IMPLEMENTATION_FACTS.md). Falls nicht: Kategorie als "geplant" markieren und Erkennungssignale auf Metadaten-basierte Heuristiken beschränken.
+
+**Mitigationsstrategie:**
+
+- **Warn** — "Dieser Anruf könnte eine KI-generierte Stimmimitation verwenden"
+- **Empfehlung** — Rückruf über gespeicherte Kontaktnummer vorschlagen
+- **Guardian-Alert** — Alle Vertrauenspersonen benachrichtigen
 
 ---
 
 ## Typischer Angriffsablauf mit Superheld-Intervention
 
-Das folgende Diagramm zeigt einen typischen Telefonbetrug und wie Superheld in Echtzeit eingreift:
+Das folgende Diagramm zeigt einen typischen Telefonbetrug und wie Superheld über die [Erkennungspipeline](/experts/detection-pipeline) in Echtzeit eingreift:
 
 ```mermaid
 sequenceDiagram
     participant A as Angreifer
-    participant O as Opfer
+    participant O as Opfer (Device)
     participant DA as Device Agent
-    participant P as Policy Engine
+    participant CRE as Context Risk Engine
+    participant PE as Policy Engine
+    participant G as Guardian
 
     A->>O: Anruf mit gespoofter Banknummer
-    DA-->>O: Signal: Rufnummer weicht von<br/>bekannter Bank-Nummer ab
+    DA->>DA: Signal: Rufnummer ≠ gespeicherter Bankkontakt
+    DA->>CRE: Signal weitergeleitet
+
     A->>O: „Ihr Konto wurde kompromittiert!"
-    DA-->>P: Signal: Sprachmuster mit<br/>künstlicher Dringlichkeit
-    P-->>O: Alert: Verdächtiges<br/>Gesprächsmuster erkannt
-    A->>O: „Installieren Sie TeamViewer"
-    DA->>P: Threat: Fernzugriffs-Installation<br/>während aktivem Anruf
-    P->>O: Event: Fernzugriffs-Installation<br/>blockiert
-    A->>O: „Nennen Sie Ihre PIN"
-    DA->>P: Threat: Anfrage nach<br/>sensiblen Daten erkannt
-    P->>O: Event: Anruf unterbrochen
-    Note over DA,P: Event dokumentiert,<br/>Familienmitglieder benachrichtigt
+    CRE->>CRE: Risikobewertung: unbekannte Nummer + Dringlichkeit
+
+    A->>O: „Installieren Sie AnyDesk für Hilfe"
+    DA->>CRE: Signal: AnyDesk-Installation gestartet
+    CRE->>PE: Compound Risk: Anruf + Fernzugriff-Install → CRITICAL
+
+    PE->>O: BLOCK: Installation blockiert
+    PE->>O: Alert: „Verdacht auf Fernzugriffsbetrug"
+    PE->>G: Guardian-Alert: Kritische Bedrohung
+
+    Note over DA,G: Event dokumentiert im Audit-Trail
 ```
 
 ---
@@ -137,48 +268,57 @@ Superheld setzt auf vier Verteidigungsschichten:
 
 | Schicht | Funktion | Wirkungsbereich |
 |---|---|---|
-| **Lokale KI (Device Agent)** | On-Device-Analyse von Anrufen, Nachrichten und App-Verhalten; erzeugt Signals in Echtzeit | Alle Bedrohungskategorien. TODO: Effektivität je Bedrohungskategorie quantifizieren |
-| **Cloud Enrichment** | Abgleich anonymisierter Signaturen mit Threat-Datenbanken, Rufnummern-Blacklists und Phishing-URLs | Telefonbetrug, Phishing, Malware. TODO: Effektivität und Latenz des Cloud-Abgleichs dokumentieren |
-| **Policy Engine** | Regelbasierte Entscheidungslogik für automatische Blockierung und Eskalation basierend auf konfigurierten Policies | Fernzugriff, Gerätemanipulation. TODO: Vollständige Policy-Liste und deren Auswirkungen dokumentieren |
-| **Alerts und Warnungen** | Kontextbezogene, verständliche Hinweise und Handlungsempfehlungen für den Nutzer | Alle Bedrohungskategorien. TODO: Effektivität der Nutzerwarnungen evaluieren |
+| **Device Agent (Lokal)** | On-Device-Analyse von Anrufen, Apps und Systemverhalten; erzeugt Signals in Echtzeit | Alle Bedrohungskategorien |
+| **Context Risk Engine** | Korrelation mehrerer Signals zu Compound-Risk-Bewertungen; erkennt Muster, die Einzelsignale nicht aufdecken | `remote_control`, `phone_scam`, `social_engineering` |
+| **Cloud Enrichment** | Abgleich von SHA-256-Hashes mit Threat-Datenbanken, Rufnummern-Blacklists und Phishing-URLs | `phone_scam`, `phishing`, `malicious_app` |
+| **Guardian Network** | Eskalation an Vertrauenspersonen bei kritischen Bedrohungen auf Geräten vulnerabler Nutzer | Alle Bedrohungskategorien bei Familienprofilen |
 
-Die lokale KI-Analyse durch den Device Agent stellt sicher, dass Anrufinhalte und persönliche Daten das Device nicht verlassen. Cloud Enrichment beschränkt sich auf den Abgleich anonymisierter Signaturen.
+> TODO: Effektivität je Verteidigungsschicht quantifizieren (Detection Rate, False Positive Rate)
 
 ---
 
 ## Annahmen
 
 :::caution
-Das Bedrohungsmodell von Superheld basiert auf folgenden Sicherheitsannahmen. Wenn diese nicht zutreffen, kann der Schutz eingeschränkt sein.
-
-- **Geräteintegrität** — Das Device ist nicht gerootet oder gejailbreakt. Der Bootloader ist gesperrt und die Firmware unverändert.
-- **Betriebssystem-Integrität** — Das Betriebssystem ist aktuell und seine Sicherheitsmechanismen (Sandbox, Berechtigungssystem) funktionieren ordnungsgemäß.
-- **Lesefähigkeit des Nutzers** — Der Nutzer kann angezeigte Alerts lesen und grundlegend verstehen. Für Nutzer mit Einschränkungen bietet Superheld akustische Warnungen.
-- **Aktive Netzwerkverbindung** — Für Cloud Enrichment ist eine Internetverbindung erforderlich. Ohne Verbindung arbeitet der Device Agent ausschließlich mit lokaler Analyse.
-- **Superheld-App ist aktiv** — Der Device Agent muss im Hintergrund laufen und über die notwendigen Betriebssystem-Berechtigungen verfügen.
-- **Adversarial Robustness** — Die lokalen ML-Modelle sind gegen Adversarial Attacks gehärtet. TODO: Adversarial-Robustness-Tests dokumentieren.
-
-TODO: Sicherheitsannahmen formell durch Penetrationstest validieren
+Das Bedrohungsmodell basiert auf folgenden Sicherheitsannahmen. Wenn diese nicht zutreffen, kann der Schutz eingeschränkt sein.
 :::
+
+| Annahme | Begründung | Auswirkung bei Verletzung |
+|---|---|---|
+| **Geräteintegrität** | Device ist nicht gerootet/gejailbreakt, Bootloader gesperrt | Device Agent kann umgangen oder manipuliert werden |
+| **OS-Integrität** | Betriebssystem ist aktuell, Sandbox und Berechtigungssystem funktionieren | Malware kann Erkennungsmechanismen umgehen |
+| **Lesefähigkeit** | Nutzer kann Alerts lesen und grundlegend verstehen | Schutzmaßnahmen werden ignoriert (akustische Warnungen als Fallback) |
+| **Netzwerkverbindung** | Für Cloud Enrichment ist Internet erforderlich | Erkennung basiert nur auf lokalem Modellstand |
+| **App aktiv** | Device Agent läuft im Hintergrund mit notwendigen Berechtigungen | Keine Erkennung möglich |
+| **Modellintegrität** | ML-Modelle sind signiert und gegen Manipulation geschützt | Adversarial Attacks könnten Erkennung umgehen |
+
+> TODO: Sicherheitsannahmen durch Penetrationstest validieren. Adversarial-Robustness-Tests dokumentieren.
 
 ---
 
 ## Out of Scope — Grenzen des Schutzes
 
-Folgende Bedrohungen liegen außerhalb des Schutzbereichs von Superheld:
+| Bedrohung | Begründung |
+|---|---|
+| **Physischer Zugriff auf entsperrtes Device** | App-basierter Schutz kann physischen Zugriff nicht verhindern |
+| **Nation-State Zero-Days** | OS-Ebene-Exploits (Pegasus-artig) liegen außerhalb der App-Sandbox |
+| **Hardware-Implantate** | Manipulierte Hardware (Ladekabel, Baseband-Chips) ist softwareseitig nicht erkennbar |
+| **Insider mit Gerätezugang + Entsperrmethode** | Legitimer physischer Zugang kann nicht von Missbrauch unterschieden werden |
+| **Inhalte in E2E-verschlüsselten Drittanbieter-Apps** | Systembedingt nicht analysierbar ohne OS-Integration |
+| **Supply-Chain-Angriffe auf Model-Updates** | TODO: Supply-Chain-Sicherheit des Model Update Service dokumentieren |
 
-- **Physischer Zugriff** — Wenn ein Angreifer physischen Zugang zum entsperrten Device hat, kann Superheld keinen vollständigen Schutz gewährleisten.
-- **Nation-State Zero-Days** — Hochentwickelte, bisher unbekannte Exploits auf Betriebssystem-Ebene (z. B. Pegasus-artige Angriffe) können nicht durch eine App-basierte Lösung abgefangen werden.
-- **Hardware-Implantate** — Kompromittierte Hardware-Komponenten (z. B. manipulierte Ladekabel, Baseband-Chips) liegen außerhalb der Software-Erkennungsebene.
-- **Insider-Angriffe mit physischem Gerätezugang** — Manipulation durch Personen mit legitimem Zugang zum Device und Kenntnis der Entsperrmethode.
-- **Verschlüsselte Kanäle Dritter** — Inhalte in Ende-zu-Ende-verschlüsselten Drittanbieter-Apps können systembedingt nicht analysiert werden, sofern keine Betriebssystem-Integration besteht.
-- **Supply-Chain-Angriffe auf das Modell-Update-System** — Angriffe auf die Lieferkette des Systems, über das ML-Modelle aktualisiert werden. TODO: Supply-Chain-Sicherheit des Model Update Service dokumentieren
+Für die vollständige Abgrenzung siehe [Scope und Nicht-Ziele](/experts/scope-non-goals).
 
 ---
 
 ## Weiterführende Informationen
 
-- [Privatsphäre & Sicherheit](/experts/privacy-security) — Verschlüsselung und Datenschutz im Detail
-- [Konfiguration](/experts/configuration) — Schutzeinstellungen anpassen
+- [Erkennungspipeline](/experts/detection-pipeline) — Die sechs Stufen der Signalverarbeitung
+- [Context Risk Engine](/experts/context-risk-engine) — Korrelation von Signalen zu Compound-Risk-Bewertungen
+- [Schutz vor Manipulation](/experts/manipulation-protection) — Erkennung psychologischer Manipulation
+- [Fernzugriffsschutz](/experts/remote-access-protection) — Schutz vor Remote-Access-Betrug
+- [Guardian-Netzwerk](/experts/guardian-network) — Schutz durch Vertrauenspersonen
+- [Datenflüsse und Vertrauensgrenzen](/experts/data-flows) — Welche Daten das Device verlassen
+- [Privatsphäre & Sicherheit](/experts/privacy-security) — Verschlüsselung und Datenschutz
+- [Scope und Nicht-Ziele](/experts/scope-non-goals) — Was Superheld schützt und was nicht
 - [Responsible Disclosure](/experts/responsible-disclosure) — Sicherheitslücken melden
-- [Häufige Fragen](/getting-started/faq) — Antworten auf Sicherheitsfragen

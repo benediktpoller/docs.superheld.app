@@ -87,6 +87,10 @@ PAGES = [
     ("/experts/integrator-quickstart/", "Integrator-Quickstart"),
     ("/experts/platform-capabilities/", "Plattform-Fähigkeiten und Einschränkungen"),
     ("/experts/trust-center/", "Trust Center"),
+    ("/experts/manipulation-protection/", "Schutz vor Manipulation"),
+    ("/experts/context-risk-engine/", "Context Risk Engine"),
+    ("/experts/remote-access-protection/", "Fernzugriffsschutz"),
+    ("/experts/guardian-network/", "Guardian-Netzwerk"),
 ]
 
 
