@@ -1,6 +1,8 @@
 ---
 title: "Apps & Plattformen"
-weight: 25
+weight: 20
+aliases:
+  - /docs/apps
 ---
 
 ## App-Übersicht
@@ -8,6 +10,24 @@ weight: 25
 superheld.app ist eine **plattformspezifische Schutz-App**, die auf jedem Gerät eine konsistente Schutzschicht bereitstellt. Alle Apps teilen dieselbe Kernlogik (Proxy, VPN, Kindersicherung, Sicherheitsstatus, KI-Analyse) – die Oberfläche passt sich an das Gerät und die Nutzungsrolle an.
 
 > Diese Seite beschreibt: **Android, iOS, Windows, macOS, Linux** sowie typische Nutzungsszenarien für **Einsteiger (DAU), versierte Nutzer, Eltern und Administratoren**.
+
+<div class="sh-gallery" style="margin-top: 2rem;">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-android.svg" alt="Android Dashboard" loading="lazy">
+    </div>
+  </div>
+  <div class="sh-gallery-desktop">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-geraete.svg" alt="Geräteübersicht auf Desktop" loading="lazy">
+    </div>
+  </div>
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-ios.svg" alt="iOS Einstellungen" loading="lazy">
+    </div>
+  </div>
+</div>
 
 ---
 

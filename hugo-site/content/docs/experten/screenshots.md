@@ -1,6 +1,8 @@
 ---
 title: "Screenshots & Use Cases"
-weight: 50
+weight: 40
+aliases:
+  - /docs/screenshots
 ---
 
 ## Visuelle Übersicht
@@ -151,9 +153,9 @@ superheld.app lässt sich nahtlos mit bestehenden Tools und Diensten verbinden -
 ## Welche Seite passt zu mir?
 
 - **Anfänger?** → [Installation](/docs/einführung/installation-v2) & [Setup](/docs/einführung/setup)
-- **Täglich nutzen?** → [Nutzung](/docs/nutzung)
-- **Profi-Workflows?** → [Konfiguration](/docs/konfiguration)
-- **Fragen?** → [FAQ](/docs/faq)
+- **Täglich nutzen?** → [Nutzung](/docs/einführung/nutzung)
+- **Profi-Workflows?** → [Konfiguration](/docs/experten/konfiguration)
+- **Fragen?** → [FAQ](/docs/einführung/faq)
 
 ---
 

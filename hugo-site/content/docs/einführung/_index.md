@@ -1,6 +1,6 @@
 ---
-title: "Einführung"
-weight: 20
+title: "Erste Schritte"
+weight: 10
 ---
 
-Willkommen! Dieses Kapitel führt dich Schritt für Schritt durch superheld.app.
+Hier findest du alles, um superheld.app in wenigen Minuten einzurichten und sofort zu nutzen. Keine technischen Vorkenntnisse nötig.

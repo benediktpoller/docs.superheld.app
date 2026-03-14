@@ -1,6 +1,8 @@
 ---
 title: "Privatsphäre & Sicherheit"
-weight: 30
+weight: 15
+aliases:
+  - /docs/privacy-sicherheit
 ---
 
 ## Die Philosophie von superheld.app
@@ -397,10 +399,10 @@ Unser Team wird umgehend alle deine Sessions pausieren, die Logs überprüfen un
 
 ## Weitere Ressourcen
 
-- [Installation und Grundlagen](/docs/einführung/installation)
-- [Sichere Nutzung unterwegs](/docs/nutzung)
-- [Erweiterte Sicherheits-Konfiguration](/docs/konfiguration)
-- [FAQ: Häufige Sicherheits-Fragen](/docs/faq)
+- [Installation und Grundlagen](/docs/einführung/installation-v2)
+- [Sichere Nutzung unterwegs](/docs/einführung/nutzung)
+- [Erweiterte Sicherheits-Konfiguration](/docs/experten/konfiguration)
+- [FAQ: Häufige Sicherheits-Fragen](/docs/einführung/faq)
 
 ---
 

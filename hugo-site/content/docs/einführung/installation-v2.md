@@ -323,7 +323,7 @@ Sync startet automatisch.
 
 {{< callout type="info" >}}
 - [Setup Guide](/docs/einführung/setup)
-- [Sicherheit & Privacy](/docs/privacy-sicherheit)
+- [Sicherheit & Privacy](/docs/experten/privacy-sicherheit)
 - [Kontaktiere Support](https://support.superheld.app)
 {{< /callout >}}
 

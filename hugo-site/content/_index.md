@@ -24,16 +24,10 @@ layout: hextra-home
 
 <div class="hx-mb-6">
 {{< hextra/hero-button text="Jetzt starten" link="/docs/einführung/installation-v2" >}}
-{{< hextra/hero-button text="Plattformen ansehen" link="/docs/apps" style="background: transparent; border: 1px solid #e5e7eb; color: inherit;" >}}
+{{< hextra/hero-button text="Plattformen ansehen" link="/docs/experten/apps" style="background: transparent; border: 1px solid #e5e7eb; color: inherit;" >}}
 </div>
 
-<div class="sh-section">
-
-## Screenshots
-
-</div>
-
-<div class="sh-gallery">
+<div class="sh-gallery" style="margin-top: 3rem;">
   <div class="sh-gallery-phone">
     <div class="sh-screenshot">
       <img src="/images/screenshot-android.svg" alt="superheld.app auf Android — Dashboard mit Schutzstatus" loading="lazy">
@@ -71,118 +65,93 @@ layout: hextra-home
     title="Privatsphäre zuerst"
     subtitle="Deine Daten gehören dir. Aller Traffic wird anonymisiert und Ende-zu-Ende verschlüsselt."
     icon="lock-closed"
-    link="/docs/privacy-sicherheit"
+    link="/docs/experten/privacy-sicherheit"
     style="background: radial-gradient(ellipse at 50% 80%, rgba(16,185,129,0.08), transparent);"
   >}}
   {{< hextra/feature-card
     title="Familiensteuerung"
     subtitle="Regeln, Zeitlimits und Freigabe-Workflows. Eltern behalten die Kontrolle, Kinder bleiben sicher."
     icon="user-group"
-    link="/docs/nutzung"
+    link="/docs/einführung/nutzung"
     style="background: radial-gradient(ellipse at 50% 80%, rgba(168,85,247,0.08), transparent);"
   >}}
   {{< hextra/feature-card
     title="Plattformübergreifend"
     subtitle="Ein Konto, alle Geräte. Nahtlose Synchronisation über iOS, Android, macOS, Windows und Linux."
     icon="device-mobile"
-    link="/docs/apps"
+    link="/docs/experten/apps"
     style="background: radial-gradient(ellipse at 50% 80%, rgba(245,158,11,0.08), transparent);"
   >}}
 {{< /hextra/feature-grid >}}
 
 <div class="sh-section">
 
-## Weitere Screenshots
+## Kindersicherung & Familie
+
+<p class="sh-section-subtitle">Volle Kontrolle für Eltern — einfach und übersichtlich.</p>
+
+</div>
+
+<div class="sh-gallery">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-kindersicherung.svg" alt="superheld.app Kindersicherung — Profile, Zeitlimits und Freigaben" loading="lazy">
+    </div>
+  </div>
+  <div class="sh-gallery-desktop">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-family-dashboard.svg" alt="superheld.app Familien-Dashboard — Bildschirmzeit und Regeln" loading="lazy">
+    </div>
+  </div>
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-vpn.svg" alt="superheld.app VPN — Verschlüsselte Verbindung" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<div class="sh-section">
+
+## Sicherheit & Kontrolle
+
+<p class="sh-section-subtitle">Bedrohungen erkennen, Regeln verwalten, Geräte im Blick behalten.</p>
 
 </div>
 
 <div class="sh-gallery">
   <div class="sh-gallery-wide">
     <div class="sh-screenshot">
-      <img src="/images/screenshot-windows.svg" alt="superheld.app auf Windows" loading="lazy">
+      <img src="/images/screenshot-regeln.svg" alt="superheld.app Filterregeln — Malware, Jugendschutz und Tracker" loading="lazy">
     </div>
   </div>
   <div class="sh-gallery-wide">
     <div class="sh-screenshot">
-      <img src="/images/screenshot-linux.svg" alt="superheld.app auf Linux" loading="lazy">
+      <img src="/images/screenshot-geraete.svg" alt="superheld.app Geräteübersicht — Alle Geräte im Blick" loading="lazy">
     </div>
   </div>
 </div>
-
-<div class="sh-section">
-
-## Plattformen
-
-<p class="sh-section-subtitle">Verfügbar auf allen wichtigen Betriebssystemen — nahtlos synchronisiert.</p>
-
-</div>
-
-{{< hextra/feature-grid cols="4" >}}
-  {{< hextra/feature-card
-    title="iOS / macOS"
-    subtitle="App Store & direkt-Download für Mac"
-    icon="device-mobile"
-  >}}
-  {{< hextra/feature-card
-    title="Android"
-    subtitle="Google Play Store & APK"
-    icon="device-mobile"
-  >}}
-  {{< hextra/feature-card
-    title="Windows"
-    subtitle="MSI-Installer & Microsoft Store"
-    icon="desktop-computer"
-  >}}
-  {{< hextra/feature-card
-    title="Linux"
-    subtitle="DEB, RPM, AppImage & CLI"
-    icon="terminal"
-  >}}
-{{< /hextra/feature-grid >}}
 
 <div class="sh-section">
 
 ## Dokumentation
 
-<p class="sh-section-subtitle">Von der Installation bis zur Experten-Konfiguration — alles in einem Ort.</p>
+<p class="sh-section-subtitle">Zwei Wege, ein Ziel — wähle deinen Einstieg.</p>
 
 </div>
 
-{{< hextra/feature-grid cols="3" >}}
+{{< hextra/feature-grid cols="2" >}}
   {{< hextra/feature-card
-    title="Installation"
-    subtitle="Lade die App herunter und starte sofort."
-    icon="download"
-    link="/docs/einführung/installation-v2"
+    title="Erste Schritte"
+    subtitle="Installation, Setup und tägliche Nutzung — einfach erklärt, ohne Fachchinesisch."
+    icon="play"
+    link="/docs/einführung"
+    style="background: radial-gradient(ellipse at 50% 80%, rgba(16,185,129,0.10), transparent); border: 2px solid rgba(16,185,129,0.15);"
   >}}
   {{< hextra/feature-card
-    title="Erstes Setup"
-    subtitle="Deine erste Konfiguration in wenigen Minuten."
-    icon="cog"
-    link="/docs/einführung/setup"
-  >}}
-  {{< hextra/feature-card
-    title="Tägliche Nutzung"
-    subtitle="So nutzt du die App im Alltag."
-    icon="book-open"
-    link="/docs/nutzung"
-  >}}
-  {{< hextra/feature-card
-    title="Konfiguration"
-    subtitle="Expert Mode für fortgeschrittene Nutzer."
-    icon="adjustments"
-    link="/docs/konfiguration"
-  >}}
-  {{< hextra/feature-card
-    title="Apps & Plattformen"
-    subtitle="Alle Oberflächen und Rollen verstehen."
-    icon="view-grid"
-    link="/docs/apps"
-  >}}
-  {{< hextra/feature-card
-    title="FAQ"
-    subtitle="Häufig gestellte Fragen und Antworten."
-    icon="question-mark-circle"
-    link="/docs/faq"
+    title="Für Experten"
+    subtitle="Architektur, Sicherheit, Konfiguration und Plattform-Details für fortgeschrittene Nutzer."
+    icon="academic-cap"
+    link="/docs/experten"
+    style="background: radial-gradient(ellipse at 50% 80%, rgba(37,99,235,0.10), transparent); border: 2px solid rgba(37,99,235,0.15);"
   >}}
 {{< /hextra/feature-grid >}}

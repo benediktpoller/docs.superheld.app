@@ -1,6 +1,8 @@
 ---
 title: "Konfiguration (Expert Mode)"
-weight: 60
+weight: 10
+aliases:
+  - /docs/konfiguration
 ---
 
 ## Erweiterte Konfiguration

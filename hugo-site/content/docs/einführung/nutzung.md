@@ -1,6 +1,8 @@
 ---
-title: "Nutzung"
+title: "Tägliche Nutzung"
 weight: 50
+aliases:
+  - /docs/nutzung
 ---
 
 ## Sprachgesteuerte Eingabe
@@ -37,6 +39,14 @@ Beispiele:
 2. Sehe eine Liste aller Anfragen
 3. Klicke auf eine für Details
 4. Überprüfe die Anonymisierung
+
+<div class="sh-gallery" style="margin-top: 1.5rem;">
+  <div class="sh-gallery-phone">
+    <div class="sh-screenshot">
+      <img src="/images/screenshot-aktivitaet.svg" alt="Aktivitäts-Log — Blockierte Tracker, Malware und Phishing" loading="lazy">
+    </div>
+  </div>
+</div>
 
 ---
 

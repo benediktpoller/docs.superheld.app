@@ -1,6 +1,8 @@
 ---
 title: "Use Cases & Szenarien"
 weight: 35
+aliases:
+  - /docs/use-cases
 ---
 
 ## superheld.app für verschiedene Szenarien
@@ -378,9 +380,9 @@ superheld.app bringt umfassende Compliance-Funktionen mit:
 
 {{< callout type="info" >}}
 - [Installation](/docs/einführung/installation-v2) – Schnell starten
-- [Konfiguration](/docs/konfiguration) – Alles anpassen
-- [Sicherheit](/docs/privacy-sicherheit) – Technische Details
-- [FAQ](/docs/faq) – Häufige Fragen
+- [Konfiguration](/docs/experten/konfiguration) – Alles anpassen
+- [Sicherheit](/docs/experten/privacy-sicherheit) – Technische Details
+- [FAQ](/docs/einführung/faq) – Häufige Fragen
 {{< /callout >}}
 
 ---

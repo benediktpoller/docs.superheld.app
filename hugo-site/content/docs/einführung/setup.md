@@ -3,54 +3,64 @@ title: "Erstkonfiguration"
 weight: 40
 ---
 
-Nach der Installation öffnet superheld.app einen Setup-Assistenten.
+Nach der Installation öffnet superheld.app automatisch einen Setup-Assistenten, der dich durch die wichtigsten Einstellungen führt.
 
-## Schritt 1: Willkommenscreen
+{{% steps %}}
 
-Wähle:
-- **Easy Mode** (empfohlen für Anfänger) ← Start hier!
-- **Expert Mode** (für Profis)
-- **Skip** (später konfigurieren)
+### Modus wählen
 
-## Schritt 2: KI-Dienste verbinden
+Der Willkommen-Screen bietet drei Optionen:
 
-Wähle deine bevorzugten KI-Anbieter:
-- ☑️ OpenAI/ChatGPT
-- ☑️ Google Gemini
-- ☑️ Anthropic Claude
-- ☑️ Microsoft Copilot
-- ☑️ Meta Llama
+| Modus | Für wen? |
+|---|---|
+| **Easy Mode** (empfohlen) | Anfänger — die besten Einstellungen werden automatisch gesetzt |
+| **Expert Mode** | Erfahrene Nutzer — volle Kontrolle über jede Einstellung |
+| **Überspringen** | Später konfigurieren |
 
-*Du kannst das später ändern!*
+### Schutz aktivieren
 
-## Schritt 3: Datenschutz einstellen
+Aktiviere die Kernfunktionen:
 
-Wähle dein Datenschutz-Level:
+- **VPN aktivieren** — verschlüsselt deinen gesamten Internetverkehr
+- **Webfilter aktivieren** — blockiert Malware, Phishing und Tracker
+- **DNS-Schutz aktivieren** — verhindert DNS-Leaks
+
+{{< callout type="info" >}}
+Im Easy Mode werden alle drei automatisch aktiviert. Du kannst sie jederzeit einzeln ein- oder ausschalten.
+{{< /callout >}}
+
+### Datenschutz-Level einstellen
+
+Wähle, wie stark deine Daten anonymisiert werden:
 
 | Level | Beschreibung |
-|-------|------------|
-| 🟢 Standard | Basis-Anonymisierung |
-| 🟡 Erweitert | Mehr Filter (empfohlen) |
-| 🔴 Maximal | Komplett Anonymisierung |
+|---|---|
+| **Standard** | Basis-Anonymisierung — für die meisten Nutzer ausreichend |
+| **Erweitert** (empfohlen) | Zusätzliche Filter für E-Mail, Telefonnummern und Standortdaten |
+| **Maximal** | Komplette Anonymisierung — alle personenbezogenen Daten werden entfernt |
 
-## Schritt 4: Apps verknüpfen
+### Apps verknüpfen (optional)
 
-Verbinde deine Lieblings-Apps:
-- Browser-Erweiterungen (Chrome, Firefox, Safari)
-- Mobile Apps (WhatsApp, Telegram)
-- Desktop-Apps (Discord, Slack)
+Verbinde deine bestehenden Apps für erweiterten Schutz:
 
-## Schritt 5: Benachrichtigungen
+- **Browser-Erweiterungen** — Chrome, Firefox, Safari
+- **Messaging-Apps** — WhatsApp, Telegram, Signal
+- **Arbeits-Tools** — Slack, Discord, Teams
 
-Wähle deine Notification-Einstellungen:
-- ☑️ Kritische Ereignisse (empfohlen)
-- ☐ Tägliche Zusammenfassung
-- ☐ Alle Anfragen
+### Benachrichtigungen einrichten
 
-## Fertig!
+Lege fest, worüber du informiert werden möchtest:
 
-Herzlichen Glückwunsch! Jetzt kannst du superheld.app nutzen.
+- **Kritische Ereignisse** (empfohlen) — Malware, Phishing, Account-Zugriff
+- **Tägliche Zusammenfassung** — Übersicht aller Blockierungen des Tages
+- **Alle Anfragen** — jede einzelne Filteraktion wird gemeldet
+
+{{% /steps %}}
+
+{{< callout type="info" >}}
+Alle Einstellungen lassen sich jederzeit unter **Einstellungen** anpassen. Für erweiterte Optionen siehe [Konfiguration (Expert Mode)](/docs/experten/konfiguration).
+{{< /callout >}}
 
 ---
 
-## Nächster Schritt: [Nutzung →](/docs/nutzung)
+## Nächster Schritt: [Tägliche Nutzung →](/docs/einführung/nutzung)

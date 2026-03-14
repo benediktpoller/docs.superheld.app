@@ -1,6 +1,8 @@
 ---
 title: "Häufig gestellte Fragen"
 weight: 70
+aliases:
+  - /docs/faq
 ---
 
 ## Installation & Setup
