@@ -62,6 +62,19 @@ For each endpoint below, confirm: **exists (Y/N)**, **correct method**, **correc
 **Additional endpoints not listed above:**
 - (add any missing endpoints here)
 
+### Canonical integration model: `/events` vs `/threats`
+
+The docs currently use both `/events` and `/threats` as integration endpoints. Clarify the relationship:
+
+- [ ] Is `/events` the canonical append-only event stream (powering SIEM, webhooks, polling)?
+  - Answer:
+- [ ] Is `/threats` a derived entity view (latest state per threat, deduplicated)?
+  - Answer:
+- [ ] Or is the relationship different? Describe:
+  - Answer:
+- [ ] Which endpoint should integrators poll as their primary feed?
+  - Answer:
+
 ---
 
 ## 4. Request/Response Details
