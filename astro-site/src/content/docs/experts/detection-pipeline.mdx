@@ -119,7 +119,7 @@ Diese Stufe ist vollständig optional und kann vom Benutzer oder Administrator d
 
 2. **Anonymisierte Feature-Vektoren** — Bei Fällen, die lokal nicht eindeutig klassifizierbar sind, werden Feature-Vektoren zur Cloud-Eskalation gesendet. Diese durchlaufen Dimensionsreduktion und Transformation, bevor sie das Device verlassen.
 
-> TODO: Genaue Definition der Feature-Vektoren dokumentieren — Transformationen, Dimensionalität, Differential-Privacy-Parameter (ε, δ). Siehe [IMPLEMENTATION_FACTS §4](/IMPLEMENTATION_FACTS.md).
+> `TODO-ENG-044`: Feature-Vektor-Spezifikation (Feature-Liste, Dimensionalität, Transformationsverfahren) dokumentieren. `TODO-ENG-045`: Differential-Privacy-Parameter (ε, δ) bestätigen oder DP-Sprache entfernen. Siehe [Privacy Model](/experts/spec/privacy-model).
 
 **Sicherheitseigenschaften:**
 
@@ -175,7 +175,7 @@ Jede Entscheidung — auch **Allow** — wird als Event-Datensatz im lokalen Eve
 - **Lokale Persistenz** — Events werden zunächst lokal gespeichert. Die Synchronisierung mit der Cloud (für API-Zugriff und Webhooks) erfolgt erst in Stufe 6 und nur für Events, die die konfigurierte Severity-Schwelle überschreiten.
 - **Datensparsamkeit** — Events enthalten die für Audit und Analyse notwendigen Felder, aber keine Klartext-Nachrichteninhalte oder Anrufaufzeichnungen. Die `indicators`-Felder referenzieren Muster, nicht Originaldaten.
 
-> TODO: Retention-Zeiträume bestätigen. Siehe [IMPLEMENTATION_FACTS §6](/IMPLEMENTATION_FACTS.md).
+> `TODO-ENG-034`: Retention-Zeiträume bestätigen (90d lokal, 180d Cloud, 12 Monate Audit, 24 Monate Metriken). Siehe [Event Pipeline](/experts/spec/event-pipeline).
 
 ---
 
@@ -205,7 +205,7 @@ Die Alert-Ausgabe stellt sicher, dass erkannte Threats die richtigen Empfänger 
 - **Zustellgarantie für Webhooks** — Fehlgeschlagene Webhook-Zustellungen werden mit exponentiellem Backoff wiederholt. Nach Erschöpfung der Retries erfolgt eine Eskalation in die Dead Letter Queue (DLQ).
 - **Offline-Pufferung** — Bei fehlender Netzwerkverbindung werden Webhook-Payloads und API-Synchronisierungen lokal zwischengespeichert und bei Wiederherstellung der Verbindung in chronologischer Reihenfolge nachgeliefert.
 
-> TODO: Webhook-Header (`X-Superheld-Timestamp`, `X-Superheld-Event-Id`) und Retry-Verhalten bestätigen. Siehe [API_FACTS §5](/API_FACTS.md).
+> `TODO-ENG-032`: Webhook-Header (`X-Superheld-Timestamp`, Idempotency-Key) und Retry-Verhalten bestätigen. Siehe [Event Pipeline](/experts/spec/event-pipeline).
 
 ---
 
