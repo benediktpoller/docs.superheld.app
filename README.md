@@ -1,300 +1,99 @@
-# superheld.app Dokumentation
+# docs.superheld.app
 
-[![Tests](https://github.com/benediktpoller/docs.superheld.app/workflows/WCAG%20AAA%20Accessibility%20Tests/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
-[![Build](https://github.com/benediktpoller/docs.superheld.app/workflows/Build%20%26%20Deploy%20Hugo%20Site/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
-[![Validation](https://github.com/benediktpoller/docs.superheld.app/workflows/Link%20%26%20Content%20Validation/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
+[![Build & Validate](https://github.com/benediktpoller/docs.superheld.app/workflows/Astro%20Docs%20Validation/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
+[![Accessibility](https://github.com/benediktpoller/docs.superheld.app/workflows/WCAG%20AAA%20Accessibility%20Tests/badge.svg)](https://github.com/benediktpoller/docs.superheld.app/actions)
 
-Offizielle End-User Dokumentation für **[superheld.app](https://superheld.app)** – dein Schutzmittel gegen KI und Datenverlust.
+Official documentation for **[superheld.app](https://superheld.app)** — enterprise-grade threat detection for social engineering, fraud, and digital manipulation.
 
-## 📖 Über diese Dokumentation
+**Live site:** [docs.superheld.app](https://docs.superheld.app)
 
-Diese Dokumentation wird mit **Hugo** statisch generiert und richtet sich an:
-- 👥 **End-User** – Leicht verständliche Anleitung zur App-Nutzung
-- 👨‍💻 **Entwickler** – Technische Details und API-Beschreibungen  
-- ⚙️ **Administratoren** – Deployment und Konfiguration
+## Stack
 
-**Status:** ✅ In Entwicklung | **Theme:** [hugo-book](https://github.com/alex-shpak/hugo-book) | **License:** MIT
+- **[Astro](https://astro.build/) 6** + **[Starlight](https://starlight.astro.build/) 0.38** — static site generator
+- **[Mermaid](https://mermaid.js.org/)** — architecture and data flow diagrams
+- **OpenAPI 3.1** — canonical API contract at `/openapi.yaml`
 
----
-
-## 🚀 Schnellstart
-
-### Voraussetzungen
-- **Hugo** (Extended) – [Installation](https://gohugo.io/installation/)
-- **Python 3.9+** (für Tests) – [Installation](https://www.python.org/downloads/)
-- **Git** – [Installation](https://git-scm.com/)
-
-### Entwicklungsserver starten
+## Quick start
 
 ```bash
-# Option 1: Mit make (empfohlen)
-make dev
-
-# Option 2: Bash-Skript
-bash dev-server.sh
-
-# Option 3: Direkt
-cd hugo-site && hugo server --buildDrafts --disableFastRender -O
+cd astro-site
+npm install
+npm run dev        # http://localhost:4321
 ```
 
-Server läuft unter: **http://127.0.0.1:1313** (Browser öffnet sich automatisch)
+Build for production:
 
----
+```bash
+npm run build      # output in astro-site/dist/
+npm run preview    # preview production build
+```
 
-## 📂 Projektstruktur
+## Project structure
 
 ```
 docs.superheld.app/
-├── hugo-site/                    # Hugo Projekt
-│   ├── hugo.toml                 # Konfiguration
-│   ├── content/                  # Markdown-Seiten
-│   │   ├── _index.md            # Startseite
-│   │   ├── installation.md
-│   │   ├── configuration.md
-│   │   ├── usage.md
-│   │   └── faq.md
-│   ├── themes/hugo-book/         # Theme
-│   └── public/                   # Build-Output
-├── tests/                        # Accessibility Tests
-│   ├── test_wcag_aaa.py         # WCAG 2.1 AAA Tests
-│   └── requirements.txt
-├── .github/workflows/            # GitHub Actions CI/CD
-│   ├── accessibility.yml
-│   ├── build-deploy.yml
-│   └── validate.yml
-├── Makefile                      # Entwickler-Commands
-├── QUICKREF.md                   # Quick Reference
-└── README.md                     # Diese Datei
+├── astro-site/                        # Astro project (primary)
+│   ├── astro.config.mjs               # Starlight + Mermaid config
+│   ├── public/
+│   │   └── openapi.yaml               # OpenAPI 3.1 contract (draft)
+│   └── src/content/docs/
+│       ├── getting-started/           # Onboarding (7 pages)
+│       ├── experts/                   # Concepts, guides, trust (32 pages)
+│       │   └── spec/                  # Engineering specifications (12 pages)
+│       └── index.mdx                  # Landing page
+├── tests/                             # Playwright tests
+├── .github/workflows/
+│   ├── astro-validate.yml             # Build, lint, link check, drift gate
+│   ├── accessibility.yml              # WCAG AAA tests
+│   └── build-deploy.yml              # Netlify deployment
+├── IMPLEMENTATION_FACTS.md            # Engineering fact sheet (unfilled)
+├── API_FACTS.md                       # API fact sheet (unfilled)
+└── README.md
 ```
 
----
+## Documentation architecture
 
-## 🧪 Qualitätssicherung
+The site follows the [Diataxis](https://diataxis.fr/) framework:
 
-### Lokale Tests
+| Section | Path | Intent | Pages |
+|---|---|---|---:|
+| Getting Started | `/getting-started/` | Tutorials + orientation | 7 |
+| Experts | `/experts/` | Concepts, guides, reference, trust | 32 |
+| Engineering Specs | `/experts/spec/` | Implementation specifications | 12 |
+| **Total** | | | **52** |
 
-```bash
-# WCAG AAA Accessibility Tests laufen
-make test
+### Engineering specifications
 
-# oder direkt
-python run_tests.py
-```
+The `/experts/spec/` section contains implementation-facing specifications with a structured TODO-ENG backlog (48 items, 20 P1 blockers). Open questions are tracked with stable `TODO-ENG-###` IDs linked to two engineering fact sheets:
 
-**Automatisierte Prüfungen:**
-- ✅ WCAG 2.1 AAA Konformität (Seitenstruktur, Alt-Text, Labels)
-- ✅ HTML-Validität
-- ✅ Kaputte Links
-- ✅ Markdown-Syntax
+- `IMPLEMENTATION_FACTS.md` — voice/audio, feature vectors, DP parameters, scoring, retention
+- `API_FACTS.md` — endpoints, schemas, auth, webhooks, pagination
 
-**Testdetails:** Siehe [tests/WCAG_AAA_README.md](tests/WCAG_AAA_README.md)
+See [TODO-ENG Summary](https://docs.superheld.app/experts/spec/todo-summary/) for the full backlog.
 
-### GitHub Actions CI/CD
+## CI pipeline
 
-Automatische Tests & Deployment bei jedem Push:
+The `astro-validate.yml` workflow runs on every push to `main`:
 
-| Workflow | Trigger | Aktion |
-|----------|---------|--------|
-| **accessibility.yml** | Push/PR | WCAG AAA Tests |
-| **build-deploy.yml** | Push zu main | Build + Deploy zu Netlify |
-| **validate.yml** | Wöchentlich | Links & HTML validieren |
+| Step | Tool | Status |
+|---|---|---|
+| Build | `astro build` | Blocking |
+| OpenAPI lint | Redocly CLI (`minimal`) | Blocking |
+| Sitemap validation | Shell checks | Blocking |
+| Page drift | Test list vs build output | Blocking |
+| Internal link check | lychee (`--offline`) | Blocking |
+| Endpoint drift | Docs vs OpenAPI paths | Informational |
 
-**Details:** Siehe [.github/CI_CD_SETUP.md](.github/CI_CD_SETUP.md)
+## Enterprise-ready status
 
----
+**NO** — 48 TODO-ENG items remain (20 P1 blockers). The path to "enterprise-ready" requires:
 
-## 📝 Content bearbeiten
+1. Engineering fills `IMPLEMENTATION_FACTS.md` and `API_FACTS.md`
+2. TODO-ENG items resolved with confirmed facts
+3. OpenAPI 3.1 finalized and linted at `recommended-strict`
+4. RFC 9116 `security.txt` deployed at `/.well-known/security.txt`
+5. Endpoint drift gate escalated to blocking
 
-### Neue Seite erstellen
+## License
 
-```bash
-cd hugo-site
-hugo new content/my-page.md
-```
-
-### Seite bearbeiten
-
-1. Markdown-Datei in `hugo-site/content/` öffnen
-2. Änderungen speichern
-3. Browser aktualisiert sich automatisch (Live Reload)
-
-### Best Practices für Content
-
-- **Sprache:** Deutsch, klar und einfach
-- **Zielgruppe:** End-User (technisch nicht versiert)
-- **Struktur:** h1 → h2 → h3 (keine Sprünge)
-- **Bilder:** Aussagekräftigen Alt-Text hinzufügen
-- **Links:** Deskriptive Link-Texte verwenden
-
-**Template:** `hugo-site/archetypes/default.md`
-
----
-
-## 🎨 Theme & Customization
-
-**Aktuelles Theme:** [hugo-book](https://github.com/alex-shpak/hugo-book)
-
-### Konfiguration
-
-- **Hugo-Config:** `hugo-site/hugo.toml`
-- **Theme-Config:** `hugo-site/themes/hugo-book/`
-- **CSS Customization:** `hugo-site/assets/_custom.scss`
-
-### Accessibility (WCAG AAA)
-
-Siehe [tests/HUGO_A11Y_CONFIG.md](tests/HUGO_A11Y_CONFIG.md) für:
-- Farb-Kontrast Richtlinien
-- Dark Mode / High Contrast Support
-- Tastatur-Navigation
-- Screenreader-Optimierung
-
----
-
-## 🚀 Deployment
-
-### Voraussetzungen
-
-- GitHub Repository eingerichtet ✅
-- (Optional) Netlify Account mit verbundener Site
-
-### Automatisches Deployment (CI/CD)
-
-```bash
-# 1. Commit & Push zu main
-git add .
-git commit -m "feat: add new content"
-git push origin main
-
-# 2. GitHub Actions laufen automatisch
-# → Tests durchgeführt
-# → Zu Netlify deployed (falls konfiguriert)
-
-# 3. Live! 🎉
-```
-
-### Manuelles Deployment
-
-```bash
-# Build for production
-cd hugo-site
-hugo --minify
-
-# Ergebnis: hugo-site/public/
-# Hochladen zu Netlify/GitHub Pages/eigenem Server
-```
-
-**Deployment-Details:** Siehe [.github/CI_CD_SETUP.md](.github/CI_CD_SETUP.md)
-
----
-
-## 🔧 Entwickler-Commands
-
-| Command | Beschreibung |
-|---------|------------|
-| `make dev` | Hugo Server starten (mit Browser) |
-| `make test` | Tests laufen |
-| `make build` | Hugo bauen |
-| `make build-minify` | Minified Build for Production |
-| `make clean` | Caches löschen |
-| `make help` | Alle Commands anzeigen |
-
-Oder siehe [QUICKREF.md](QUICKREF.md) für detaillierte Anleitung.
-
----
-
-## 🤝 Contributing
-
-### Bug Reports & Suggestions
-
-Fehler gefunden? Feature-Idee?  
-→ [Issues auf GitHub erstellen](https://github.com/benediktpoller/docs.superheld.app/issues/new)
-
-### Code / Content Beiträge
-
-```bash
-# 1. Fork & Clone
-git clone https://github.com/<dein-username>/docs.superheld.app.git
-cd docs.superheld.app
-
-# 2. Feature Branch erstellen
-git checkout -b feat/my-feature
-
-# 3. Lokal testen
-make test
-
-# 4. Commit & Push
-git add .
-git commit -m "feat: add awesome feature"
-git push origin feat/my-feature
-
-# 5. Pull Request auf GitHub erstellen
-```
-
-**Richtlinien:**
-- Tests müssen bestanden (grün) sein
-- Commit-Messages auf Deutsch/Englisch
-- Alt-Text für alle Bilder
-- WCAG AAA Konformität
-
----
-
-## 📚 Dokumentation
-
-| Datei | Inhalt |
-|-------|--------|
-| [QUICKREF.md](QUICKREF.md) | Schnelle Befehle & Shortcuts |
-| [tests/QUICKSTART.md](tests/QUICKSTART.md) | Test-Anleitung mit Fehler-Lösungen |
-| [tests/WCAG_AAA_README.md](tests/WCAG_AAA_README.md) | Accessibility Details |
-| [.github/CI_CD_SETUP.md](.github/CI_CD_SETUP.md) | CI/CD Konfiguration |
-| [tests/HUGO_A11Y_CONFIG.md](tests/HUGO_A11Y_CONFIG.md) | Theme Accessibility |
-
----
-
-## 🔗 Links & Ressourcen
-
-**Projekt:**
-- 🌐 **Website:** [superheld.app](https://superheld.app)
-- 📱 **GitHub:** [benediktpoller/docs.superheld.app](https://github.com/benediktpoller/docs.superheld.app)
-- 🐛 **Issues:** [GitHub Issues](https://github.com/benediktpoller/docs.superheld.app/issues)
-
-**Tools & Libraries:**
-- 📘 [Hugo Dokumentation](https://gohugo.io/documentation/)
-- 🎨 [hugo-book Theme](https://github.com/alex-shpak/hugo-book)
-- ♿ [WCAG 2.1 Quickref](https://www.w3.org/WAI/WCAG21/quickref/)
-- 📝 [Markdown Guide](https://www.markdownguide.org/)
-
----
-
-## 📋 Checkliste für neue Features
-
-Vor dem Merge in `main`:
-
-- [ ] Content ist verständlich & korrekt (Grammatik)
-- [ ] Hugo bauen funktioniert: `make build` ✅
-- [ ] Tests bestanden: `make test` ✅
-- [ ] Bilder haben Alt-Text
-- [ ] Links funktionieren
-- [ ] Keine Überschriften-Sprünge (h1 → h2 → h3)
-- [ ] Lokal getestet unter http://127.0.0.1:1313
-- [ ] Committed & gepusht
-
----
-
-## 📄 Lizenz
-
-MIT License – [LICENSE](LICENSE)
-
----
-
-## ❓ Support & Questions
-
-Fragen oder Hilfe benötigt?
-
-1. **Dokumentation lesen:** Siehe [QUICKREF.md](QUICKREF.md)
-2. **Tests prüfen:** Siehe [tests/QUICKSTART.md](tests/QUICKSTART.md#häufige-fehler-und-lösungen)
-3. **Issue erstellen:** [GitHub Issues](https://github.com/benediktpoller/docs.superheld.app/issues)
-4. **Kontakt:** superheld.app Team
-
----
-
-**Happy documenting! 🎉**
+MIT
