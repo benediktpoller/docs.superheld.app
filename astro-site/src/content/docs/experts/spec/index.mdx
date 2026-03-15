@@ -1,0 +1,79 @@
+---
+title: "Engineering Specifications"
+sidebar:
+  order: 0
+  badge:
+    text: Internal
+    variant: caution
+---
+
+Engineering-grade specifications for the Superheld platform. These documents describe **how the system works** at implementation level — components, data contracts, trust boundaries, failure modes.
+
+:::caution[Audience]
+These specifications are intended for Superheld engineers, security auditors, and integration architects. They contain implementation details that go beyond the public documentation. For integration guidance, see the [Integrator-Quickstart](/experts/integrator-quickstart).
+:::
+
+:::note[TODO-ENG Policy]
+Missing engineering facts are marked with `TODO-ENG-###` identifiers. Each TODO links to either `IMPLEMENTATION_FACTS.md` or `API_FACTS.md` — structured questionnaires that the engineering team must complete to unblock these items. See the [TODO Summary](/experts/spec/todo-summary) for the full backlog.
+:::
+
+---
+
+## P1 — Core Specifications
+
+<div class="sh-feature-grid" data-cols="3">
+  <a href="/experts/spec/system-overview" class="sh-feature-card">
+    <div class="sh-feature-card-title">System Overview</div>
+    <p class="sh-feature-card-subtitle">Component map, trust boundaries, deployment topology, data flow summary.</p>
+  </a>
+  <a href="/experts/spec/device-agent" class="sh-feature-card">
+    <div class="sh-feature-card-title">Device Agent</div>
+    <p class="sh-feature-card-subtitle">Signal collection, OS permissions, local buffering, platform constraints.</p>
+  </a>
+  <a href="/experts/spec/detection-engine" class="sh-feature-card">
+    <div class="sh-feature-card-title">Detection Engine</div>
+    <p class="sh-feature-card-subtitle">Rule-based vs. ML classifiers, confidence scoring, evasion resistance.</p>
+  </a>
+  <a href="/experts/spec/context-risk-engine" class="sh-feature-card">
+    <div class="sh-feature-card-title">Context Risk Engine</div>
+    <p class="sh-feature-card-subtitle">Compound risk scoring, temporal correlation, signal multipliers.</p>
+  </a>
+  <a href="/experts/spec/policy-engine" class="sh-feature-card">
+    <div class="sh-feature-card-title">Policy Engine</div>
+    <p class="sh-feature-card-subtitle">Evaluation model, action catalog, conflict resolution, fail-closed semantics.</p>
+  </a>
+  <a href="/experts/spec/event-pipeline" class="sh-feature-card">
+    <div class="sh-feature-card-title">Event Pipeline</div>
+    <p class="sh-feature-card-subtitle">Event lifecycle, immutability, delivery guarantees, schema contracts.</p>
+  </a>
+  <a href="/experts/spec/api-contract" class="sh-feature-card">
+    <div class="sh-feature-card-title">API Contract</div>
+    <p class="sh-feature-card-subtitle">OpenAPI canonical contract, endpoint inventory, auth model, error semantics.</p>
+  </a>
+  <a href="/experts/spec/privacy-model" class="sh-feature-card">
+    <div class="sh-feature-card-title">Privacy Model</div>
+    <p class="sh-feature-card-subtitle">Data inventory, trust boundary flows, retention, feature vector transforms.</p>
+  </a>
+</div>
+
+## P2 — Extended Specifications
+
+<div class="sh-feature-grid" data-cols="3">
+  <a href="/experts/spec/telemetry-schema" class="sh-feature-card">
+    <div class="sh-feature-card-title">Telemetry Schema</div>
+    <p class="sh-feature-card-subtitle">Event types, PII classification, redaction rules, export pathways.</p>
+  </a>
+  <a href="/experts/spec/threat-intelligence" class="sh-feature-card">
+    <div class="sh-feature-card-title">Threat Intelligence</div>
+    <p class="sh-feature-card-subtitle">Feed ingestion, signed updates, cloud enrichment, poisoning resistance.</p>
+  </a>
+</div>
+
+## Tracking
+
+<div class="sh-feature-grid" data-cols="3">
+  <a href="/experts/spec/todo-summary" class="sh-feature-card">
+    <div class="sh-feature-card-title">TODO-ENG Summary</div>
+    <p class="sh-feature-card-subtitle">All open engineering questions, grouped by owner and priority.</p>
+  </a>
+</div>

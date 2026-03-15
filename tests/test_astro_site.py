@@ -91,6 +91,20 @@ PAGES = [
     ("/experts/context-risk-engine/", "Context Risk Engine"),
     ("/experts/remote-access-protection/", "Fernzugriffsschutz"),
     ("/experts/guardian-network/", "Guardian-Netzwerk"),
+    ("/experts/ransomware-protection/", "Ransomware-Schutz"),
+    ("/experts/detection-limitations/", "Erkennungsgrenzen und Risiken"),
+    ("/experts/spec/", "Engineering Specifications"),
+    ("/experts/spec/system-overview/", "System Overview"),
+    ("/experts/spec/device-agent/", "Device Agent"),
+    ("/experts/spec/detection-engine/", "Detection Engine"),
+    ("/experts/spec/context-risk-engine-spec/", "Context Risk Engine (Spec)"),
+    ("/experts/spec/policy-engine/", "Policy Engine"),
+    ("/experts/spec/event-pipeline/", "Event Pipeline"),
+    ("/experts/spec/api-contract/", "API Contract"),
+    ("/experts/spec/privacy-model/", "Privacy Model"),
+    ("/experts/spec/telemetry-schema/", "Telemetry Schema"),
+    ("/experts/spec/threat-intelligence/", "Threat Intelligence"),
+    ("/experts/spec/todo-summary/", "TODO-ENG Summary"),
 ]
 
 

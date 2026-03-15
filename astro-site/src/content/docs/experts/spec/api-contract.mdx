@@ -1,0 +1,208 @@
+---
+title: "API Contract"
+sidebar:
+  order: 7
+---
+
+## Purpose
+
+This specification defines the API contract: endpoint inventory, authentication model, scope matrix, error semantics, pagination, rate limiting, and the relationship between `/events` and `/threats`.
+
+**Audience:** API engineers, integration architects.
+
+---
+
+## Contract Philosophy
+
+The OpenAPI specification is the canonical, machine-readable API contract. All documentation and integrations must reference OpenAPI paths — never invent endpoints that don't exist in the spec.
+
+> `TODO-ENG-035`: Publish finalized `openapi.yaml` (OpenAPI 3.1) as the authoritative contract. Current spec is draft pending `API_FACTS.md` completion.
+
+---
+
+## Environments
+
+| Environment | Base URL | API Key Prefix | Status |
+|---|---|---|---|
+| Production | `https://api.superheld.app/api/v1/` | `sh_live_*` | `TODO-ENG-036` |
+| Test / Sandbox | `TODO-ENG-036` | `sh_test_*` | `TODO-ENG-036` |
+| Staging | `TODO-ENG-036` | `TODO-ENG-036` | `TODO-ENG-036` |
+
+> `TODO-ENG-036`: Confirm base URLs for all environments. Confirm staging/sandbox availability.
+
+---
+
+## Versioning
+
+- **Strategy:** URL path versioning (`/v1/`)
+- **Deprecation:** `TODO-ENG-037` (header? changelog? email?)
+- **Timeline:** `TODO-ENG-037` (e.g., "6 months notice")
+
+> `TODO-ENG-037`: Confirm versioning strategy, deprecation notice mechanism, and backward compatibility guarantees.
+
+---
+
+## Endpoint Inventory
+
+### Confirmed Endpoints
+
+| Method | Path | Description | Auth Required | Status |
+|---|---|---|---|---|
+| GET | `/api/v1/devices` | List registered devices | Yes (`devices:read`) | Documented |
+| GET | `/api/v1/devices/{id}` | Get device details | Yes (`devices:read`) | `TODO-ENG-038` |
+| GET | `/api/v1/threats` | List detected threats | Yes (`threats:read`) | Documented |
+| GET | `/api/v1/threats/{id}` | Get threat details | Yes (`threats:read`) | `TODO-ENG-038` |
+| GET | `/api/v1/events` | List events (SIEM integration) | Yes (`events:read`) | Documented |
+| GET | `/api/v1/events/{id}` | Get event details | Yes (`events:read`) | `TODO-ENG-038` |
+| POST | `/api/v1/events/{id}/acknowledge` | Acknowledge event | Yes (`events:write`) | `TODO-ENG-038` |
+| GET | `/api/v1/alerts` | List notification rules | Yes (`alerts:read`) | Documented |
+| POST | `/api/v1/alerts` | Create notification rule | Yes (`alerts:write`) | Documented |
+| POST | `/api/v1/scan` | Submit content for analysis | Yes (`scan:execute`) | Documented |
+| GET | `/api/v1/policies` | List policies | Yes (`policies:read`) | `TODO-ENG-038` |
+| PUT | `/api/v1/policies/{id}` | Update policy | Yes (`policies:write`) | `TODO-ENG-038` |
+
+> `TODO-ENG-038`: Confirm existence and correct paths for all endpoints above. See `API_FACTS.md` Section 3.
+
+### Canonical Integration Model: `/events` vs `/threats`
+
+The API exposes both `/events` and `/threats`. Their relationship:
+
+| Endpoint | Model | Description |
+|---|---|---|
+| `/events` | Append-only event stream | Every detection decision (allow, warn, block) as an immutable event. Canonical feed for SIEM, webhooks, polling. |
+| `/threats` | Derived entity view | Latest state per threat (active, resolved, dismissed). Deduplicated. Derived from events. |
+
+**Integrators should poll `/events` as their primary feed.** `/threats` is a convenience view for dashboards and status queries.
+
+> `TODO-ENG-039`: Confirm this canonical relationship. Is `/events` the primary integration surface? Is `/threats` derived from events?
+
+---
+
+## Authentication
+
+### API Keys
+
+| Property | Value |
+|---|---|
+| Header | `Authorization: Bearer sh_live_abc123xyz456` |
+| Production prefix | `sh_live_` |
+| Test prefix | `sh_test_` |
+| Rotation | Recommended every 90 days (30 days in security-critical environments) |
+| Revocation | Immediate, irreversible, `401 Unauthorized` thereafter |
+| Mapping | Each key mapped to exactly one organization |
+
+### OAuth2
+
+| Property | Value |
+|---|---|
+| Authorization URL | `https://auth.superheld.app/authorize` |
+| Token URL | `https://auth.superheld.app/token` |
+| Grant types | Authorization Code (web apps), Client Credentials (server-to-server) |
+| Access token lifetime | 60 minutes |
+| Refresh token | `TODO-ENG-040` |
+
+> `TODO-ENG-040`: Confirm refresh token support, lifetime, and endpoint.
+
+### Scope Matrix
+
+| Scope | Permission | Status |
+|---|---|---|
+| `devices:read` | List/read devices | Confirmed |
+| `devices:write` | Register/configure devices | Confirmed |
+| `threats:read` | List/read threats | Confirmed |
+| `alerts:read` | View notification rules | Confirmed |
+| `alerts:write` | Create/modify rules | Confirmed |
+| `scan:execute` | Submit content for analysis | Confirmed |
+| `events:read` | Read event stream | `TODO-ENG-041` |
+| `events:write` | Acknowledge events | `TODO-ENG-041` |
+| `policies:read` | Read policies | `TODO-ENG-041` |
+| `policies:write` | Modify policies | `TODO-ENG-041` |
+| `family:read` | Read family profiles | `TODO-ENG-041` |
+| `family:write` | Modify family profiles | `TODO-ENG-041` |
+
+> `TODO-ENG-041`: Confirm all scopes marked TODO. Complete the scope inventory.
+
+---
+
+## Pagination
+
+| Property | Value |
+|---|---|
+| Type | Cursor-based |
+| Query parameters | `cursor`, `limit` |
+| Response fields | `has_more` (boolean), `cursor` (string for next page) |
+| Default limit | `TODO-ENG-042` |
+| Maximum limit | `TODO-ENG-042` |
+
+> `TODO-ENG-042`: Confirm default and maximum page sizes.
+
+---
+
+## Rate Limiting
+
+| Property | Value |
+|---|---|
+| Limit | 120 requests/minute per API key |
+| Status code | `429 Too Many Requests` |
+| Headers | `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` (Unix timestamp) |
+
+> `TODO-ENG-043`: Confirm rate limit value (120/min). Confirm header names.
+
+---
+
+## Error Model
+
+### Error Response Schema
+
+```json
+{
+  "error": {
+    "code": "string",
+    "message": "string",
+    "status": 400
+  }
+}
+```
+
+### Status Codes
+
+| Code | Meaning |
+|---|---|
+| 400 | Invalid request (missing/bad parameters) |
+| 401 | Authentication failed (invalid/expired key) |
+| 403 | Missing scope or insufficient permission |
+| 404 | Resource not found |
+| 429 | Rate limit exceeded |
+| 500 | Server error (retry with backoff) |
+
+### Insufficient Scope Example
+
+```json
+{
+  "error": {
+    "code": "insufficient_scope",
+    "message": "Scope 'threats:read' required for this endpoint.",
+    "status": 403
+  }
+}
+```
+
+---
+
+## Multi-Tenant Isolation
+
+| Property | Description |
+|---|---|
+| Isolation unit | Organization |
+| API key binding | Each key mapped to exactly one organization |
+| Data visibility | Devices, threats, alerts, events strictly isolated per organization |
+| Cross-org access | Impossible by design |
+
+---
+
+## Related Specifications
+
+- [Event Pipeline](/experts/spec/event-pipeline) — Event lifecycle and schema contracts
+- [Telemetry Schema](/experts/spec/telemetry-schema) — PII classification in API responses
+- [API Overview](/experts/api) — Public API documentation
+- [Authentication](/experts/auth) — Public auth guide

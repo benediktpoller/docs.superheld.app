@@ -1,0 +1,224 @@
+---
+title: "Telemetry Schema"
+sidebar:
+  order: 9
+---
+
+## Purpose
+
+This specification defines the telemetry schema: event types, PII classification per field, redaction rules, retention defaults, and export pathways.
+
+**Audience:** Backend/security engineers, SIEM integrators.
+
+---
+
+## In-Scope / Out-of-Scope
+
+| In-Scope | Out-of-Scope |
+|---|---|
+| Telemetry event types and their schemas | Detection logic |
+| Field-level PII classification | Policy evaluation |
+| Redaction and hashing rules | Cloud infrastructure security |
+| Export pathways (API, webhooks) | Dashboard UI |
+
+---
+
+## Telemetry Event Types
+
+### 1. Detection Events
+
+Emitted by the Policy Engine for every detection decision.
+
+```json
+{
+  "event_id": "evt_7f2a9c",
+  "event_type": "detection",
+  "timestamp": "2026-03-14T14:32:08Z",
+  "device_id": "dev_3c8a1f",
+  "threat_category": "phishing",
+  "confidence": 0.94,
+  "action_taken": "block",
+  "policy_id": "pol_default",
+  "severity": "high",
+  "description": "Gefälschte Login-Seite erkannt und blockiert.",
+  "indicators": ["sha256:a1b2c3d4e5f6..."],
+  "metadata": {
+    "agent_version": "2.4.1",
+    "model_version": "detect-v3.2",
+    "device_platform": "macos",
+    "tenant_id": "org_5e9d2a"
+  }
+}
+```
+
+### 2. User Action Events
+
+Emitted when a user takes a security-relevant action.
+
+```json
+{
+  "event_id": "evt_8a3b2c",
+  "event_type": "user_action",
+  "timestamp": "2026-03-14T14:33:00Z",
+  "device_id": "dev_3c8a1f",
+  "action": "dismiss_warning",
+  "related_event_id": "evt_7f2a9c",
+  "metadata": {
+    "agent_version": "2.4.1",
+    "device_platform": "macos",
+    "tenant_id": "org_5e9d2a"
+  }
+}
+```
+
+**User action types:**
+| Action | Description |
+|---|---|
+| `dismiss_warning` | User dismissed a warn-level alert |
+| `unblock_url` | User overrode a URL block |
+| `ignore_threat` | User dismissed a threat notification |
+| `manual_scan` | User initiated a manual scan |
+| `approve_app` | Guardian approved an app installation |
+| `deny_app` | Guardian denied an app installation |
+
+### 3. Policy Change Events (Audit)
+
+Emitted when configuration is modified.
+
+```json
+{
+  "event_id": "evt_9c4d3e",
+  "event_type": "policy_change",
+  "timestamp": "2026-03-14T15:00:00Z",
+  "actor": "user:admin@example.com",
+  "action": "update_policy",
+  "target": "pol_family_child",
+  "old_state": { "action": "warn", "confidence_threshold": 0.5 },
+  "new_state": { "action": "block", "confidence_threshold": 0.3 },
+  "metadata": {
+    "tenant_id": "org_5e9d2a"
+  }
+}
+```
+
+**Audit action types:**
+| Action | Description |
+|---|---|
+| `update_policy` | Policy modified |
+| `create_policy` | New policy created |
+| `delete_policy` | Policy removed |
+| `rotate_api_key` | API key rotated |
+| `revoke_api_key` | API key revoked |
+| `add_team_member` | Team member added |
+| `remove_team_member` | Team member removed |
+| `change_role` | User role changed |
+| `register_device` | New device registered |
+| `update_alert_rule` | Alert rule modified |
+
+---
+
+## Field-Level PII Classification
+
+### Detection Event Fields
+
+| Field | PII? | Category | External Delivery |
+|---|---|---|---|
+| `event_id` | No | Operational | Transmitted |
+| `timestamp` | No | Operational | Transmitted |
+| `device_id` | Pseudonymous | Device identifier | Transmitted (opaque ID) |
+| `threat_category` | No | Operational | Transmitted |
+| `confidence` | No | Operational | Transmitted |
+| `action_taken` | No | Operational | Transmitted |
+| `policy_id` | No | Operational | Transmitted |
+| `severity` | No | Operational | Transmitted |
+| `description` | Potentially | May contain redacted context | Transmitted (redacted) |
+| `indicators` | No | SHA-256 hashes only | Transmitted |
+| `metadata.agent_version` | No | Operational | Transmitted |
+| `metadata.model_version` | No | Operational | Transmitted |
+| `metadata.device_platform` | No | Operational | Transmitted |
+| `metadata.tenant_id` | Pseudonymous | Organization identifier | Transmitted (opaque ID) |
+
+### Data NOT in Telemetry (Never Transmitted)
+
+| Data Type | Reason |
+|---|---|
+| Message content (email, chat) | Privacy: never leaves device |
+| Audio content | Privacy: processed in RAM only |
+| Phone numbers (plaintext) | Privacy: only SHA-256 hashes |
+| URLs (full) | Privacy: only SHA-256 hashes |
+| IP addresses (full) | Privacy: truncated to /24 or /48 |
+| File contents | Privacy: never leaves device |
+| Contact information | Privacy: not accessed by agent |
+
+---
+
+## Redaction Rules
+
+Applied before any data leaves the device for cloud transmission or external delivery.
+
+| Data Type | Redaction Method | Example |
+|---|---|---|
+| PII (email) | Replaced with `[REDACTED]` | `admin@example.com` → `[REDACTED]` |
+| PII (name) | Replaced with `[REDACTED]` | `Max Mustermann` → `[REDACTED]` |
+| PII (phone number) | SHA-256 hash | `+49 30 123456` → `sha256:a1b2c3...` |
+| URLs | SHA-256 hash | `https://evil.com/login` → `sha256:d4e5f6...` |
+| IP addresses (IPv4) | Truncated to /24 | `192.168.1.42` → `192.168.1.0/24` |
+| IP addresses (IPv6) | Truncated to /48 | Full → `/48` prefix |
+| Message content | Not included | Never present in telemetry |
+
+**Scope:** Cloud transmission and external delivery only. Local Event Store (AES-256 encrypted) retains full unredacted data.
+
+---
+
+## Retention
+
+| Event Type | Local Retention | Cloud Retention | Status |
+|---|---|---|---|
+| Detection events | 90 days | 180 days | `TODO-ENG-034` |
+| User action events | 90 days | 180 days | `TODO-ENG-034` |
+| Policy change events (audit) | 90 days | 12 months | `TODO-ENG-034` |
+| Aggregated metrics | N/A | 24 months (then anonymized) | `TODO-ENG-034` |
+
+**Deletion:** Irreversible. Early deletion requestable via dashboard or API.
+
+---
+
+## Export Pathways
+
+### Push: Webhooks
+
+- **Endpoint:** Configurable HTTPS URL
+- **Format:** JSON (canonical event schema)
+- **Signing:** HMAC-SHA256 (`X-Superheld-Signature`)
+- **Delivery:** At-least-once with exponential backoff
+- **Filtering:** By severity, threat category
+
+### Pull: REST API
+
+- **Endpoint:** `GET /api/v1/events`
+- **Pagination:** Cursor-based (`cursor` + `limit`)
+- **Filtering:** `since` (ISO 8601), `severity`, `threat_category`
+- **Format:** JSON array with `has_more` and `cursor`
+
+### SIEM Mapping
+
+| Superheld Field | Common SIEM Field | CEF Field |
+|---|---|---|
+| `event_id` | Event ID | `externalId` |
+| `timestamp` | Event Time | `rt` |
+| `device_id` | Source Host | `shost` |
+| `threat_category` | Category | `cat` |
+| `severity` | Severity | `severity` |
+| `action_taken` | Action | `act` |
+| `confidence` | Confidence | `cfp1` |
+
+> `TODO-ENG-049`: Confirm CEF mapping and provide Syslog-formatted examples.
+
+---
+
+## Related Specifications
+
+- [Event Pipeline](/experts/spec/event-pipeline) — Event lifecycle and immutability
+- [Privacy Model](/experts/spec/privacy-model) — Data inventory and retention
+- [SIEM Integration](/experts/siem-integration) — Public SIEM integration guide
+- [Webhooks](/experts/webhooks) — Public webhook guide

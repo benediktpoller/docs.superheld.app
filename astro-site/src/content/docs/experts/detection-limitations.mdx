@@ -1,0 +1,177 @@
+---
+title: "Erkennungsgrenzen und Risiken"
+sidebar:
+  order: 31
+---
+
+Jedes Erkennungssystem hat inhärente Grenzen. Superheld verfolgt einen transparenten Ansatz: Dieses Dokument beschreibt die technischen Limitierungen der Erkennungsarchitektur, deren Ursachen und die implementierten Mitigationen.
+
+:::note
+Superheld ersetzt keine dedizierte EDR-Lösung (Endpoint Detection and Response). Der Schwerpunkt liegt auf der Erkennung und Blockierung von Social-Engineering- und Installations-Vektoren. Siehe [Scope und Nicht-Ziele](/experts/scope-non-goals).
+:::
+
+---
+
+## 1 · Falsch-Positive (False Positives)
+
+### Problem
+
+Jede heuristische Erkennung produziert False Positives — legitime Aktionen, die fälschlicherweise als Bedrohung klassifiziert werden.
+
+| Szenario | Ursache | Auswirkung |
+|---|---|---|
+| IT-Support-Anruf + AnyDesk-Installation | Compound-Signal interpretiert legitimen Remote-Support als Betrug | Blockierte Fernwartung |
+| Unbekannte App-Installation | Neue App ohne Store-Eintrag oder Cloud-Reputation | Falsche Warnung bei Sideload |
+| Homoglyph-ähnliche Domain | Legitime Domain wird als Phishing-Domain klassifiziert | Blockierter Zugriff auf echte Website |
+| Langer Anruf + Banking-App | Zeitliche Korrelation ohne kausale Verbindung | Unnötige Warnung |
+
+### Mitigationen
+
+- **Mehrstufige Erkennung** — Ein einzelnes Signal löst keinen Block aus. Die [Context Risk Engine](/experts/context-risk-engine) korreliert mindestens zwei unabhängige Signale, bevor eine kritische Aktion ausgelöst wird.
+- **Confidence-Schwellenwerte** — Jede Erkennungsstufe hat konfigurierbare Schwellenwerte. Nur Signale oberhalb des Schwellenwerts werden an die nächste Stufe weitergeleitet.
+- **Whitelist-Mechanismen** — Administratoren können autorisierte Remote-Access-Tools, vertrauenswürdige Domains und bekannte Anwendungen auf eine Whitelist setzen.
+- **Profil-basierte Policies** — Experten-Profile erlauben mehr Handlungsspielraum, während Kind/Senior-Profile restriktiver sind.
+- **Feedback-Schleife** — Nutzer können False Positives melden. Diese Meldungen fließen in die Verbesserung der Erkennungsmodelle ein.
+
+> TODO: Konkrete False-Positive-Rate mit Engineering bestätigen (Ziel < 0,1 % pro Tag und Gerät)
+
+---
+
+## 2 · Datenschutz-Einschränkungen (Privacy Constraints)
+
+### Problem
+
+Datenschutz limitiert die Erkennungsfähigkeit fundamental. Superheld verarbeitet so viel wie möglich lokal auf dem Gerät, was den Zugang zu globaler Bedrohungsintelligenz einschränkt.
+
+| Einschränkung | Ursache | Konsequenz |
+|---|---|---|
+| Kein Zugriff auf Nachrichteninhalte (Klartext) | Ende-zu-Ende-Verschlüsselung + Datenschutz | Phishing-Erkennung in verschlüsselten Messengern eingeschränkt |
+| Kein Zugriff auf Anrufinhalte | Kein Audio-Monitoring | Manipulation nur über Metadaten (Dauer, Muster) erkennbar |
+| Eingeschränkte Cloud-Daten | Nur SHA-256-Hashes und anonymisierte Feature-Vektoren verlassen das Gerät | Cloud kann nur bekannte Bedrohungen abgleichen |
+| Kein Cross-Device-Profiling | Keine geräteübergreifende Korrelation ohne Einwilligung | Angriffe über mehrere Geräte werden isoliert betrachtet |
+
+### Mitigationen
+
+- **Lokale ML-Modelle** — Stufe-1-Erkennung läuft vollständig on-device mit leichtgewichtigen ML-Modellen, die Muster in Metadaten erkennen, ohne Inhalte zu lesen.
+- **Privacy-Preserving Cloud Enrichment** — Nur kryptografische Hashes und anonymisierte Feature-Vektoren werden an die Cloud gesendet. Die Cloud sieht keine Klartextdaten. Siehe [Datenflüsse](/experts/data-flows).
+- **Differential Privacy** — Feature-Vektoren werden mit kalibrierten Rauschfunktionen versehen, bevor sie das Gerät verlassen.
+- **Opt-in für erweiterte Erkennung** — Nutzer können optional zusätzliche Datenfreigaben aktivieren, um die Erkennungsgenauigkeit zu erhöhen.
+
+> TODO: Exakte Feature-Vektor-Transformationen und DP-Parameter mit Engineering bestätigen
+
+---
+
+## 3 · Plattform-Einschränkungen (Platform Limitations)
+
+### Problem
+
+Mobile Betriebssysteme (insbesondere iOS) beschränken den Zugriff auf System-APIs, die für eine vollständige Erkennung erforderlich wären.
+
+| Plattform | Einschränkung | Auswirkung |
+|---|---|---|
+| **iOS** | Kein Zugriff auf installierte Apps, keine Hintergrund-Prozessüberwachung | App-Monitoring stark eingeschränkt |
+| **iOS** | Keine Sideload-Erkennung (bis iOS 17.4 EU) | Sideload-basierte Angriffe nicht erkennbar |
+| **iOS** | CallKit-API liefert nur eingehende Anrufer-ID, keine Anrufdauer in Echtzeit | Compound-Signale mit Anruf-Kontext eingeschränkt |
+| **Android** | Ab Android 14: eingeschränkter Zugriff auf nicht-eigene App-Installationen | App-Monitoring teilweise eingeschränkt |
+| **Windows** | UAC-Prompts können nicht programmatisch blockiert werden | Malware mit Admin-Rechten kann Schutz umgehen |
+| **macOS** | TCC (Transparency, Consent, and Control) erfordert explizite Benutzer-Genehmigung | Monitoring erfordert manuelle Freigabe |
+| **Linux** | Fragmentierung (Distributionen, DE, Paketmanager) | Konsistente Erkennung schwierig |
+
+### Mitigationen
+
+- **Plattformspezifische Erkennungsstrategien** — Jede Plattform nutzt die bestmöglichen verfügbaren APIs. Siehe [Plattform-Fähigkeiten](/experts/platform-capabilities).
+- **Kompensation durch Netzwerk-Analyse** — Wo App-Monitoring eingeschränkt ist, kompensiert DNS-basierte Erkennung und Netzwerk-Metadaten-Analyse.
+- **Transparente Fähigkeitsmatrix** — Nutzer und Administratoren sehen, welche Schutzfunktionen auf welcher Plattform verfügbar sind.
+- **OS-Update-Empfehlungen** — Superheld empfiehlt aktiv, das Betriebssystem aktuell zu halten, da neuere Versionen oft erweiterte Sicherheits-APIs bieten.
+
+---
+
+## 4 · Angreifer-Umgehung (Attacker Evasion)
+
+### Problem
+
+Angreifer passen ihre Methoden kontinuierlich an Erkennungssysteme an.
+
+| Evasion-Technik | Beschreibung | Betroffene Erkennung |
+|---|---|---|
+| **Langsame Eskalation** | Angreifer baut über Tage Vertrauen auf, statt sofort zu eskalieren | Zeitliche Korrelation (Compound-Signale) |
+| **Legitime Tools** | Nutzung von Standard-Software (z. B. PowerShell, curl) statt bekannter Malware | App-Signatur-basierte Erkennung |
+| **Domain-Rotation** | Schneller Wechsel von Phishing-Domains (< 24h Lebensdauer) | Cloud-basierte Domain-Reputation |
+| **Deepfake-Stimmen** | KI-generierte Stimmimitation von Vertrauenspersonen | Anrufer-ID und Rufnummer-basierte Erkennung |
+| **Offline-Angriffe** | Social Engineering persönlich oder telefonisch ohne digitale Spuren | Alle digitalen Erkennungsmechanismen |
+| **Verschlüsselte Kanäle** | Angriff über verschlüsselte Messenger ohne Metadaten | Inhaltsbasierte Erkennung |
+
+### Mitigationen
+
+- **Verhaltensbasierte Erkennung** — Die Context Risk Engine analysiert Verhaltensmuster statt einzelner Indikatoren. Langsame Eskalation erhöht den Risk-Score über die Zeit.
+- **Regelmäßige Modell-Updates** — ML-Modelle werden kontinuierlich mit neuen Angriffsmustern trainiert und per OTA-Update ausgeliefert.
+- **Community-Threat-Intelligence** — Anonymisierte Bedrohungsdaten werden plattformweit aggregiert, um neue Angriffsmuster schneller zu erkennen.
+- **Guardian-Netzwerk** — Selbst wenn technische Erkennung versagt, bieten Vertrauenspersonen eine menschliche Schutzschicht. Siehe [Guardian-Netzwerk](/experts/guardian-network).
+- **Deepfake-Erkennung** — Analyse akustischer Artefakte in Echtzeit (in Entwicklung). Siehe [Bedrohungsmodell](/experts/threat-model).
+
+> TODO: Status der Deepfake-Erkennung mit Engineering bestätigen (Prototyp vs. Produktion)
+
+---
+
+## 5 · Skalierbarkeit (Scalability Considerations)
+
+### Problem
+
+Lokale Erkennung muss auf ressourcenbeschränkten Geräten laufen, ohne Akkulaufzeit und Nutzererfahrung zu beeinträchtigen.
+
+| Constraint | Auswirkung |
+|---|---|
+| **Batterie-Budget** | ML-Inferenz und kontinuierliches Monitoring verbrauchen Energie |
+| **Speicher-Limit** | On-Device-Modelle müssen kompakt bleiben (< 50 MB) |
+| **CPU-Budget** | Erkennung darf maximal 2–5 % CPU-Last im Hintergrund verursachen |
+| **Netzwerk-Bandbreite** | Cloud Enrichment muss minimale Bandbreite nutzen |
+| **Cloud-Skalierung** | Enrichment-API muss Millionen gleichzeitiger Anfragen verarbeiten |
+
+### Mitigationen
+
+- **Stufenweise Eskalation** — Stufe 1 (lokale Heuristiken) ist extrem leichtgewichtig. Nur bei positivem Ergebnis wird das schwerere ML-Modell (Stufe 2) aktiviert. Nur bei weiterem positivem Ergebnis wird Cloud Enrichment (Stufe 3) kontaktiert. Siehe [Erkennungspipeline](/experts/detection-pipeline).
+- **Batch-Processing** — Nicht-kritische Signale werden gebündelt verarbeitet, um CPU- und Netzwerk-Spitzen zu vermeiden.
+- **Modell-Quantisierung** — On-Device-ML-Modelle werden quantisiert (INT8/FP16), um Speicher und Rechenleistung zu reduzieren.
+- **Adaptives Monitoring** — Bei niedrigem Akkustand wird die Monitoring-Frequenz reduziert, wobei kritische Erkennungen (Compound-Signale) priorisiert werden.
+- **Edge-Caching** — Häufig abgefragte Cloud-Enrichment-Ergebnisse (z. B. Domain-Reputation) werden lokal gecacht, um redundante Anfragen zu vermeiden.
+
+> TODO: Konkrete Batterie-Auswirkung (% pro Tag) und Modellgrößen mit Engineering bestätigen
+
+---
+
+## Risikomatrix
+
+| Limitation | Schweregrad | Wahrscheinlichkeit | Mitigation-Effektivität | Restrisiko |
+|---|---|---|---|---|
+| False Positives | Mittel | Hoch | Hoch (Compound-Signale, Whitelists) | Niedrig |
+| Privacy Constraints | Hoch | Sicher (by design) | Mittel (lokale ML kompensiert teilweise) | Mittel |
+| iOS-Einschränkungen | Hoch | Sicher (Plattform-Limit) | Mittel (Netzwerk-Kompensation) | Mittel |
+| Android-Einschränkungen | Mittel | Mittel | Hoch (breiter API-Zugang) | Niedrig |
+| Desktop-Einschränkungen | Mittel | Mittel | Hoch (voller System-Zugang) | Niedrig |
+| Angreifer-Evasion | Hoch | Hoch | Mittel (Wettrüsten) | Mittel–Hoch |
+| Deepfake-Stimmen | Hoch | Steigend | Niedrig (in Entwicklung) | Hoch |
+| Skalierbarkeit | Mittel | Mittel | Hoch (stufenweise Erkennung) | Niedrig |
+
+---
+
+## Transparenzprinzip
+
+Superheld verfolgt das Prinzip der **ehrlichen Erkennung**:
+
+1. **Keine übertriebenen Schutzversprechen** — Die Dokumentation benennt explizit, was Superheld nicht erkennt
+2. **Klare Abgrenzung** — Superheld ist kein Virenscanner und kein EDR. Für diese Aufgaben werden dedizierte Lösungen empfohlen
+3. **Offene Limitierungen** — Plattform-Einschränkungen und Erkennungsgrenzen werden transparent kommuniziert
+4. **Messbarer Schutz** — Erkennungsraten und False-Positive-Raten werden regelmäßig evaluiert und veröffentlicht
+
+> TODO: Link zu Public Detection Metrics / Transparency Report, sobald verfügbar
+
+---
+
+## Weiterführende Informationen
+
+- [Scope und Nicht-Ziele](/experts/scope-non-goals) — Was Superheld schützt und was nicht
+- [Erkennungspipeline](/experts/detection-pipeline) — Die sechs Stufen der Signalverarbeitung
+- [Context Risk Engine](/experts/context-risk-engine) — Compound-Risk-Bewertung
+- [Plattform-Fähigkeiten](/experts/platform-capabilities) — Fähigkeitsmatrix pro Plattform
+- [Datenflüsse](/experts/data-flows) — Lokale vs. Cloud-Verarbeitung
+- [Bedrohungsmodell](/experts/threat-model) — Assets, Angreifer und Angriffsflächen

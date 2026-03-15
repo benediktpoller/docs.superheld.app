@@ -1,0 +1,145 @@
+---
+title: "TODO-ENG Summary"
+sidebar:
+  order: 99
+  badge:
+    text: Tracking
+    variant: danger
+---
+
+All open engineering questions required to move specifications from draft to enterprise-ready status. Each TODO links to the fact sheet that must be completed to resolve it.
+
+:::caution[Action Required]
+These TODOs block enterprise-grade documentation. Complete `IMPLEMENTATION_FACTS.md` and `API_FACTS.md` to unblock them.
+:::
+
+---
+
+## Summary
+
+| Priority | IMPL_FACTS | API_FACTS | Infrastructure | Total |
+|---|---|---|---|---|
+| **P1 (Blocking)** | 8 | 10 | 2 | 20 |
+| **P2 (Important)** | 9 | 4 | 1 | 14 |
+| **P3 (Nice-to-have)** | 5 | 2 | 4 | 11 |
+| **Total** | 22 | 16 | 7 | **45** |
+
+---
+
+## P1 — Blocking (Must resolve before "enterprise-ready")
+
+### IMPLEMENTATION_FACTS
+
+| ID | Question | Spec Page | Blocking |
+|---|---|---|---|
+| `TODO-ENG-044` | Feature vector specification: feature list, dimensionality, transformation method(s), reconstruction resistance guarantee | [Privacy Model](/experts/spec/privacy-model) | Privacy claims unverifiable |
+| `TODO-ENG-045` | Differential Privacy parameters (ε, δ) — if DP is applied, provide parameters; if not, remove DP language | [Privacy Model](/experts/spec/privacy-model) | Privacy claims unverifiable |
+| `TODO-ENG-046` | Voice/audio handling: does agent transcribe calls? What does "voice patterns" mean? | [Privacy Model](/experts/spec/privacy-model) | Privacy scope ambiguous |
+| `TODO-ENG-023` | Base risk scores for each signal type (numerical values 0–100) | [CRE Spec](/experts/spec/context-risk-engine-spec) | Scoring model unverifiable |
+| `TODO-ENG-024` | Temporal correlation windows (seconds/minutes) and multiplier values | [CRE Spec](/experts/spec/context-risk-engine-spec) | Scoring model unverifiable |
+| `TODO-ENG-025` | Context multiplier values for signal combinations | [CRE Spec](/experts/spec/context-risk-engine-spec) | Scoring model unverifiable |
+| `TODO-ENG-026` | Final decision thresholds — do they differ per threat category or profile? | [CRE Spec](/experts/spec/context-risk-engine-spec) | Action semantics ambiguous |
+| `TODO-ENG-051` | Signing algorithm for update packages (RSA, ECDSA, Ed25519?), key management | [Threat Intelligence](/experts/spec/threat-intelligence) | Supply chain integrity unverifiable |
+
+### API_FACTS
+
+| ID | Question | Spec Page | Blocking |
+|---|---|---|---|
+| `TODO-ENG-036` | Base URLs for all environments (production, test, staging) | [API Contract](/experts/spec/api-contract) | Integrators cannot connect |
+| `TODO-ENG-038` | Confirm existence and correct paths for all endpoints | [API Contract](/experts/spec/api-contract) | API contract incomplete |
+| `TODO-ENG-039` | Canonical relationship between `/events` and `/threats` | [API Contract](/experts/spec/api-contract) | Integration model ambiguous |
+| `TODO-ENG-040` | OAuth2 refresh token support, lifetime, endpoint | [API Contract](/experts/spec/api-contract) | Auth flow incomplete |
+| `TODO-ENG-041` | Confirm all scopes (events:read, policies:read/write, family:read/write) | [API Contract](/experts/spec/api-contract) | Scope matrix incomplete |
+| `TODO-ENG-042` | Default and maximum pagination page sizes | [API Contract](/experts/spec/api-contract) | Integrator guidance incomplete |
+| `TODO-ENG-031` | Schema stability confirmation for Event, Threat, Device, Policy, Alert objects | [Event Pipeline](/experts/spec/event-pipeline) | Schema contract draft only |
+| `TODO-ENG-032` | Webhook `X-Superheld-Timestamp` header and idempotency key mechanism | [Event Pipeline](/experts/spec/event-pipeline) | Webhook security incomplete |
+| `TODO-ENG-034` | All retention periods (90d local, 180d cloud, 12mo audit, 24mo metrics) | [Event Pipeline](/experts/spec/event-pipeline), [Privacy Model](/experts/spec/privacy-model) | Compliance claims unverifiable |
+| `TODO-ENG-035` | Publish finalized OpenAPI 3.1 YAML | [API Contract](/experts/spec/api-contract) | No canonical machine-readable contract |
+
+### Infrastructure
+
+| ID | Question | Spec Page | Blocking |
+|---|---|---|---|
+| `TODO-ENG-001` | Cloud enrichment statelessness: confirm no anonymized token or session ID enables cross-request correlation | [System Overview](/experts/spec/system-overview), [Privacy Model](/experts/spec/privacy-model) | Privacy guarantee unverifiable |
+| `TODO-ENG-002` | Deployment topology: cloud provider, AZ count, failover strategy | [System Overview](/experts/spec/system-overview) | Availability claims incomplete |
+
+---
+
+## P2 — Important
+
+### IMPLEMENTATION_FACTS
+
+| ID | Question | Spec Page |
+|---|---|---|
+| `TODO-ENG-003` | Ring buffer size and overwrite policy | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-014` | Memory, storage, and CPU requirements per platform | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-015` | Model architecture family and quantization format | [Detection Engine](/experts/spec/detection-engine) |
+| `TODO-ENG-016` | Model update frequency (weekly, monthly, on-demand) | [Detection Engine](/experts/spec/detection-engine) |
+| `TODO-ENG-017` | Feature vector transformation method (hashing, random projection, quantization) | [Detection Engine](/experts/spec/detection-engine) |
+| `TODO-ENG-020` | Confidence score calibration method | [Detection Engine](/experts/spec/detection-engine) |
+| `TODO-ENG-021` | Whether thresholds differ per threat category | [Detection Engine](/experts/spec/detection-engine) |
+| `TODO-ENG-027` | Scoring formula confirmation (additive-then-multiplicative?) | [CRE Spec](/experts/spec/context-risk-engine-spec) |
+| `TODO-ENG-047` | Family profile location notification: local-only or cloud-transmitted? | [Privacy Model](/experts/spec/privacy-model) |
+
+### API_FACTS
+
+| ID | Question | Spec Page |
+|---|---|---|
+| `TODO-ENG-033` | DLQ manual replay availability in dashboard | [Event Pipeline](/experts/spec/event-pipeline) |
+| `TODO-ENG-037` | Versioning strategy, deprecation mechanism, backward compatibility | [API Contract](/experts/spec/api-contract) |
+| `TODO-ENG-043` | Rate limit confirmation (120/min) and header names | [API Contract](/experts/spec/api-contract) |
+| `TODO-ENG-049` | CEF mapping and Syslog-formatted examples for SIEM | [Telemetry Schema](/experts/spec/telemetry-schema) |
+
+### Infrastructure
+
+| ID | Question | Spec Page |
+|---|---|---|
+| `TODO-ENG-048` | Client IP logging by cloud infrastructure (load balancer, CDN) | [Privacy Model](/experts/spec/privacy-model) |
+
+---
+
+## P3 — Nice-to-have
+
+### IMPLEMENTATION_FACTS
+
+| ID | Question | Spec Page |
+|---|---|---|
+| `TODO-ENG-004` | Battery optimization exemption list per Android manufacturer | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-006` | Exact iOS CallKit limitations | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-010` | Apple Silicon vs. Intel compatibility | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-022` | Fallback when both rule database and ML model unavailable | [Detection Engine](/experts/spec/detection-engine) |
+| `TODO-ENG-028` | CRE latency targets (P95/P99 measured values) | [CRE Spec](/experts/spec/context-risk-engine-spec) |
+
+### API_FACTS
+
+| ID | Question | Spec Page |
+|---|---|---|
+| `TODO-ENG-029` | Additional policy schema fields (time-based, geo-restrictions) | [Policy Engine](/experts/spec/policy-engine) |
+| `TODO-ENG-053` | Cloud enrichment response schema confirmation | [Threat Intelligence](/experts/spec/threat-intelligence) |
+
+### Infrastructure
+
+| ID | Question | Spec Page |
+|---|---|---|
+| `TODO-ENG-005` | Android Enterprise Managed Configurations support | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-007` | iOS Managed App Configuration and Supervision | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-008` | Windows Defender compatibility | [Device Agent](/experts/spec/device-agent) |
+| `TODO-ENG-009` | GPO/Intune deployment support | [Device Agent](/experts/spec/device-agent) |
+
+---
+
+## Resolution Workflow
+
+1. Engineering team completes `IMPLEMENTATION_FACTS.md` and `API_FACTS.md`
+2. Each completed section resolves the linked TODO-ENG items
+3. Spec pages are updated to replace TODOs with confirmed facts
+4. Security reviewer validates claims match facts
+5. CI gates (OpenAPI lint, endpoint drift) escalated to blocking
+
+### Enterprise-Ready Criteria
+
+- [ ] All P1 TODOs resolved
+- [ ] All P2 TODOs resolved or explicitly deferred with rationale
+- [ ] OpenAPI 3.1 YAML finalized and published
+- [ ] Security review completed with no P1 findings
+- [ ] CI pipeline enforces contract consistency

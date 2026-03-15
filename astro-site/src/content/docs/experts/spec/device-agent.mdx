@@ -1,0 +1,182 @@
+---
+title: "Device Agent"
+sidebar:
+  order: 2
+---
+
+## Purpose
+
+This specification defines the Device Guardian Agent: what signals it collects, what OS permissions it requires, how it buffers data locally, and what platform-specific constraints apply.
+
+**Audience:** Client/agent engineers, security auditors.
+
+---
+
+## In-Scope / Out-of-Scope
+
+| In-Scope | Out-of-Scope |
+|---|---|
+| Signal collection from OS APIs and sensors | Signal classification (see [Detection Engine](/experts/spec/detection-engine)) |
+| Permission model per platform | Cloud enrichment processing |
+| Local buffering and ring buffer semantics | Event delivery to external systems |
+| Platform constraints and limitations | Network firewall / IDS functionality |
+
+---
+
+## Signal Collection
+
+### Signal Inventory
+
+| Signal | Source | Raw/Derived | Leaves Device? | Purpose | Frequency |
+|---|---|---|---|---|---|
+| Call metadata (number, duration, timestamp) | OS API (CallKit / TelephonyManager) | Raw | Hashes only (SHA-256) | Fraud call detection | Per call event |
+| STIR/SHAKEN attestation | OS API | Raw | No | Spoofing detection | Per call event |
+| App installation event | OS API (PackageManager / App Store) | Raw | Hashes only (SHA-256) | Malicious app detection | Per install/update |
+| App permission requests | OS API | Raw | No | Suspicious permission detection | Per permission request |
+| DNS queries | Network stack | Raw | Hashes for TI lookup | Phishing/C2 detection | Continuous |
+| TLS certificate info | Network stack | Derived | No | Certificate validation | Per connection |
+| Microphone access patterns | Device sensor API | Derived | No | Remote control detection | Continuous |
+| Screen activity (lock/unlock, transitions) | Device sensor API | Derived | No | Behavioral analysis | Continuous |
+| Motion sensor data | Device sensor API | Derived | No | Remote control detection | Continuous |
+| Accessibility events | OS API | Raw | No | Overlay/notification detection | Continuous |
+| USB device connections | System API (Desktop only) | Raw | No | USB threat detection | Per connection event |
+| Process execution | System API (Desktop only) | Raw | No | Malware/remote access detection | Continuous |
+
+### Data Handling Rules
+
+- **In-RAM processing:** Message content, audio, and files are analyzed in volatile RAM and immediately discarded after analysis
+- **No persistent storage of content:** The agent never writes plaintext content, audio, or files to disk
+- **Ring buffer:** Normalized signals are stored in a ring buffer (non-persistent) that auto-overwrites older entries
+
+> `TODO-ENG-003`: Confirm ring buffer size (number of entries or MB) and overwrite policy.
+
+---
+
+## Permission Model
+
+### Android
+
+| Permission | Purpose | Optional? |
+|---|---|---|
+| `READ_CALL_LOG` / `READ_PHONE_STATE` | Call protection, fraud detection | No (required for call protection) |
+| `PACKAGE_USAGE_STATS` | App scanner, sideload detection | No (required for app scanner) |
+| `ACCESSIBILITY_SERVICE` | Remote control protection, overlay detection | No (required for remote control protection) |
+| `POST_NOTIFICATIONS` | Threat notifications | No |
+| `INTERNET` | Cloud enrichment, model updates | No |
+
+**Limitations:**
+- Background services affected by aggressive battery optimization (manufacturer-dependent: Samsung, Xiaomi, Huawei)
+- Android 14+: restricted access to non-own app installations
+
+> `TODO-ENG-004`: Confirm recommended battery optimization exemption list per manufacturer.
+> `TODO-ENG-005`: Confirm Android Enterprise Managed Configurations support.
+
+### iOS
+
+| Permission | Purpose | Optional? |
+|---|---|---|
+| CallKit Integration | Caller ID + call blocking | No (required for call protection) |
+| Notifications | Push alerts | No |
+| Network Extension (VPN profile) | Network monitoring, phishing protection | No (required for network protection) |
+
+**Limitations:**
+- iOS sandbox prevents direct access to other apps — app scanner limited to known signatures + URL checking
+- CallKit: Caller ID + blocking only, no real-time audio access, no call duration in real-time
+- No Accessibility Service equivalent — remote control protection limited to known app detection
+
+> `TODO-ENG-006`: Confirm exact iOS CallKit limitations with engineering.
+> `TODO-ENG-007`: Confirm iOS Managed App Configuration and Supervision support.
+
+### Windows
+
+| Permission | Purpose | Optional? |
+|---|---|---|
+| Administrator (installation) | Agent runs as system service | No |
+| Network access | DNS monitoring, phishing protection | No |
+| Filesystem access | App/file scanning | No |
+
+**Limitations:**
+- No call protection (no native phone function)
+- UAC prompts cannot be programmatically blocked
+
+> `TODO-ENG-008`: Confirm Windows Defender compatibility and conflict resolution.
+> `TODO-ENG-009`: Confirm GPO/Intune deployment and silent install support.
+
+### macOS
+
+| Permission | Purpose | Optional? |
+|---|---|---|
+| System Extension | Network monitoring | No |
+| Full Disk Access | File scanning | Optional (enhanced protection) |
+| Notifications | Push alerts | No |
+
+**Limitations:**
+- No call protection
+- System Extensions require user confirmation in System Settings
+- TCC (Transparency, Consent, and Control) requires explicit user grants
+
+> `TODO-ENG-010`: Confirm Apple Silicon vs. Intel compatibility.
+> `TODO-ENG-011`: Confirm PPPC/TCC profile deployment support.
+
+### Linux
+
+| Permission | Purpose | Optional? |
+|---|---|---|
+| root (installation) | Agent runs as systemd service | No |
+| Network access | DNS monitoring | No |
+
+**Limitations:**
+- No call protection
+- No push notifications (API/webhook/email only)
+- No family management
+- Distribution fragmentation
+
+> `TODO-ENG-012`: Confirm supported distributions, kernel versions, and package formats.
+> `TODO-ENG-013`: Confirm Ansible/Puppet deployment support.
+
+---
+
+## Minimum Requirements
+
+| Platform | Min Version | Memory | Storage | Network |
+|---|---|---|---|---|
+| Android | 8.0 (API 26) | `TODO-ENG-014` | `TODO-ENG-014` | Optional (offline mode supported) |
+| iOS | 15.0 | `TODO-ENG-014` | `TODO-ENG-014` | Optional |
+| Windows | 10 (1903+) | `TODO-ENG-014` | `TODO-ENG-014` | Optional |
+| macOS | 12.0 (Monterey) | `TODO-ENG-014` | `TODO-ENG-014` | Optional |
+| Linux | Kernel 5.4+ | `TODO-ENG-014` | `TODO-ENG-014` | Optional |
+
+> `TODO-ENG-014`: Confirm memory, storage, and CPU requirements per platform.
+
+---
+
+## Security Boundaries
+
+| Constraint | Description |
+|---|---|
+| **Minimal system rights** | Agent accesses only user-explicitly-allowed content |
+| **No persistent content storage** | Plaintext content exists only in RAM during analysis |
+| **No internet requirement** | Cloud queries only for signature updates and escalation. Full local protection without connectivity. |
+| **Signed model updates** | Model packages are cryptographically signed. Signature verified before loading. Rollback protection (agent rejects older versions). |
+| **Permission denial handling** | Each signal source degrades gracefully. Missing permission reduces scope, does not crash agent. |
+
+---
+
+## Failure Modes
+
+| Failure | Impact | Mitigation |
+|---|---|---|
+| Permission denied (single source) | That signal source unavailable | Graceful degradation. User notified of reduced scope. Other signals continue. |
+| All permissions denied | Agent cannot monitor | User shown clear guidance to re-enable. Agent in "dormant" mode. |
+| Offline (no internet) | No Cloud Enrichment, no model updates | Local detection continues. Events buffered for later sync. Last-known-good models used. |
+| Battery optimization kills service | Agent stops monitoring | Manufacturer-specific workarounds. User guided through battery exemption setup. |
+| OS update breaks API | Signal collection fails | Agent self-tests on startup. Failed collectors logged. OTA agent update pushed. |
+
+---
+
+## Related Specifications
+
+- [System Overview](/experts/spec/system-overview) — Component architecture
+- [Detection Engine](/experts/spec/detection-engine) — How collected signals are classified
+- [Privacy Model](/experts/spec/privacy-model) — What data leaves the device
+- [Platform Capabilities](/experts/platform-capabilities) — Public capability matrix
