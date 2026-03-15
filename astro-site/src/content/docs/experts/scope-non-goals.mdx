@@ -66,18 +66,11 @@ Die folgenden Begriffe werden in der Superheld-Dokumentation verwendet und erfor
 
 On-Device-Klassifikatoren (ML-Modelle) für lokale Bedrohungserkennung. Bei uneindeutigen Fällen erfolgt optional eine Cloud Enrichment auf Basis anonymisierter Feature-Vektoren — niemals Klartext-Inhalte.
 
-:::caution[TODO]
-Genaue Modellarchitektur und Inferenz-Framework dokumentieren. Relevante Details: Modellformat (TFLite, ONNX, Core ML), Modellgröße, Inferenzzeit, unterstützte Hardware-Beschleunigung.
-:::
+`TODO-ENG-015`: Modellarchitektur, Inferenz-Framework und Quantisierungsformat bestätigen (TFLite, ONNX, Core ML). Siehe [Detection Engine Spec](/experts/spec/detection-engine).
 
 ### 2. Sprachmuster (Voice Patterns)
 
-:::caution[TODO]
-Klären, ob die KI-Stimmanalyse auf Audio-Zugriff (Mikrofon), Transkripte, oder ausschließlich Anruf-Metadaten zugreift.
-
-- **Falls Audio-Zugriff:** Welche Berechtigungen sind erforderlich? Wird Audio im Arbeitsspeicher verarbeitet und sofort verworfen? Wie wird sichergestellt, dass keine Audioaufnahmen persistiert werden?
-- **Falls kein Audio-Zugriff:** Begriff „Sprachmuster" durch „Anruf-Metadaten-Heuristik" ersetzen, um falsche Erwartungen zu vermeiden.
-:::
+`TODO-ENG-046`: Klären, ob die KI-Stimmanalyse auf Audio-Zugriff (Mikrofon), Transkripte, oder ausschließlich Anruf-Metadaten zugreift. Falls kein Audio-Zugriff: Begriff „Sprachmuster" durch „Anruf-Metadaten-Heuristik" ersetzen. Siehe [Privacy Model](/experts/spec/privacy-model).
 
 ### 3. Gefährliche Nutzeraktionen (Dangerous User Actions)
 
@@ -88,39 +81,21 @@ OS-beobachtbare Aktionen, die die Policy Engine als risikoreich einstuft. Aktuel
 - **(c)** Fernsteuerungs-Apps während eines aktiven Anrufs installieren
 - **(d)** Warnungen der Schutz-Engine ignorieren/überstimmen
 
-:::caution[TODO]
-Vollständige Liste mit Produktteam bestätigen. Insbesondere klären: Gibt es weitere beobachtbare Aktionen (z. B. Deaktivierung von Play Protect, USB-Debugging aktivieren), die als risikoreich eingestuft werden sollten?
-:::
+`TODO-ENG-056`: Vollständige Liste gefährlicher Nutzeraktionen mit Produktteam bestätigen (z. B. Play-Protect-Deaktivierung, USB-Debugging).
 
 ### 4. Prompt-Manipulation
 
-:::caution[TODO]
-Klären, ob ein LLM/Sprachmodell als Produktbestandteil existiert.
-
-- **Falls ja:** Dokumentieren, wo Prompts existieren und wie Prompt Injection mitigiert wird (Input Sanitization, Output Validation, System-Prompt-Härtung).
-- **Falls nein:** Diesen Abschnitt entfernen und durch „KI-generierte Betrugs-Inhalte (extern erzeugt)" ersetzen — also die Erkennung von Inhalten, die durch externe LLMs erzeugt wurden.
-:::
+`TODO-ENG-057`: Klären, ob ein LLM/Sprachmodell als Produktbestandteil existiert. Falls ja: Prompt-Injection-Mitigationen dokumentieren. Falls nein: Abschnitt auf „Erkennung extern erzeugter KI-Inhalte" umstellen.
 
 ### 5. Federated Learning
 
-:::caution[TODO]
-Implementierungsstatus klären.
-
-- **Falls implementiert:** Opt-in-Modell dokumentieren, Aggregationsverfahren (Secure Aggregation?), Differential-Privacy-Parameter (ε, δ), und exakt definieren, welche Daten das Gerät verlassen (Gradienten, Modell-Updates, aggregierte Statistiken).
-- **Falls nicht implementiert:** Als „Geplant" kennzeichnen und aus aktuellen Architektur-Beschreibungen entfernen oder explizit als Roadmap-Item markieren.
-:::
+`TODO-ENG-058`: Federated-Learning-Implementierungsstatus klären. Falls nicht implementiert: aus Architektur-Beschreibungen entfernen und als Roadmap-Item kennzeichnen. Siehe [Privacy Model](/experts/spec/privacy-model).
 
 ### 6. Feature-Vektoren
 
 Abgeleitete, numerische Repräsentationen von Signalmerkmalen, die durch Dimensionsreduktion und irreversible Transformationen anonymisiert werden. Feature-Vektoren werden für Cloud Enrichment übertragen, wenn die lokale Analyse kein eindeutiges Ergebnis liefert.
 
-:::caution[TODO]
-- Enthaltene Merkmale (Feature-Liste) dokumentieren
-- Transformationsverfahren beschreiben (Hashing, Projektion, Quantisierung)
-- Dimensionalität der Vektoren angeben
-- Differential-Privacy-Parameter (ε, δ) dokumentieren
-- Grenzen der Nicht-Invertierbarkeits-Garantie dokumentieren: Unter welchen Bedingungen könnten Feature-Vektoren theoretisch re-identifiziert werden?
-:::
+`TODO-ENG-044`: Feature-Liste, Dimensionalität und Transformationsverfahren dokumentieren. `TODO-ENG-045`: Differential-Privacy-Parameter (ε, δ) bestätigen oder DP-Sprache entfernen. Siehe [Privacy Model](/experts/spec/privacy-model).
 
 ---
 

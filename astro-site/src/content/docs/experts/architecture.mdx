@@ -110,8 +110,8 @@ Bei einer Cloud-Eskalation werden ausschließlich anonymisierte Feature-Vektoren
 Die Cloud-Komponenten dienen als Quelle für kollektive Threat Intelligence und stellen aktualisierte Erkennungsmodelle bereit. Es werden ausschließlich zwei Datentypen an die Cloud übertragen: (1) **SHA-256-Hashes** für Threat-Intelligence-Lookups und (2) **anonymisierte Feature-Vektoren** bei Eskalation komplexer Fälle. Keine Klartext-Inhalte.
 
 - **Threat Database:** Enthält Indicators of Compromise (IoC), anonymisierte Bedrohungssignaturen und Reputationsdaten zu Domains und IPs. Wird kontinuierlich aus den anonymisierten Meldungen aller Agenten gespeist.
-- **Model Update Service:** Verteilt aktualisierte ML-Modelle an die lokalen Schutz-Engines. TODO: Federated Learning — Implementierungsstatus klären. Aktuell dokumentiert als Architekturprinzip; unklar ob in Produktion.
-- **AI Analysis Module:** GPU-gestützte Analyse für komplexe Fälle (Deepfake-Erkennung, fortgeschrittene Social-Engineering-Analyse). Verarbeitet ausschließlich anonymisierte Feature-Vektoren. TODO: Genaue Definition der Feature-Vektoren dokumentieren.
+- **Model Update Service:** Verteilt aktualisierte ML-Modelle als signierte Pakete an die lokalen Schutz-Engines. Rollback-Schutz: der Agent lehnt ältere Modellversionen ab. `TODO-ENG-051`: Signaturalgorithmus und Schlüsselmanagement mit Engineering bestätigen. `TODO-ENG-016`: Update-Frequenz bestätigen.
+- **AI Analysis Module:** GPU-gestützte Analyse für komplexe Fälle (Deepfake-Erkennung, fortgeschrittene Social-Engineering-Analyse). Verarbeitet ausschließlich anonymisierte Feature-Vektoren — niemals Klartext. `TODO-ENG-044`: Genaue Feature-Vektor-Spezifikation (Merkmale, Dimensionalität, Transformationsverfahren) dokumentieren.
 
 ---
 
@@ -130,7 +130,7 @@ Die Architektur definiert eine klare Sicherheitsgrenze zwischen dem Benutzerger�
 | Aggregierte Telemetrie | Opt-in-Statistiken (z. B. Anzahl blockierter Bedrohungen) | **Ja** — nur mit expliziter Zustimmung |
 
 :::note
-Die Sicherheitsgrenze ist kryptografisch durchgesetzt: Alle Kommunikation zwischen Gerät und Cloud ist mit TLS 1.3 gesichert. Feature-Vektoren werden vor der Übertragung lokal anonymisiert und können nicht auf einzelne Benutzer oder Inhalte zurückgeführt werden.
+Die Sicherheitsgrenze ist kryptografisch durchgesetzt: Alle Kommunikation zwischen Gerät und Cloud ist mit TLS 1.3 + Certificate Pinning gesichert. Feature-Vektoren werden vor der Übertragung lokal transformiert. Cloud-Anfragen enthalten keine Geräte- oder Benutzer-IDs und sind nicht über Anfragen hinweg korrelierbar (`TODO-ENG-001`: Statelessness-Garantie bestätigen).
 :::
 
 ---
@@ -141,9 +141,9 @@ Die Architektur von superheld.app ist so konzipiert, dass Datenschutz kein Featu
 
 1. **Keine Rohdaten in der Cloud.** Nachrichteninhalte, Dateien und personenbezogene Metadaten verlassen das Gerät unter keinen Umständen. Die Cloud erhält ausschließlich anonymisierte Feature-Vektoren und aggregierte Statistiken.
 
-2. **Keine Rekonstruktion möglich.** Die Feature-Vektoren, die bei einer Cloud-Eskalation übertragen werden, sind durch Dimensionsreduktion und irreversible Transformationen so verarbeitet, dass eine Rekonstruktion der Originaldaten nach aktuellem Stand der Technik nicht praktikabel ist. TODO: Genaue Transformationsverfahren und Differential-Privacy-Parameter (ε, δ) dokumentieren.
+2. **Rekonstruktionsresistenz.** Die Feature-Vektoren, die bei einer Cloud-Eskalation übertragen werden, werden durch Dimensionsreduktion und irreversible Transformationen verarbeitet. Die genauen Transformationsverfahren und formalen Garantien sind in der [Privacy-Model-Spezifikation](/experts/spec/privacy-model) dokumentiert. `TODO-ENG-044`: Transformationsverfahren und Dimensionalität bestätigen. `TODO-ENG-045`: Differential-Privacy-Parameter (ε, δ) bestätigen, falls DP angewendet wird.
 
-3. **Modell-Updates ohne zentrale Rohdaten.** ML-Modelle werden als signierte Pakete an die lokalen Schutz-Engines verteilt. TODO: Federated Learning — Implementierungsstatus klären. Falls implementiert: Opt-in-Modell, Aggregationsverfahren und Privacy-Garantien dokumentieren.
+3. **Modell-Updates ohne zentrale Rohdaten.** ML-Modelle werden als kryptografisch signierte Pakete an die lokalen Schutz-Engines verteilt. Der Agent verifiziert die Signatur vor dem Laden und lehnt ältere Versionen ab (Rollback-Schutz). `TODO-ENG-051`: Signaturalgorithmus bestätigen.
 
 4. **Vollständige Transparenz.** Jede Cloud-Kommunikation wird im lokalen Aktivitätsprotokoll dokumentiert. Benutzer können jederzeit einsehen, welche Daten übertragen wurden.
 

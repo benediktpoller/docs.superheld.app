@@ -67,11 +67,45 @@ Das Trust Center bündelt alle sicherheits- und datenschutzrelevanten Dokumentat
 |---|---|---|
 | Bedrohungsmodell | [/experts/threat-model](/experts/threat-model) | Verfügbar |
 | Datenflussdiagramm | [/experts/data-flows](/experts/data-flows) | Verfügbar |
-| OpenAPI-Spezifikation | [/openapi.yaml](/openapi.yaml) | Verfügbar (TODO: Engineering-Review ausstehend) |
-| security.txt (RFC 9116) | `https://superheld.app/.well-known/security.txt` | TODO: Deployment ausstehend |
-| PGP Public Key | `https://superheld.app/.well-known/pgp-key.asc` | TODO: Deployment ausstehend |
-| Penetrationstest-Bericht | — | TODO: Penetrationstest durchführen |
-| SOC 2 / ISO 27001 | — | TODO: Zertifizierungsstatus klären |
+| Engineering Specifications | [/experts/spec/](/experts/spec/) | Draft — 45 offene `TODO-ENG`-Items |
+| OpenAPI-Spezifikation | [/openapi.yaml](/openapi.yaml) | Draft — `API_FACTS.md` Bestätigung ausstehend |
+| security.txt (RFC 9116) | `https://superheld.app/.well-known/security.txt` | Deployment ausstehend |
+| PGP Public Key | `https://superheld.app/.well-known/pgp-key.asc` | Deployment ausstehend |
+| Penetrationstest-Bericht | — | Ausstehend |
+| SOC 2 / ISO 27001 | — | Zertifizierungsstatus klären |
+
+---
+
+## RFC 9116 Deployment-Checkliste
+
+Die folgenden Schritte sind erforderlich, um die RFC-9116-Konformität operativ umzusetzen:
+
+### Vorbereitung
+
+- [ ] PGP-Schlüsselpaar für `security@superheld.app` generieren (Ed25519 empfohlen)
+- [ ] Öffentlichen Schlüssel als ASCII-Armor exportieren
+- [ ] `security.txt` erstellen (Vorlage: [Responsible Disclosure](/experts/responsible-disclosure))
+- [ ] `Expires`-Feld setzen (max. 1 Jahr in der Zukunft)
+
+### Deployment
+
+- [ ] `security.txt` unter `https://superheld.app/.well-known/security.txt` bereitstellen
+- [ ] PGP Public Key unter `https://superheld.app/.well-known/pgp-key.asc` bereitstellen
+- [ ] `Content-Type: text/plain` für beide Dateien
+- [ ] HTTPS erzwingen (kein HTTP-Fallback)
+
+### Verifikation
+
+- [ ] `curl -I https://superheld.app/.well-known/security.txt` → `200 OK`
+- [ ] `curl -I https://superheld.app/.well-known/pgp-key.asc` → `200 OK`
+- [ ] Inhalt validieren: Contact, Expires, Encryption, Preferred-Languages, Canonical, Policy
+- [ ] PGP-Schlüssel importierbar und verifizierbar
+
+### CI-Monitoring
+
+- [ ] CI-Check: Beide Endpunkte antworten mit `200`
+- [ ] CI-Check: `Expires`-Datum liegt in der Zukunft
+- [ ] Erinnerung: `Expires`-Feld mindestens 30 Tage vor Ablauf erneuern
 
 :::note
 Für Sicherheitsfragen kontaktieren Sie security@superheld.app. Für Datenschutz-Anfragen: privacy@superheld.app.

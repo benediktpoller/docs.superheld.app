@@ -39,13 +39,11 @@ echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "$SIGNING_SECRET"
 
 ## Replay-Schutz
 
-:::note[TODO]
-Klären ob Superheld einen Timestamp-Header (z.B. `X-Superheld-Timestamp`) mitsendet.
-:::
+`TODO-ENG-032`: Bestätigen, ob Superheld einen `X-Superheld-Timestamp`-Header mitsendet. Falls ja, sollte dieser anstelle des Payload-Feldes für die Replay-Prüfung verwendet werden.
 
 **Empfohlene Implementierung (Consumer-seitig):**
 
-1. Prüfen Sie den Zeitstempel im Payload (`timestamp`-Feld) gegen die aktuelle Uhrzeit.
+1. Prüfen Sie den Zeitstempel im Payload (`timestamp`-Feld) gegen die aktuelle Serverzeit.
 2. Lehnen Sie Events ab, die älter als 5 Minuten sind (konfigurierbar).
 3. Speichern Sie verarbeitete `event_id`-Werte für mindestens 24 Stunden zur Deduplizierung.
 
@@ -55,9 +53,7 @@ Klären ob Superheld einen Timestamp-Header (z.B. `X-Superheld-Timestamp`) mitse
 - Consumer sollten `event_id` als Idempotenz-Schlüssel verwenden.
 - Empfohlener Ablauf: Vor Verarbeitung prüfen ob `event_id` bereits verarbeitet wurde.
 
-:::note[TODO]
-Klären ob Superheld einen dedizierten Idempotency-Key-Header mitsendet.
-:::
+`TODO-ENG-032`: Bestätigen, ob ein dedizierter `X-Superheld-Idempotency-Key`-Header gesendet wird oder ob `event_id` im Payload als einziger Idempotenz-Schlüssel dient.
 
 ## Retry-Verhalten und Dead Letter Queue
 
@@ -73,9 +69,7 @@ Klären ob Superheld einen dedizierten Idempotency-Key-Header mitsendet.
 - Nach 5 Fehlversuchen: Event wird in die **Dead-Letter-Queue** verschoben.
 - Im Dashboard als *unzustellbar* markiert.
 
-:::note[TODO]
-Klären ob fehlgeschlagene Webhooks manuell erneut ausgelöst werden können (Replay aus DLQ).
-:::
+`TODO-ENG-033`: Bestätigen, ob fehlgeschlagene Webhooks manuell aus der DLQ erneut ausgelöst werden können (Dashboard-Replay).
 
 ## Payload-Format
 

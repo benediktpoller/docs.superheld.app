@@ -15,8 +15,9 @@ https://api.superheld.app/api/v1/
 ```
 
 - Transport: ausschließlich HTTPS. Unverschlüsselte Verbindungen werden abgelehnt.
-- Versionierung: Das Präfix `/v1/` kennzeichnet die aktuelle API-Version. TODO: Abwärtskompatibilitätsgarantien mit Engineering bestätigen.
+- Versionierung: Das Präfix `/v1/` kennzeichnet die aktuelle API-Version. `TODO-ENG-037`: Abwärtskompatibilitätsgarantien und Deprecation-Mechanismus bestätigen.
 - Datenformat: JSON (Request und Response).
+- Kanonischer Vertrag: [OpenAPI 3.1 Spezifikation](/openapi.yaml) (Draft — Engineering-Review ausstehend).
 
 ## Authentifizierung
 
@@ -30,7 +31,7 @@ Details zu API-Schlüsseln, OAuth2-Flows und Scopes: [Authentifizierung und Auto
 
 ## Rate Limiting
 
-TODO: Rate-Limits mit Engineering bestätigen.
+`TODO-ENG-043`: Rate-Limits mit Engineering bestätigen.
 
 Pro API-Schlüssel sind derzeit **120 Anfragen pro Minute** dokumentiert. Bei Überschreitung antwortet die API mit `429 Too Many Requests`. Relevante Response-Header:
 
@@ -42,7 +43,7 @@ Pro API-Schlüssel sind derzeit **120 Anfragen pro Minute** dokumentiert. Bei Ü
 
 ## Paginierung
 
-TODO: Paginierungsverhalten mit Engineering bestätigen.
+`TODO-ENG-042`: Paginierungsverhalten mit Engineering bestätigen.
 
 Die API verwendet cursor-basierte Paginierung. Antworten mit mehreren Ergebnissen enthalten ein `has_more`-Feld und einen `cursor`-Wert für die nächste Seite:
 
@@ -50,7 +51,7 @@ Die API verwendet cursor-basierte Paginierung. Antworten mit mehreren Ergebnisse
 GET /api/v1/threats?cursor=abc123&limit=50
 ```
 
-TODO: Standardwerte für `limit` und maximale Seitengröße dokumentieren.
+`TODO-ENG-042`: Standardwerte für `limit` und maximale Seitengröße dokumentieren.
 
 ## Kanonische Endpunkt-Tabelle
 
@@ -58,22 +59,29 @@ Die folgende Tabelle enthält alle dokumentierten Endpunkte. Endpunkte, die nur 
 
 | Methode | Pfad | Beschreibung | Status |
 |---|---|---|---|
-| `GET` | `/api/v1/devices` | Registrierte Geräte abrufen | Documented |
-| `GET` | `/api/v1/threats` | Erkannte Bedrohungen auflisten | Documented |
-| `GET` | `/api/v1/alerts` | Benachrichtigungsregeln abrufen | Documented |
-| `POST` | `/api/v1/scan` | Inhalt zur Analyse übergeben | Documented |
-| `GET` | `/api/v1/status` | Schutzstatus abrufen | TODO: Nur in configuration.mdx erwähnt |
-| `GET` | `/api/v1/events` | Ereignisse abrufen | Documented (siem-integration, integrator-quickstart, event-model) |
-| `POST` | `/api/v1/rules` | Schutzregel erstellen/ändern | TODO: Nur in configuration.mdx erwähnt |
-| `GET` | `/api/v1/family` | Familienprofile abrufen | TODO: Nur in configuration.mdx erwähnt |
-| `POST` | `/api/v1/whitelist` | Whitelist-Eintrag hinzufügen | TODO: Nur in configuration.mdx erwähnt |
-| `POST` | `/api/v1/report` | Bedrohungsbericht generieren | TODO: Nur in configuration.mdx erwähnt |
+| `GET` | `/api/v1/devices` | Registrierte Geräte abrufen | Bestätigt |
+| `GET` | `/api/v1/threats` | Erkannte Bedrohungen auflisten (abgeleitete Entitätssicht) | Bestätigt |
+| `GET` | `/api/v1/events` | Kanonischer Event-Stream (append-only, primäre SIEM-Integration) | Bestätigt |
+| `GET` | `/api/v1/alerts` | Benachrichtigungsregeln abrufen | Bestätigt |
+| `POST` | `/api/v1/alerts` | Benachrichtigungsregel erstellen | Bestätigt |
+| `POST` | `/api/v1/scan` | Inhalt zur Analyse übergeben | Bestätigt |
+| `GET` | `/api/v1/policies` | Schutzrichtlinien abrufen | `TODO-ENG-038` |
+| `PUT` | `/api/v1/policies/{id}` | Schutzrichtlinie aktualisieren | `TODO-ENG-038` |
+| `GET` | `/api/v1/status` | Schutzstatus abrufen | `TODO-ENG-038` |
+| `POST` | `/api/v1/rules` | Schutzregel erstellen/ändern | `TODO-ENG-038` |
+| `GET` | `/api/v1/family` | Familienprofile abrufen | `TODO-ENG-038` |
+| `POST` | `/api/v1/whitelist` | Whitelist-Eintrag hinzufügen | `TODO-ENG-038` |
+| `POST` | `/api/v1/report` | Bedrohungsbericht generieren | `TODO-ENG-038` |
+
+:::note[Kanonisches Integrationsmodell]
+`/events` ist der kanonische append-only Event-Stream (jede Entscheidung als unveränderliches Event). `/threats` ist eine abgeleitete Entitätssicht (letzter Stand pro Bedrohung, dedupliziert). **Integratoren sollten `/events` als primären Feed nutzen.** `TODO-ENG-039`: Dieses Modell mit Engineering bestätigen.
+:::
 
 ## Beispiel-Antworten
 
 ### GET /threats
 
-TODO: Response-Schema mit Engineering bestätigen.
+`TODO-ENG-031`: Response-Schema mit Engineering bestätigen.
 
 ```json
 {
@@ -94,7 +102,7 @@ TODO: Response-Schema mit Engineering bestätigen.
 
 ### POST /scan
 
-TODO: Response-Schema mit Engineering bestätigen.
+`TODO-ENG-038`: Response-Schema mit Engineering bestätigen.
 
 ```json
 {
@@ -109,7 +117,7 @@ TODO: Response-Schema mit Engineering bestätigen.
 
 ## Fehlerformat
 
-TODO: Fehlerformat mit Engineering bestätigen.
+`TODO-ENG-038`: Fehlerformat mit Engineering bestätigen.
 
 Die API liefert Fehler in folgendem Format:
 
