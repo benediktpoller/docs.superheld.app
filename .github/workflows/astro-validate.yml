@@ -98,7 +98,7 @@ jobs:
             --offline
             --no-progress
             --include-fragments
-            --base astro-site/dist
+            --root-dir astro-site/dist
             'astro-site/dist/**/*.html'
           fail: true
 
